@@ -10,32 +10,95 @@ import UIKit
 import SnapKit
 
 class FirstOnboardingController: UIViewController {
-    
+        
     //MARK: - left circle
-    private let imageViewCircleLeft = UIImageView()
-    private let imageCircleLeft = UIImage(named: "firstOnboardingCircle")
-
+    public lazy var imageViewCircleLeft: UIImageView = {
+        let imageCircleLeft = UIImage(named: "firstOnboardingCircle")
+        let imageViewCircleLeft = UIImageView()
+        imageViewCircleLeft.image = imageCircleLeft
+        view.addSubview(imageViewCircleLeft)
+        return imageViewCircleLeft
+    }()
+        
     //MARK: - right circle
-    private let imageViewCircleRight = UIImageView()
-    private let imageCircleRight = UIImage(named: "firstOnboardingCircle")
+    private lazy var imageViewCircleRight: UIImageView = {
+        let imageViewCircleRight = UIImageView()
+        let imageCircleRight = UIImage(named: "firstOnboardingCircle")
+        imageViewCircleRight.image = imageCircleRight
+        view.addSubview(imageViewCircleRight)
+        return imageViewCircleRight
+    }()
 
     //MARK: - main image
-    private let imageViewMain = UIImageView()
-    private let imageMain = UIImage(named: "firstOnboardingImage")
+    private lazy var imageViewMain: UIImageView = {
+        let imageViewMain = UIImageView()
+        let imageMain = UIImage(named: "firstOnboardingImage")
+        imageViewMain.image = imageMain
+        view.addSubview(imageViewMain)
+        return imageViewMain
+    }()
 
     //MARK: - header label
-    private let labelHeader = UILabel()
-
+    private lazy var labelHeader: UILabel = {
+        let labelHeader = UILabel()
+        labelHeader.text = "Quick search for entry conditions in all countries"
+        labelHeader.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
+        labelHeader.font = UIFont(name: "Inter-Bold", size: 26)
+        labelHeader.numberOfLines = 2
+        view.addSubview(labelHeader)
+        return labelHeader
+    }()
+    
     //MARK: - swipe lines
-    private let viewLineFirst = UIView()
-    private let viewLineSecond = UIView()
-    private let viewLineThird = UIView()
+    //MARK: - line first
+    private lazy var viewLineFirst: UIView = {
+        let viewLineFirst = UIView()
+        viewLineFirst.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
+        viewLineFirst.layer.cornerRadius = 3
+        view.addSubview(viewLineFirst)
+        return viewLineFirst
+    }()
+    
+    //MARK: - line second
+    private lazy var viewLineSecond: UIView = {
+        let viewLineSecond = UIView()
+        viewLineSecond.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+        viewLineSecond.layer.cornerRadius = 3
+        view.addSubview(viewLineSecond)
+        return viewLineSecond
+    }()
+    
+    //MARK: - line third
+    private lazy var viewLineThird: UIView = {
+        let viewLineThird = UIView()
+        viewLineThird.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
+        viewLineThird.layer.cornerRadius = 3
+        view.addSubview(viewLineThird)
+        return viewLineThird
+    }()
 
     //MARK: - button next
-    private let buttonNext = UIButton()
-
+    private lazy var buttonNext: UIButton = {
+        let buttonNext = UIButton()
+        buttonNext.backgroundColor = UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1)
+        buttonNext.setImage(UIImage(systemName: "chevron.forward", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)), for: .normal)
+        buttonNext.tintColor = .white
+        buttonNext.layer.cornerRadius = 10
+        view.addSubview(buttonNext)
+        return buttonNext
+    }()
+    
     //MARK: - button skip
-    private let buttonSkip = UIButton()
+    private lazy var buttonSkip: UIButton = {
+        let buttonSkip = UIButton()
+        buttonSkip.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        buttonSkip.setTitle("Skip", for: .normal)
+        buttonSkip.titleLabel?.font = UIFont(name: "Inter-Medium", size: 14)
+        buttonSkip.titleLabel?.textAlignment = .left
+        buttonSkip.setTitleColor(UIColor(red: 174/255, green: 174/255, blue: 178/255, alpha: 1), for: .normal)
+        view.addSubview(buttonSkip)
+        return buttonSkip
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,9 +115,6 @@ class FirstOnboardingController: UIViewController {
 
     //MARK: - circle left
     func setupCircleLeft() {
-        
-        imageViewCircleLeft.image = imageCircleLeft
-        view.addSubview(imageViewCircleLeft)
 
         //constraints
         imageViewCircleLeft.snp.makeConstraints( { make in
@@ -67,9 +127,6 @@ class FirstOnboardingController: UIViewController {
     //MARK: - circle right
     func setupCircleRight() {
         
-        imageViewCircleRight.image = imageCircleRight
-        view.addSubview(imageViewCircleRight)
-        
         //constraints
         imageViewCircleRight.snp.makeConstraints( { make in
             make.leading.equalToSuperview().offset(185)
@@ -80,9 +137,6 @@ class FirstOnboardingController: UIViewController {
 
     //MARK: - image main
     func setupImageMain() {
-        
-        imageViewMain.image = imageMain
-        view.addSubview(imageViewMain)
         
         //constraints
         imageViewMain.snp.makeConstraints( { make in
@@ -95,12 +149,6 @@ class FirstOnboardingController: UIViewController {
 
     //MARK: - label header
     func setupLabelHeader() {
-        
-        labelHeader.text = "Quick search for entry conditions in all countries"
-        labelHeader.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
-        labelHeader.font = UIFont(name: "Inter-Bold", size: 26)
-        labelHeader.numberOfLines = 2
-        view.addSubview(labelHeader)
 
         //constraints
         labelHeader.snp.makeConstraints({ make in
@@ -114,11 +162,6 @@ class FirstOnboardingController: UIViewController {
     //MARK: - view swipe lines
     func setupSwipeLines() {
 
-        //first line
-        viewLineFirst.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
-        viewLineFirst.layer.cornerRadius = 3
-        view.addSubview(viewLineFirst)
-        
         //constraints to the first line
         viewLineFirst.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)
@@ -128,11 +171,6 @@ class FirstOnboardingController: UIViewController {
             make.height.equalTo(6)
         })
 
-        //second line
-        viewLineSecond.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
-        viewLineSecond.layer.cornerRadius = 3
-        view.addSubview(viewLineSecond)
-        
         //constraints to the second line
         viewLineSecond.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(46)
@@ -141,11 +179,6 @@ class FirstOnboardingController: UIViewController {
             make.width.equalTo(22)
             make.height.equalTo(6)
         })
-
-        //third line
-        viewLineThird.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
-        viewLineThird.layer.cornerRadius = 3
-        view.addSubview(viewLineThird)
         
         //constraints to the third line
         viewLineThird.snp.makeConstraints({ make in
@@ -159,12 +192,6 @@ class FirstOnboardingController: UIViewController {
 
     //MARK: - button next
     func setupButtonNext() {
-
-        buttonNext.backgroundColor = UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1)
-        buttonNext.setImage(UIImage(systemName: "chevron.forward", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)), for: .normal)
-        buttonNext.tintColor = .white
-        buttonNext.layer.cornerRadius = 10
-        view.addSubview(buttonNext)
         
         //constraints
         buttonNext.snp.makeConstraints({ make in
@@ -174,7 +201,7 @@ class FirstOnboardingController: UIViewController {
             make.height.equalTo(60)
         })
 
-        //create action on the next view
+        //MARK: - create action on the next view
         buttonNext.addTarget(self, action: #selector(actionForButtonNext), for: .touchUpInside)
     }
 
@@ -187,13 +214,6 @@ class FirstOnboardingController: UIViewController {
     //MARK: - button skip
     func setupButtonSkip() {
 
-        buttonSkip.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-        buttonSkip.setTitle("Skip", for: .normal)
-        buttonSkip.titleLabel?.font = UIFont(name: "Inter-Medium", size: 14)
-        buttonSkip.titleLabel?.textAlignment = .left
-        buttonSkip.setTitleColor(UIColor(red: 174/255, green: 174/255, blue: 178/255, alpha: 1), for: .normal)
-        view.addSubview(buttonSkip)
-        
         //constraints
         buttonSkip.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)

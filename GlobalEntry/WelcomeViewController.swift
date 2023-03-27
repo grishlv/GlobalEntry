@@ -12,36 +12,104 @@ import SnapKit
 class WelcomeViewController: UIViewController {
     
     //MARK: - image group of circles
-    private let imageViewGroupOfCirles = UIImageView()
-    private let imageGroupOfCircles = UIImage(named: "groupOfCircles")
+    private lazy var imageViewGroupOfCircles: UIImageView = {
+        let imageViewGroupOfCircles = UIImageView()
+        let imageGroupOfCircles = UIImage(named: "groupOfCircles")
+        imageViewGroupOfCircles.image = imageGroupOfCircles
+        view.addSubview(imageViewGroupOfCircles)
+        return imageViewGroupOfCircles
+    }()
     
     //MARK: - top image
-    private let imageViewTop = UIImageView()
-    private let imageTop = UIImage(named: "welcomeImageTop")
+    private lazy var imageViewTop: UIImageView = {
+        let imageViewTop = UIImageView()
+        let imageTop = UIImage(named: "welcomeImageTop")
+        imageViewTop.image = imageTop
+        imageViewTop.layer.cornerRadius = 21
+        imageViewTop.layer.masksToBounds = true
+        view.addSubview(imageViewTop)
+        return imageViewTop
+    }()
     
     //MARK: - right image
-    private let imageViewRight = UIImageView()
-    private let imageRight = UIImage(named: "welcomeImageRight")
+    private lazy var imageViewRight: UIImageView = {
+        let imageViewRight = UIImageView()
+        let imageRight = UIImage(named: "welcomeImageRight")
+        imageViewRight.image = imageRight
+        imageViewRight.layer.cornerRadius = 16
+        imageViewRight.layer.masksToBounds = true
+        view.addSubview(imageViewRight)
+        return imageViewRight
+    }()
     
     //MARK: - bottom image
-    private let imageViewBottom = UIImageView()
-    private let imageBottom = UIImage(named: "welcomeImageBottom")
+    private lazy var imageViewBottom: UIImageView = {
+        let imageViewBottom = UIImageView()
+        let imageBottom = UIImage(named: "welcomeImageBottom")
+        imageViewBottom.image = imageBottom
+        imageViewBottom.layer.cornerRadius = 35
+        imageViewBottom.layer.masksToBounds = true
+        view.addSubview(imageViewBottom)
+        return imageViewBottom
+    }()
     
     //MARK: - header label
-    private let labelHeader = UILabel()
+    private lazy var labelHeader: UILabel = {
+        let labelHeader = UILabel()
+        labelHeader.text = "Welcome!"
+        labelHeader.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
+        labelHeader.font = UIFont(name: "Inter-Bold", size: 26)
+        labelHeader.numberOfLines = 1
+        view.addSubview(labelHeader)
+        return labelHeader
+    }()
     
     //MARK: - description label
-    private let labelDescription = UILabel()
+    private lazy var labelDescription: UILabel = {
+        let labelDescription = UILabel()
+        labelDescription.text = "Let's stay in touch! Please sign up or log in to account."
+        labelDescription.textColor = UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1)
+        labelDescription.font = UIFont(name: "Inter-Regular", size: 14)
+        labelDescription.numberOfLines = 2
+        view.addSubview(labelDescription)
+        return labelDescription
+    }()
     
     //MARK: - sign up button
-    private let buttonSignUp = UIButton()
+    private lazy var buttonSignUp: UIButton = {
+        let buttonSignUp = UIButton()
+        buttonSignUp.backgroundColor = UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1)
+        buttonSignUp.layer.cornerRadius = 10
+        buttonSignUp.setTitle("Sign up", for: .normal)
+        buttonSignUp.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
+        view.addSubview(buttonSignUp)
+        return buttonSignUp
+    }()
     
     //MARK: - log in button
-    private let buttonLogIn = UIButton()
+    private lazy var buttonLogIn: UIButton = {
+        let buttonLogIn = UIButton()
+        buttonLogIn.backgroundColor = UIColor(red: 229/255, green: 239/255, blue: 251/255, alpha: 1)
+        buttonLogIn.layer.cornerRadius = 10
+        buttonLogIn.setTitle("Log in", for: .normal)
+        buttonLogIn.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
+        buttonLogIn.setTitleColor(UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1), for: .normal)
+        view.addSubview(buttonLogIn)
+        return buttonLogIn
+    }()
 
     //MARK: - later button
-    private let buttonLater = UIButton()
-
+    private lazy var buttonLater: UIButton = {
+        let buttonLater = UIButton()
+        buttonLater.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0)
+        buttonLater.layer.cornerRadius = 10
+        buttonLater.setTitle("Later", for: .normal)
+        buttonLater.titleLabel?.font = UIFont(name: "Inter-Medium", size: 14)
+        buttonLater.setTitleColor(UIColor(red: 174/255, green: 174/255, blue: 178/255, alpha: 1), for: .normal)
+        view.addSubview(buttonLater)
+        return buttonLater
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
@@ -60,11 +128,8 @@ class WelcomeViewController: UIViewController {
     //MARK: - group of circles on the background
     func setupGroupOfCircle() {
         
-        imageViewGroupOfCirles.image = imageGroupOfCircles
-        view.addSubview(imageViewGroupOfCirles)
-        
         //constraints
-        imageViewGroupOfCirles.snp.makeConstraints( { make in
+        imageViewGroupOfCircles.snp.makeConstraints( { make in
             make.centerX.equalToSuperview()
             make.top.greaterThanOrEqualToSuperview().offset(55)
             make.size.equalTo(335)
@@ -73,16 +138,11 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - image top
     func setupImageTop() {
-        
-        imageViewTop.image = imageTop
-        imageViewTop.layer.cornerRadius = 21
-        imageViewTop.layer.masksToBounds = true
-        view.addSubview(imageViewTop)
-        
+
         //constraints
         imageViewTop.snp.makeConstraints( { make in
-            make.leading.equalTo(imageViewGroupOfCirles.snp.leading).inset(45)
-            make.top.equalTo(imageViewGroupOfCirles.snp.top).inset(51)
+            make.leading.equalTo(imageViewGroupOfCircles.snp.leading).inset(45)
+            make.top.equalTo(imageViewGroupOfCircles.snp.top).inset(51)
             make.size.equalTo(42)
         })
     }
@@ -90,15 +150,10 @@ class WelcomeViewController: UIViewController {
     //MARK: - image right
     func setupImageRight() {
         
-        imageViewRight.image = imageRight
-        imageViewRight.layer.cornerRadius = 16
-        imageViewRight.layer.masksToBounds = true
-        view.addSubview(imageViewRight)
-        
         //constraints
         imageViewRight.snp.makeConstraints( { make in
-            make.trailing.equalTo(imageViewGroupOfCirles.snp.trailing).inset(-6)
-            make.bottom.equalTo(imageViewGroupOfCirles.snp.bottom).inset(88)
+            make.trailing.equalTo(imageViewGroupOfCircles.snp.trailing).inset(-6)
+            make.bottom.equalTo(imageViewGroupOfCircles.snp.bottom).inset(88)
             make.size.equalTo(32)
         })
     }
@@ -106,32 +161,21 @@ class WelcomeViewController: UIViewController {
     //MARK: - image bottom
     func setupImageBottom() {
         
-        imageViewBottom.image = imageBottom
-        imageViewBottom.layer.cornerRadius = 35
-        imageViewBottom.layer.masksToBounds = true
-        view.addSubview(imageViewBottom)
-        
         //constraints
         imageViewBottom.snp.makeConstraints( { make in
-            make.leading.equalTo(imageViewGroupOfCirles.snp.leading).inset(80)
-            make.bottom.equalTo(imageViewGroupOfCirles.snp.bottom).inset(-10)
+            make.leading.equalTo(imageViewGroupOfCircles.snp.leading).inset(80)
+            make.bottom.equalTo(imageViewGroupOfCircles.snp.bottom).inset(-10)
             make.size.equalTo(70)
         })
     }
     
     //MARK: - label header
     func setupLabelHeader() {
-        
-        labelHeader.text = "Welcome!"
-        labelHeader.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
-        labelHeader.font = UIFont(name: "Inter-Bold", size: 26)
-        labelHeader.numberOfLines = 1
-        view.addSubview(labelHeader)
-        
+            
         //constraints
         labelHeader.snp.makeConstraints( { make in
-            make.leading.equalTo(imageViewGroupOfCirles.snp.leading)
-            make.top.greaterThanOrEqualTo(imageViewGroupOfCirles.snp.bottom).offset(32)
+            make.leading.equalTo(imageViewGroupOfCircles.snp.leading)
+            make.top.greaterThanOrEqualTo(imageViewGroupOfCircles.snp.bottom).offset(32)
             make.width.equalTo(130)
             make.height.equalTo(32)
         })
@@ -140,15 +184,9 @@ class WelcomeViewController: UIViewController {
     //MARK: - label description
     func setupLabelDescription() {
         
-        labelDescription.text = "Let's stay in touch! Please sign up or log in to account."
-        labelDescription.textColor = UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1)
-        labelDescription.font = UIFont(name: "Inter-Regular", size: 14)
-        labelDescription.numberOfLines = 2
-        view.addSubview(labelDescription)
-        
         //constraints
         labelDescription.snp.makeConstraints( { make in
-            make.leading.equalTo(imageViewGroupOfCirles.snp.leading)
+            make.leading.equalTo(imageViewGroupOfCircles.snp.leading)
             make.top.equalTo(labelHeader.snp.bottom).offset(2)
             make.width.equalTo(292)
             make.height.equalTo(34)
@@ -157,12 +195,6 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - button sign up
     func setupButtonSignUp() {
-        
-        buttonSignUp.backgroundColor = UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1)
-        buttonSignUp.layer.cornerRadius = 10
-        buttonSignUp.setTitle("Sign up", for: .normal)
-        buttonSignUp.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
-        view.addSubview(buttonSignUp)
         
         //constraints
         buttonSignUp.snp.makeConstraints( { make in
@@ -176,13 +208,6 @@ class WelcomeViewController: UIViewController {
     //MARK: - button log in
     func setupButtonLogIn() {
         
-        buttonLogIn.backgroundColor = UIColor(red: 229/255, green: 239/255, blue: 251/255, alpha: 1)
-        buttonLogIn.layer.cornerRadius = 10
-        buttonLogIn.setTitle("Log in", for: .normal)
-        buttonLogIn.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
-        buttonLogIn.setTitleColor(UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1), for: .normal)
-        view.addSubview(buttonLogIn)
-        
         //constraints
         buttonLogIn.snp.makeConstraints( { make in
             make.centerX.equalToSuperview()
@@ -194,13 +219,6 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - button later
     func setupButtonLater() {
-        
-        buttonLater.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0)
-        buttonLater.layer.cornerRadius = 10
-        buttonLater.setTitle("Later", for: .normal)
-        buttonLater.titleLabel?.font = UIFont(name: "Inter-Medium", size: 14)
-        buttonLater.setTitleColor(UIColor(red: 174/255, green: 174/255, blue: 178/255, alpha: 1), for: .normal)
-        view.addSubview(buttonLater)
  
         //constraints
         buttonLater.snp.makeConstraints( { make in
