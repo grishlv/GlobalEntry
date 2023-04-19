@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 
 class FirstOnboardingController: UIViewController {
-        
+    
     //MARK: - left circle
-    public lazy var imageViewCircleLeft: UIImageView = {
+    private lazy var imageViewCircleLeft: UIImageView = {
         let imageCircleLeft = UIImage(named: "firstOnboardingCircle")
         let imageViewCircleLeft = UIImageView()
         imageViewCircleLeft.image = imageCircleLeft
@@ -104,6 +104,7 @@ class FirstOnboardingController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
 
+        setupSwipeByGesture()
         setupCircleLeft()
         setupCircleRight()
         setupImageMain()
@@ -111,8 +112,25 @@ class FirstOnboardingController: UIViewController {
         setupSwipeLines()
         setupButtonNext()
         setupButtonSkip()
+        
+        let goForward = UISwipeGestureRecognizer(target: self, action: #selector(swipeFunc(gesture:)))
+        goForward.direction = .left
+        view.addGestureRecognizer(goForward)
     }
-
+    
+    //MARK: - go forward by gesture recognizer
+    func setupSwipeByGesture() {
+        let goForward = UISwipeGestureRecognizer(target: self, action: #selector(swipeFunc(gesture:)))
+        goForward.direction = .left
+        view.addGestureRecognizer(goForward)
+    }
+    
+    @objc func swipeFunc(gesture: UISwipeGestureRecognizer) {
+        print("go on the second screen")
+        let secondOnboardingVC = SecondOnboardingController()
+        navigationController?.pushViewController(secondOnboardingVC, animated: true)
+    }
+    
     //MARK: - circle left
     func setupCircleLeft() {
 
@@ -207,7 +225,7 @@ class FirstOnboardingController: UIViewController {
 
     //MARK: - action to the next view
     @objc func actionForButtonNext() {
-        let secondOnboardingVC = storyboard?.instantiateViewController(withIdentifier: "SecondOnboardingController") as! SecondOnboardingController
+        let secondOnboardingVC = SecondOnboardingController()
         navigationController?.pushViewController(secondOnboardingVC, animated: true)
     }
 
@@ -221,6 +239,14 @@ class FirstOnboardingController: UIViewController {
             make.width.equalTo(30)
             make.height.equalTo(20)
         })
+        
+        //MARK: - create action on the welcome view controller
+        buttonSkip.addTarget(self, action: #selector(actionForButtonSkip), for: .touchUpInside)
+    }
+    //MARK: - action to the next view
+    @objc func actionForButtonSkip() {
+        let welcomeVC = WelcomeViewController()
+        navigationController?.pushViewController(welcomeVC, animated: true)
     }
 }
 

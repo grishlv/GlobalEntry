@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class WelcomeViewController: UIViewController {
-    
+
     //MARK: - image group of circles
     private lazy var imageViewGroupOfCircles: UIImageView = {
         let imageViewGroupOfCircles = UIImageView()
@@ -91,7 +91,7 @@ class WelcomeViewController: UIViewController {
         let buttonLogIn = UIButton()
         buttonLogIn.backgroundColor = UIColor(red: 229/255, green: 239/255, blue: 251/255, alpha: 1)
         buttonLogIn.layer.cornerRadius = 10
-        buttonLogIn.setTitle("Log in", for: .normal)
+        buttonLogIn.setTitle("Login", for: .normal)
         buttonLogIn.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
         buttonLogIn.setTitleColor(UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1), for: .normal)
         view.addSubview(buttonLogIn)
@@ -131,7 +131,7 @@ class WelcomeViewController: UIViewController {
         //constraints
         imageViewGroupOfCircles.snp.makeConstraints( { make in
             make.centerX.equalToSuperview()
-            make.top.greaterThanOrEqualToSuperview().offset(55)
+            make.top.greaterThanOrEqualToSuperview().offset(30)
             make.size.equalTo(335)
         })
     }
@@ -175,7 +175,7 @@ class WelcomeViewController: UIViewController {
         //constraints
         labelHeader.snp.makeConstraints( { make in
             make.leading.equalTo(imageViewGroupOfCircles.snp.leading)
-            make.top.greaterThanOrEqualTo(imageViewGroupOfCircles.snp.bottom).offset(32)
+            make.top.greaterThanOrEqualTo(imageViewGroupOfCircles.snp.bottom).offset(30)
             make.width.equalTo(130)
             make.height.equalTo(32)
         })
@@ -203,6 +203,15 @@ class WelcomeViewController: UIViewController {
             make.width.equalTo(335)
             make.height.equalTo(48)
         })
+        
+        //MARK: - create action on the next view
+        buttonSignUp.addTarget(self, action: #selector(actionForSignupButton), for: .touchUpInside)
+    }
+
+    //MARK: - action to the next view
+    @objc func actionForSignupButton() {
+        let signupVC = SignupViewController()
+        navigationController?.pushViewController(signupVC, animated: true)
     }
     
     //MARK: - button log in
@@ -215,6 +224,15 @@ class WelcomeViewController: UIViewController {
             make.width.equalTo(335)
             make.height.equalTo(48)
         })
+        
+        //MARK: - create action on the next view
+        buttonLogIn.addTarget(self, action: #selector(actionForLogInButton), for: .touchUpInside)
+    }
+    
+    //MARK: - action to the next view
+    @objc func actionForLogInButton() {
+        let logInVC = LogInViewController()
+        navigationController?.pushViewController(logInVC, animated: true)
     }
     
     //MARK: - button later
@@ -224,9 +242,19 @@ class WelcomeViewController: UIViewController {
         buttonLater.snp.makeConstraints( { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(buttonLogIn.snp.bottom).offset(10)
-            make.bottom.greaterThanOrEqualToSuperview().inset(44)
+            make.bottom.equalTo(self.view.safeAreaInsets.bottom).inset(30)
             make.width.equalTo(78)
             make.height.equalTo(32)
         })
+        
+        //MARK: - skip login or sign up
+        buttonLater.addTarget(self, action: #selector(actionForButtonLater), for: .touchUpInside)
+    }
+    
+    //MARK: - action for button later
+    @objc func actionForButtonLater() {
+        
+        let chooseVC = ChoosePassportViewController()
+        navigationController?.pushViewController(chooseVC, animated: true)
     }
 }
