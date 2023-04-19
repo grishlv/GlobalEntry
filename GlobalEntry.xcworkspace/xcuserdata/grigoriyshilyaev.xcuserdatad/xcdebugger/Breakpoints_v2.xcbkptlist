@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "2346E814-B9F7-498D-98B3-1B129BB679E8"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0C2C659F-45BF-4163-A39C-1D871BAAEE59"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GlobalEntry/SecondOnboardingController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "setupImageMain()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0C2C659F-45BF-4163-A39C-1D871BAAEE59 - 7d85fbf7341650c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GlobalEntry.SecondOnboardingController.setupImageMain() -&gt; ()"
+                  moduleName = "GlobalEntry"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/grigoriyshilyaev/Desktop/GlobalEntry/GlobalEntry/GlobalEntry/SecondOnboardingController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "190"
+                  endingLineNumber = "190"
+                  offsetFromSymbolStart = "22">
+               </Location>
+               <Location
+                  uuid = "0C2C659F-45BF-4163-A39C-1D871BAAEE59 - aead1da85fb4bfe5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SnapKit.ConstraintMaker) -&gt; () in GlobalEntry.SecondOnboardingController.setupImageMain() -&gt; ()"
+                  moduleName = "GlobalEntry"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/grigoriyshilyaev/Desktop/GlobalEntry/GlobalEntry/GlobalEntry/SecondOnboardingController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "191"
+                  endingLineNumber = "191"
+                  offsetFromSymbolStart = "35">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
