@@ -246,7 +246,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         return nil
     }
     
-    //MARK: - action to the next view
+    //MARK: - action to the next screen
     @objc func actionForSignupButton() {
         
         let errorEmptyFields = validateFields()
