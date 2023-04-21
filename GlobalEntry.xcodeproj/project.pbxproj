@@ -12,6 +12,7 @@
 		782F861029E6F715006B3106 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 782F860F29E6F715006B3106 /* FirebaseFirestore */; };
 		782F861229E6F719006B3106 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 782F861129E6F719006B3106 /* FirebaseFirestoreSwift */; };
 		782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F861529E8349E006B3106 /* ChoosePassportViewController.swift */; };
+		7839825E29F2CF4E00D30821 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7839825D29F2CF4E00D30821 /* Validator.swift */; };
 		783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36DA29CB5D3D0029BD6D /* AppDelegate.swift */; };
 		783B36DD29CB5D3D0029BD6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36DC29CB5D3D0029BD6D /* SceneDelegate.swift */; };
 		783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36DE29CB5D3D0029BD6D /* FirstOnboardingController.swift */; };
@@ -81,6 +82,7 @@
 		6B1CBD8EC4C94F485C8E88BB /* Pods_GlobalEntry_GlobalEntryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlobalEntry_GlobalEntryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		782F860D29E6E4D5006B3106 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		782F861529E8349E006B3106 /* ChoosePassportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportViewController.swift; sourceTree = "<group>"; };
+		7839825D29F2CF4E00D30821 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		783B36D729CB5D3D0029BD6D /* GlobalEntry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlobalEntry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		783B36DA29CB5D3D0029BD6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		783B36DC29CB5D3D0029BD6D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -190,6 +192,14 @@
 			path = ChoosePassport;
 			sourceTree = "<group>";
 		};
+		7839825C29F2CED500D30821 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				7839825D29F2CF4E00D30821 /* Validator.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		783B36CE29CB5D3D0029BD6D = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +295,7 @@
 		78B1622729D737DE002CD5A9 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				7839825C29F2CED500D30821 /* Helpers */,
 				78B1622F29D9843C002CD5A9 /* View */,
 				78B1622E29D98411002CD5A9 /* Presenter */,
 				78B1622D29D84BE7002CD5A9 /* Model */,
@@ -622,6 +633,7 @@
 				783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */,
 				783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */,
 				782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */,
+				7839825E29F2CF4E00D30821 /* Validator.swift in Sources */,
 				78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */,
 				78B1622C29D738C8002CD5A9 /* Register.swift in Sources */,
 				789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */,

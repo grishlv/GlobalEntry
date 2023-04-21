@@ -15,7 +15,7 @@ import FirebaseFirestore
 import GoogleSignIn
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
-        
+    
     //MARK: - header label
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -30,15 +30,14 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     //MARK: - textfield full name
     private lazy var textFieldName: UITextField = {
         let textFieldName = UITextField()
-        //add common style parameters
-        setupCommonStyleForTextFields(textFieldName)
-        
         textFieldName.textContentType = .name
         textFieldName.attributedPlaceholder = NSAttributedString(string: "Full Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 126/255, green: 131/255, blue: 137/255, alpha: 1)])
         textFieldName.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textFieldName.frame.height))
         textFieldName.delegate = self
         textFieldName.tag = 0
         
+        //add common style parameters
+        setupCommonStyleForTextFields(textFieldName)
         view.addSubview(textFieldName)
         return textFieldName
     }()
@@ -46,9 +45,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     //MARK: - textfield email address
     private lazy var textFieldEmail: UITextField = {
         let textFieldEmail = UITextField()
-        //add common style parameters
-        setupCommonStyleForTextFields(textFieldEmail)
-        
         textFieldEmail.textContentType = .emailAddress
         textFieldEmail.keyboardType = .emailAddress
         textFieldEmail.autocapitalizationType = .none
@@ -57,6 +53,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         textFieldEmail.delegate = self
         textFieldEmail.tag = 1
         
+        //add common style parameters
+        setupCommonStyleForTextFields(textFieldEmail)
         view.addSubview(textFieldEmail)
         return textFieldEmail
     }()
@@ -64,10 +62,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     //MARK: - textfield password
     private lazy var textFieldPassword: UITextField = {
         let textFieldPassword = UITextField()
-        //add common style parameters
-        setupCommonStyleForTextFields(textFieldPassword)
-        textFieldPassword.enablePasswordToggle()
-        
         textFieldPassword.textContentType = .password
         textFieldPassword.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 126/255, green: 131/255, blue: 137/255, alpha: 1)])
         textFieldPassword.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textFieldName.frame.height))
@@ -75,6 +69,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         textFieldPassword.tag = 2
         textFieldPassword.isSecureTextEntry.toggle()
         
+        //add common style parameters
+        setupCommonStyleForTextFields(textFieldPassword)
+        textFieldPassword.enablePasswordToggle()
         view.addSubview(textFieldPassword)
         return textFieldPassword
     }()
@@ -82,16 +79,15 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     //MARK: - textfield confirm password
     private lazy var textFieldConfirmPassword: UITextField = {
         let textFieldConfirmPassword = UITextField()
-        setupCommonStyleForTextFields(textFieldConfirmPassword)
-        textFieldConfirmPassword.enablePasswordToggle()
-        
         textFieldConfirmPassword.textContentType = .password
         textFieldConfirmPassword.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 126/255, green: 131/255, blue: 137/255, alpha: 1)])
         textFieldConfirmPassword.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textFieldName.frame.height))
         textFieldConfirmPassword.delegate = self
         textFieldConfirmPassword.tag = 3
         textFieldConfirmPassword.isSecureTextEntry.toggle()
-
+        
+        setupCommonStyleForTextFields(textFieldConfirmPassword)
+        textFieldConfirmPassword.enablePasswordToggle()
         view.addSubview(textFieldConfirmPassword)
         return textFieldConfirmPassword
     }()
@@ -103,6 +99,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         buttonSignUp.layer.cornerRadius = 10
         buttonSignUp.setTitle("Sign up", for: .normal)
         buttonSignUp.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
+        
         view.addSubview(buttonSignUp)
         return buttonSignUp
     }()
@@ -118,10 +115,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         GIDSignInButton.layer.shadowOpacity = 1.0
         GIDSignInButton.layer.shadowRadius = 20
         GIDSignInButton.layer.masksToBounds = false
+        
         view.addSubview(GIDSignInButton)
         return GIDSignInButton
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
@@ -225,7 +223,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         //MARK: - create action on the next view
         GIDSignInButton.addTarget(self, action: #selector(actionForGoogleButton), for: .touchUpInside)
     }
-
+    
     func validateFields() -> String? {
         
         //Check that all fields are filled in
@@ -294,15 +292,15 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                         .setData([
                             "email": email,
                             "name": name]) { error in
-                        
-                        if error != nil {
-                            let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
-                            alertData.addAction(UIAlertAction(title: "OK", style: .default))
-                            self.present(alertData, animated: true, completion: {
-                                return
-                            })
-                        }
-                    }
+                                
+                                if error != nil {
+                                    let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
+                                    alertData.addAction(UIAlertAction(title: "OK", style: .default))
+                                    self.present(alertData, animated: true, completion: {
+                                        return
+                                    })
+                                }
+                            }
                     self.transitionNext()
                 }
             }
@@ -312,7 +310,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     //MARK: - action to the next view with google button
     @objc func actionForGoogleButton() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-
+        
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
@@ -328,10 +326,10 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
             
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                            accessToken: user.accessToken.tokenString)
-                        
+            
             let email = user.profile?.email
             let name = user.profile?.name
-
+            
             Auth.auth().signIn(with: credential) { result, error in
                 
                 if error != nil {
@@ -348,15 +346,15 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                         .setData([
                             "email": email,
                             "name": name]) { error in
-                        
-                        if error != nil {
-                            let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
-                            alertData.addAction(UIAlertAction(title: "OK", style: .default))
-                            self.present(alertData, animated: true, completion: {
-                                return
-                            })
-                        }
-                    }
+                                
+                                if error != nil {
+                                    let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
+                                    alertData.addAction(UIAlertAction(title: "OK", style: .default))
+                                    self.present(alertData, animated: true, completion: {
+                                        return
+                                    })
+                                }
+                            }
                     self.transitionNext()
                 }
             }
@@ -381,20 +379,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         textField.font = UIFont(name: "Inter-Regular", size: 14)
         textField.backgroundColor = UIColor(red: 237/255, green: 238/255, blue: 242/255, alpha: 1)
         textField.layer.cornerRadius = 10
-    }
-}
-
-//MARK: - add switch between text fields with button return
-extension SignupViewController {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //try to find next responder
-        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
-            nextField.becomeFirstResponder()
-        } else {
-            //if not found then remove keyboard
-            textField.resignFirstResponder()
-        }
-        return false
     }
 }
 
@@ -423,6 +407,19 @@ extension UITextField {
         self.isSecureTextEntry = !self.isSecureTextEntry
         setPasswordToggleImage(sender as! UIButton)
     }
+    
+    //MARK: - add switch between text fields with button return
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            //if not found then remove keyboard
+            textField.resignFirstResponder()
+        }
+        return false
+    }
+    
 }
 
 //MARK: - validate text field that it's not empty
@@ -432,7 +429,7 @@ extension UITextField {
         else {
             print("Please fill the field.")
             return false }
-
+        
         guard text.contains(word) else {
             print("Wrong word. Please check again.")
             return false
@@ -448,5 +445,31 @@ extension UIButton {
         self.imageEdgeInsets = UIEdgeInsets(top: 15, left: image.size.width, bottom: 15, right: image.size.width)
         self.contentHorizontalAlignment = .center
         self.imageView?.contentMode = .scaleAspectFit
+    }
+}
+
+extension SignupViewController: AlertActions {
+    func alertErrorCreate() {
+        let alertError = UIAlertController(title: "Error create user", message: "Please try again!", preferredStyle: .alert)
+        alertError.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alertError, animated: true, completion: {
+            return
+        })
+    }
+    
+    func alertErrorSafeData() {
+        let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
+        alertData.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alertData, animated: true, completion: {
+            return
+        })
+        
+    }
+}
+
+extension SignupViewController: SignUpOutput {
+    func didRegisterEnd() {
+        let chooseVC = ChoosePassportViewController()
+        navigationController?.pushViewController(chooseVC, animated: true)
     }
 }
