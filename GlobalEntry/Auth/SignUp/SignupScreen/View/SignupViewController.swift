@@ -9,9 +9,6 @@ import Foundation
 import UIKit
 import SnapKit
 import Firebase
-import FirebaseCore
-import FirebaseAuth
-import FirebaseFirestore
 import GoogleSignIn
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
@@ -119,7 +116,18 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(GIDSignInButton)
         return GIDSignInButton
     }()
-    
+
+    private let presenter: SignupInputProtocol
+
+    init(presenter: SignupInputProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
@@ -224,144 +232,44 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         GIDSignInButton.addTarget(self, action: #selector(actionForGoogleButton), for: .touchUpInside)
     }
     
-    func validateFields() -> String? {
-        
-        //Check that all fields are filled in
+    private func validateFields() -> Bool {
         if textFieldName.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             textFieldEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            textFieldPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            return "Please fill in all fields."
+            textFieldPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            textFieldPassword.text != textFieldConfirmPassword.text {
+            showAlert(with: "Please fill in all fields.")
+            return false
         }
-        return nil
-    }
-    
-    func validatePasswords() -> String? {
-        
-        //Check that passwords are the same
-        if textFieldPassword.text != textFieldConfirmPassword.text {
-            return "Passwords aren't correct"
-        }
-        return nil
+        return true
     }
     
     //MARK: - action to the next screen
     @objc func actionForSignupButton() {
-        
-        let errorEmptyFields = validateFields()
-        let wrongPasswords = validatePasswords()
-        
-        if errorEmptyFields != nil {
-            let alertEmptyFields = UIAlertController(title: "Some fields are empty", message: "Please fill in all fields", preferredStyle: .alert)
-            alertEmptyFields.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alertEmptyFields, animated: true, completion: {
-                return
-            })
-        }
-        
-        if wrongPasswords != nil {
-            let alertWrongPasswords = UIAlertController(title: "Passwords are different", message: "Please enter the password again", preferredStyle: .alert)
-            alertWrongPasswords.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alertWrongPasswords, animated: true, completion: {
-                return
-            })
-        }
-        
-        else {
-            //MARK: - give info in firebase
-            guard let email = textFieldEmail.text, !email.isEmpty else { return }
-            guard let name = textFieldName.text, !name.isEmpty else { return }
-            guard let password = textFieldPassword.text, !password.isEmpty else { return }
-            
-            Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-                
-                if err != nil {
-                    let alertError = UIAlertController(title: "Error create user", message: "Please try again!", preferredStyle: .alert)
-                    alertError.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alertError, animated: true, completion: {
-                        return
-                    })
-                    
-                } else {
-                    let db = Firestore.firestore()
-                    guard let resultUser = result?.user else {
-                        print("error with result")
-                        return }
-                    
-                    db.collection("users")
-                        .document(resultUser.uid)
-                        .setData([
-                            "email": email,
-                            "name": name]) { error in
-                                
-                                if error != nil {
-                                    let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
-                                    alertData.addAction(UIAlertAction(title: "OK", style: .default))
-                                    self.present(alertData, animated: true, completion: {
-                                        return
-                                    })
-                                }
-                            }
-                    self.transitionNext()
-                }
-            }
-        }
+        validateFields()
+        guard let _ = validateFields(),
+              let email = textFieldEmail.text,
+              let name = textFieldName.text,
+              let password = textFieldPassword.text else { return }
+
+        let user = Register(name: name, email: email, password: password)
+        presenter.signUpWithUsername(user: user)
     }
     
     //MARK: - action to the next view with google button
     @objc func actionForGoogleButton() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-        
+
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-        
-        // Start the sign in flow!
+
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self] result, error in
-            
-            guard error == nil else { return }
-            
-            guard let user = result?.user,
-                  let idToken = user.idToken?.tokenString
-            else { return }
-            
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                           accessToken: user.accessToken.tokenString)
-            
-            let email = user.profile?.email
-            let name = user.profile?.name
-            
-            Auth.auth().signIn(with: credential) { result, error in
-                
-                if error != nil {
-                    let alertError = UIAlertController(title: "Error create user", message: "Please try again!", preferredStyle: .alert)
-                    alertError.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alertError, animated: true, completion: {
-                        return
-                    })
-                    
-                } else {
-                    let db = Firestore.firestore()
-                    db.collection("users")
-                        .document(credential.provider)
-                        .setData([
-                            "email": email,
-                            "name": name]) { error in
-                                
-                                if error != nil {
-                                    let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
-                                    alertData.addAction(UIAlertAction(title: "OK", style: .default))
-                                    self.present(alertData, animated: true, completion: {
-                                        return
-                                    })
-                                }
-                            }
-                    self.transitionNext()
-                }
-            }
+            guard let result else { return }
+            presenter.signUpWithGoogle(with: result)
         }
     }
     
-    func transitionNext() {
+    private func transitionNext() {
         let chooseVC = ChoosePassportViewController()
         navigationController?.pushViewController(chooseVC, animated: true)
     }
@@ -380,11 +288,17 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         textField.backgroundColor = UIColor(red: 237/255, green: 238/255, blue: 242/255, alpha: 1)
         textField.layer.cornerRadius = 10
     }
+
+    private func showAlert(with text: String) {
+        let alertError = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
+        alertError.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertError, animated: true)
+    }
 }
 
 //MARK: - set eye button to hide and show password
-extension UITextField {
-    fileprivate func setPasswordToggleImage(_ button: UIButton) {
+private extension UITextField {
+    func setPasswordToggleImage(_ button: UIButton) {
         button.tintColor = UIColor(red: 126/255, green: 131/255, blue: 137/255, alpha: 1)
         if isSecureTextEntry {
             button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
@@ -448,28 +362,12 @@ extension UIButton {
     }
 }
 
-extension SignupViewController: AlertActions {
-    func alertErrorCreate() {
-        let alertError = UIAlertController(title: "Error create user", message: "Please try again!", preferredStyle: .alert)
-        alertError.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alertError, animated: true, completion: {
-            return
-        })
-    }
-    
-    func alertErrorSafeData() {
-        let alertData = UIAlertController(title: "Error safe data", message: "Please try again!", preferredStyle: .alert)
-        alertData.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alertData, animated: true, completion: {
-            return
-        })
-        
-    }
-}
-
 extension SignupViewController: SignUpOutput {
+    func didRecieveValidateError(with text: String) {
+        showAlert(with: text)
+    }
+
     func didRegisterEnd() {
-        let chooseVC = ChoosePassportViewController()
-        navigationController?.pushViewController(chooseVC, animated: true)
+        transitionNext()
     }
 }

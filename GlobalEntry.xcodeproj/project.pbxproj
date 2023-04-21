@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		521DAD8229F2D753009209A6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 521DAD8129F2D753009209A6 /* SnapKit */; };
+		52ACEA5129F2D9BE00EEED74 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4829F2D9BE00EEED74 /* Inter-Medium.ttf */; };
+		52ACEA5229F2D9BE00EEED74 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4929F2D9BE00EEED74 /* Inter-Light.ttf */; };
+		52ACEA5329F2D9BE00EEED74 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4A29F2D9BE00EEED74 /* Inter-Thin.ttf */; };
+		52ACEA5429F2D9BE00EEED74 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4B29F2D9BE00EEED74 /* Inter-Bold.ttf */; };
+		52ACEA5529F2D9BE00EEED74 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4C29F2D9BE00EEED74 /* Inter-Regular.ttf */; };
+		52ACEA5629F2D9BE00EEED74 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4D29F2D9BE00EEED74 /* Inter-ExtraBold.ttf */; };
+		52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4E29F2D9BE00EEED74 /* Inter-ExtraLight.ttf */; };
+		52ACEA5829F2D9BE00EEED74 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4F29F2D9BE00EEED74 /* Inter-Black.ttf */; };
+		52ACEA5929F2D9BE00EEED74 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA5029F2D9BE00EEED74 /* Inter-SemiBold.ttf */; };
+		52ACEA5A29F3007200EEED74 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78B0638629DB17510007051F /* GoogleService-Info.plist */; };
+		52ACEA5F29F3010600EEED74 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACEA5E29F3010600EEED74 /* FirebaseService.swift */; };
+		52ACEA6129F307D200EEED74 /* SingnupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACEA6029F307D200EEED74 /* SingnupInteractor.swift */; };
+		52ACEA6329F3099400EEED74 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACEA6229F3099400EEED74 /* Assembly.swift */; };
 		782F860E29E6E4D6006B3106 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F860D29E6E4D5006B3106 /* LogInViewController.swift */; };
 		782F861029E6F715006B3106 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 782F860F29E6F715006B3106 /* FirebaseFirestore */; };
 		782F861229E6F719006B3106 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 782F861129E6F719006B3106 /* FirebaseFirestoreSwift */; };
@@ -25,7 +38,6 @@
 		789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */; };
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
 		78B0638329D9AB1F0007051F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B0638229D9AB1F0007051F /* Storyboard.storyboard */; };
-		78B0638529DB17480007051F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78B0638429DB17480007051F /* GoogleService-Info.plist */; };
 		78B0638929DB1AB70007051F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638829DB1AB70007051F /* FirebaseAuth */; };
 		78B0638D29DB1AB70007051F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638C29DB1AB70007051F /* FirebaseStorage */; };
 		78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1622929D73813002CD5A9 /* SignupViewController.swift */; };
@@ -33,24 +45,6 @@
 		78B1623129D98467002CD5A9 /* SignupPresenter .swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1623029D98467002CD5A9 /* SignupPresenter .swift */; };
 		78C1AB3C29ED5B4A00253AA8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1AB3B29ED5B4A00253AA8 /* GoogleSignIn */; };
 		78C1AB3E29ED5B4A00253AA8 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1AB3D29ED5B4A00253AA8 /* GoogleSignInSwift */; };
-		78CC419529CC332300490F84 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418C29CC332300490F84 /* Inter-Thin.ttf */; };
-		78CC419629CC332300490F84 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418C29CC332300490F84 /* Inter-Thin.ttf */; };
-		78CC419729CC332300490F84 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418D29CC332300490F84 /* Inter-ExtraBold.ttf */; };
-		78CC419829CC332300490F84 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418D29CC332300490F84 /* Inter-ExtraBold.ttf */; };
-		78CC419929CC332300490F84 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418E29CC332300490F84 /* Inter-ExtraLight.ttf */; };
-		78CC419A29CC332300490F84 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418E29CC332300490F84 /* Inter-ExtraLight.ttf */; };
-		78CC419B29CC332300490F84 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418F29CC332300490F84 /* Inter-Light.ttf */; };
-		78CC419C29CC332300490F84 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC418F29CC332300490F84 /* Inter-Light.ttf */; };
-		78CC419D29CC332300490F84 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419029CC332300490F84 /* Inter-Regular.ttf */; };
-		78CC419E29CC332300490F84 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419029CC332300490F84 /* Inter-Regular.ttf */; };
-		78CC419F29CC332300490F84 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419129CC332300490F84 /* Inter-Bold.ttf */; };
-		78CC41A029CC332300490F84 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419129CC332300490F84 /* Inter-Bold.ttf */; };
-		78CC41A129CC332300490F84 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419229CC332300490F84 /* Inter-SemiBold.ttf */; };
-		78CC41A229CC332300490F84 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419229CC332300490F84 /* Inter-SemiBold.ttf */; };
-		78CC41A329CC332300490F84 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419329CC332300490F84 /* Inter-Medium.ttf */; };
-		78CC41A429CC332300490F84 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419329CC332300490F84 /* Inter-Medium.ttf */; };
-		78CC41A529CC332300490F84 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419429CC332300490F84 /* Inter-Black.ttf */; };
-		78CC41A629CC332300490F84 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CC419429CC332300490F84 /* Inter-Black.ttf */; };
 		A49AB816EF93A76E83A8AAB9 /* Pods_GlobalEntryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565468D2AFF99EDA716D6339 /* Pods_GlobalEntryTests.framework */; };
 		E16A9881466E55A64CDA039D /* Pods_GlobalEntry_GlobalEntryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1CBD8EC4C94F485C8E88BB /* Pods_GlobalEntry_GlobalEntryUITests.framework */; };
 /* End PBXBuildFile section */
@@ -73,6 +67,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52ACEA4829F2D9BE00EEED74 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
+		52ACEA4929F2D9BE00EEED74 /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.ttf"; sourceTree = "<group>"; };
+		52ACEA4A29F2D9BE00EEED74 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
+		52ACEA4B29F2D9BE00EEED74 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
+		52ACEA4C29F2D9BE00EEED74 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		52ACEA4D29F2D9BE00EEED74 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
+		52ACEA4E29F2D9BE00EEED74 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		52ACEA4F29F2D9BE00EEED74 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
+		52ACEA5029F2D9BE00EEED74 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		52ACEA5E29F3010600EEED74 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		52ACEA6029F307D200EEED74 /* SingnupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingnupInteractor.swift; sourceTree = "<group>"; };
+		52ACEA6229F3099400EEED74 /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 		5451B27055BF8FD23F0E2CE8 /* Pods_GlobalEntry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlobalEntry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		565468D2AFF99EDA716D6339 /* Pods_GlobalEntryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlobalEntryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B1CBD8EC4C94F485C8E88BB /* Pods_GlobalEntry_GlobalEntryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlobalEntry_GlobalEntryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,15 +106,6 @@
 		78B1622929D73813002CD5A9 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		78B1622B29D738C8002CD5A9 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		78B1623029D98467002CD5A9 /* SignupPresenter .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupPresenter .swift"; sourceTree = "<group>"; };
-		78CC418C29CC332300490F84 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Thin.ttf"; path = "../../../../Downloads/Inter/static/Inter-Thin.ttf"; sourceTree = "<group>"; };
-		78CC418D29CC332300490F84 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-ExtraBold.ttf"; path = "../../../../Downloads/Inter/static/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
-		78CC418E29CC332300490F84 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-ExtraLight.ttf"; path = "../../../../Downloads/Inter/static/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
-		78CC418F29CC332300490F84 /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Light.ttf"; path = "../../../../Downloads/Inter/static/Inter-Light.ttf"; sourceTree = "<group>"; };
-		78CC419029CC332300490F84 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Regular.ttf"; path = "../../../../Downloads/Inter/static/Inter-Regular.ttf"; sourceTree = "<group>"; };
-		78CC419129CC332300490F84 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Bold.ttf"; path = "../../../../Downloads/Inter/static/Inter-Bold.ttf"; sourceTree = "<group>"; };
-		78CC419229CC332300490F84 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-SemiBold.ttf"; path = "../../../../Downloads/Inter/static/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
-		78CC419329CC332300490F84 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Medium.ttf"; path = "../../../../Downloads/Inter/static/Inter-Medium.ttf"; sourceTree = "<group>"; };
-		78CC419429CC332300490F84 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Black.ttf"; path = "../../../../Downloads/Inter/static/Inter-Black.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +154,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		52ACEA4729F2D9BE00EEED74 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				52ACEA4829F2D9BE00EEED74 /* Inter-Medium.ttf */,
+				52ACEA4929F2D9BE00EEED74 /* Inter-Light.ttf */,
+				52ACEA4A29F2D9BE00EEED74 /* Inter-Thin.ttf */,
+				52ACEA4B29F2D9BE00EEED74 /* Inter-Bold.ttf */,
+				52ACEA4C29F2D9BE00EEED74 /* Inter-Regular.ttf */,
+				52ACEA4D29F2D9BE00EEED74 /* Inter-ExtraBold.ttf */,
+				52ACEA4E29F2D9BE00EEED74 /* Inter-ExtraLight.ttf */,
+				52ACEA4F29F2D9BE00EEED74 /* Inter-Black.ttf */,
+				52ACEA5029F2D9BE00EEED74 /* Inter-SemiBold.ttf */,
+			);
+			name = Fonts;
+			path = GlobalEntry/Fonts;
+			sourceTree = "<group>";
+		};
+		52ACEA5B29F300CA00EEED74 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				52ACEA6029F307D200EEED74 /* SingnupInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		52ACEA5C29F300DE00EEED74 /* SignupScreen */ = {
+			isa = PBXGroup;
+			children = (
+				52ACEA5B29F300CA00EEED74 /* Interactor */,
+				78B1622F29D9843C002CD5A9 /* View */,
+				78B1622E29D98411002CD5A9 /* Presenter */,
+			);
+			path = SignupScreen;
+			sourceTree = "<group>";
+		};
+		52ACEA5D29F300FD00EEED74 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				52ACEA5E29F3010600EEED74 /* FirebaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		782F860C29E6E4B4006B3106 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,7 +224,7 @@
 		783B36CE29CB5D3D0029BD6D = {
 			isa = PBXGroup;
 			children = (
-				78CC418B29CC32CB00490F84 /* Fonts */,
+				52ACEA4729F2D9BE00EEED74 /* Fonts */,
 				783B36D929CB5D3D0029BD6D /* GlobalEntry */,
 				783B36F029CB5D420029BD6D /* GlobalEntryTests */,
 				783B36FA29CB5D420029BD6D /* GlobalEntryUITests */,
@@ -275,9 +315,10 @@
 		78B1622729D737DE002CD5A9 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				52ACEA6229F3099400EEED74 /* Assembly.swift */,
+				52ACEA5D29F300FD00EEED74 /* Services */,
+				52ACEA5C29F300DE00EEED74 /* SignupScreen */,
 				7839825C29F2CED500D30821 /* Helpers */,
-				78B1622F29D9843C002CD5A9 /* View */,
-				78B1622E29D98411002CD5A9 /* Presenter */,
 				78B1622D29D84BE7002CD5A9 /* Model */,
 			);
 			path = SignUp;
@@ -321,22 +362,6 @@
 			children = (
 			);
 			name = "New Group";
-			sourceTree = "<group>";
-		};
-		78CC418B29CC32CB00490F84 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				78CC419429CC332300490F84 /* Inter-Black.ttf */,
-				78CC419129CC332300490F84 /* Inter-Bold.ttf */,
-				78CC418D29CC332300490F84 /* Inter-ExtraBold.ttf */,
-				78CC418E29CC332300490F84 /* Inter-ExtraLight.ttf */,
-				78CC418F29CC332300490F84 /* Inter-Light.ttf */,
-				78CC419329CC332300490F84 /* Inter-Medium.ttf */,
-				78CC419029CC332300490F84 /* Inter-Regular.ttf */,
-				78CC419229CC332300490F84 /* Inter-SemiBold.ttf */,
-				78CC418C29CC332300490F84 /* Inter-Thin.ttf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -460,19 +485,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78B0638529DB17480007051F /* GoogleService-Info.plist in Resources */,
-				78CC419729CC332300490F84 /* Inter-ExtraBold.ttf in Resources */,
-				78CC419929CC332300490F84 /* Inter-ExtraLight.ttf in Resources */,
-				78CC419529CC332300490F84 /* Inter-Thin.ttf in Resources */,
-				78CC419F29CC332300490F84 /* Inter-Bold.ttf in Resources */,
+				52ACEA5A29F3007200EEED74 /* GoogleService-Info.plist in Resources */,
+				52ACEA5429F2D9BE00EEED74 /* Inter-Bold.ttf in Resources */,
+				52ACEA5129F2D9BE00EEED74 /* Inter-Medium.ttf in Resources */,
+				52ACEA5629F2D9BE00EEED74 /* Inter-ExtraBold.ttf in Resources */,
 				783B36E729CB5D420029BD6D /* LaunchScreen.storyboard in Resources */,
 				78B0638329D9AB1F0007051F /* Storyboard.storyboard in Resources */,
 				783B36E429CB5D420029BD6D /* Assets.xcassets in Resources */,
-				78CC41A529CC332300490F84 /* Inter-Black.ttf in Resources */,
-				78CC419D29CC332300490F84 /* Inter-Regular.ttf in Resources */,
-				78CC41A129CC332300490F84 /* Inter-SemiBold.ttf in Resources */,
-				78CC41A329CC332300490F84 /* Inter-Medium.ttf in Resources */,
-				78CC419B29CC332300490F84 /* Inter-Light.ttf in Resources */,
+				52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */,
+				52ACEA5529F2D9BE00EEED74 /* Inter-Regular.ttf in Resources */,
+				52ACEA5829F2D9BE00EEED74 /* Inter-Black.ttf in Resources */,
+				52ACEA5929F2D9BE00EEED74 /* Inter-SemiBold.ttf in Resources */,
+				52ACEA5229F2D9BE00EEED74 /* Inter-Light.ttf in Resources */,
+				52ACEA5329F2D9BE00EEED74 /* Inter-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,15 +505,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78CC41A029CC332300490F84 /* Inter-Bold.ttf in Resources */,
-				78CC41A629CC332300490F84 /* Inter-Black.ttf in Resources */,
-				78CC419629CC332300490F84 /* Inter-Thin.ttf in Resources */,
-				78CC419E29CC332300490F84 /* Inter-Regular.ttf in Resources */,
-				78CC419A29CC332300490F84 /* Inter-ExtraLight.ttf in Resources */,
-				78CC41A429CC332300490F84 /* Inter-Medium.ttf in Resources */,
-				78CC419C29CC332300490F84 /* Inter-Light.ttf in Resources */,
-				78CC419829CC332300490F84 /* Inter-ExtraBold.ttf in Resources */,
-				78CC41A229CC332300490F84 /* Inter-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,12 +587,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				78B1623129D98467002CD5A9 /* SignupPresenter .swift in Sources */,
+				52ACEA6329F3099400EEED74 /* Assembly.swift in Sources */,
 				783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */,
 				783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */,
 				782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */,
 				7839825E29F2CF4E00D30821 /* Validator.swift in Sources */,
+				52ACEA6129F307D200EEED74 /* SingnupInteractor.swift in Sources */,
 				78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */,
 				78B1622C29D738C8002CD5A9 /* Register.swift in Sources */,
+				52ACEA5F29F3010600EEED74 /* FirebaseService.swift in Sources */,
 				789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */,
 				789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */,
 				783B36DD29CB5D3D0029BD6D /* SceneDelegate.swift in Sources */,

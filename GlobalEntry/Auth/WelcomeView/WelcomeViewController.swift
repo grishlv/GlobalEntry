@@ -210,8 +210,8 @@ class WelcomeViewController: UIViewController {
 
     //MARK: - action to the next view
     @objc func actionForSignupButton() {
-        let signupVC = SignupViewController()
-        navigationController?.pushViewController(signupVC, animated: true)
+        let singupModule = SingupModuleAssembly.assemble()
+        navigationController?.pushViewController(singupModule, animated: true)
     }
     
     //MARK: - button log in
