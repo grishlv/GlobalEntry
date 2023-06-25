@@ -245,9 +245,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - action to the next screen
     @objc func actionForSignupButton() {
-        validateFields()
-        guard let _ = validateFields(),
-              let email = textFieldEmail.text,
+        let validate = validateFields()
+        
+        guard let email = textFieldEmail.text,
               let name = textFieldName.text,
               let password = textFieldPassword.text else { return }
 
@@ -297,7 +297,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
 }
 
 //MARK: - set eye button to hide and show password
-private extension UITextField {
+extension UITextField {
     func setPasswordToggleImage(_ button: UIButton) {
         button.tintColor = UIColor(red: 126/255, green: 131/255, blue: 137/255, alpha: 1)
         if isSecureTextEntry {

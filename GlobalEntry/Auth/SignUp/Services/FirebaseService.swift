@@ -33,7 +33,9 @@ final class FirebaseService: FirebaseServiceProtocol {
     }
 
     func authWithUsername(user: Register, completion: @escaping (Result<Void, Error>) -> Void) {
+        
         Auth.auth().createUser(withEmail: user.email, password: user.password) { (result, error) in
+            
             guard result != nil else {
                 if let error = error {
                     completion(.failure(error))
@@ -42,11 +44,13 @@ final class FirebaseService: FirebaseServiceProtocol {
                 }
                 return
             }
+            
             let db = Firestore.firestore()
             guard let resultUser = result?.user else {
                 print("error with result")
                 return
             }
+            
             let dataArr = [
                 "email": user.email,
                 "name": user.name
@@ -65,6 +69,7 @@ final class FirebaseService: FirebaseServiceProtocol {
     }
 
     func authWithGoogle(with data: GIDSignInResult, completion: @escaping (Result<Void, Error>) -> Void) {
+        
         guard let idToken = data.user.idToken?.tokenString else { return }
         let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                        accessToken: data.user.accessToken.tokenString)
@@ -82,10 +87,12 @@ final class FirebaseService: FirebaseServiceProtocol {
                 return
             }
             let db = Firestore.firestore()
+            
             let dataArr = [
                 "email": email,
                 "name": name
             ]
+            
             db.collection("users")
                 .document(credential.provider)
                 .setData(dataArr) { error in

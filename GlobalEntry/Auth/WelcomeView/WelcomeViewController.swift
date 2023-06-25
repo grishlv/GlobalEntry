@@ -254,7 +254,7 @@ class WelcomeViewController: UIViewController {
     //MARK: - action for button later
     @objc func actionForButtonLater() {
         
-        let chooseVC = ChoosePassportViewController()
+        let chooseVC = TestChoosePassportContoller()
         navigationController?.pushViewController(chooseVC, animated: true)
     }
 }

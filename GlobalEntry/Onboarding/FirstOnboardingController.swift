@@ -9,6 +9,18 @@ import Foundation
 import UIKit
 import SnapKit
 
+//struct Country: Codable {
+//    let Passport: String
+//    let Destination: String
+//    let Requirement: String
+//}
+
+struct CountryParams: Codable {
+    let Destination: String
+    let Requirement: String
+}
+
+
 class FirstOnboardingController: UIViewController {
     
     //MARK: - left circle
@@ -19,7 +31,7 @@ class FirstOnboardingController: UIViewController {
         view.addSubview(imageViewCircleLeft)
         return imageViewCircleLeft
     }()
-        
+    
     //MARK: - right circle
     private lazy var imageViewCircleRight: UIImageView = {
         let imageViewCircleRight = UIImageView()
@@ -28,7 +40,7 @@ class FirstOnboardingController: UIViewController {
         view.addSubview(imageViewCircleRight)
         return imageViewCircleRight
     }()
-
+    
     //MARK: - main image
     private lazy var imageViewMain: UIImageView = {
         let imageViewMain = UIImageView()
@@ -37,7 +49,7 @@ class FirstOnboardingController: UIViewController {
         view.addSubview(imageViewMain)
         return imageViewMain
     }()
-
+    
     //MARK: - header label
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -76,7 +88,7 @@ class FirstOnboardingController: UIViewController {
         view.addSubview(viewLineThird)
         return viewLineThird
     }()
-
+    
     //MARK: - button next
     private lazy var buttonNext: UIButton = {
         let buttonNext = UIButton()
@@ -99,11 +111,11 @@ class FirstOnboardingController: UIViewController {
         view.addSubview(buttonSkip)
         return buttonSkip
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-
+        
         setupSwipeByGesture()
         setupCircleLeft()
         setupCircleRight()
@@ -112,6 +124,8 @@ class FirstOnboardingController: UIViewController {
         setupSwipeLines()
         setupButtonNext()
         setupButtonSkip()
+        
+//        megaFunc()
         
         let goForward = UISwipeGestureRecognizer(target: self, action: #selector(swipeFunc(gesture:)))
         goForward.direction = .left
@@ -133,7 +147,7 @@ class FirstOnboardingController: UIViewController {
     
     //MARK: - circle left
     func setupCircleLeft() {
-
+        
         //constraints
         imageViewCircleLeft.snp.makeConstraints( { make in
             make.leading.equalToSuperview().inset(-130)
@@ -141,7 +155,7 @@ class FirstOnboardingController: UIViewController {
             make.size.equalTo(410)
         })
     }
-
+    
     //MARK: - circle right
     func setupCircleRight() {
         
@@ -152,7 +166,7 @@ class FirstOnboardingController: UIViewController {
             make.size.equalTo(340)
         })
     }
-
+    
     //MARK: - image main
     func setupImageMain() {
         
@@ -164,10 +178,10 @@ class FirstOnboardingController: UIViewController {
             make.width.equalTo(290)
         })
     }
-
+    
     //MARK: - label header
     func setupLabelHeader() {
-
+        
         //constraints
         labelHeader.snp.makeConstraints({ make in
             make.top.greaterThanOrEqualTo(imageViewMain.snp.bottom).offset(48)
@@ -176,10 +190,10 @@ class FirstOnboardingController: UIViewController {
             make.height.equalTo(65)
         })
     }
-
+    
     //MARK: - view swipe lines
     func setupSwipeLines() {
-
+        
         //constraints to the first line
         viewLineFirst.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)
@@ -188,7 +202,7 @@ class FirstOnboardingController: UIViewController {
             make.width.equalTo(22)
             make.height.equalTo(6)
         })
-
+        
         //constraints to the second line
         viewLineSecond.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(46)
@@ -207,7 +221,7 @@ class FirstOnboardingController: UIViewController {
             make.height.equalTo(6)
         })
     }
-
+    
     //MARK: - button next
     func setupButtonNext() {
         
@@ -218,20 +232,20 @@ class FirstOnboardingController: UIViewController {
             make.width.equalTo(60)
             make.height.equalTo(60)
         })
-
+        
         //MARK: - create action on the next view
         buttonNext.addTarget(self, action: #selector(actionForButtonNext), for: .touchUpInside)
     }
-
+    
     //MARK: - action to the next view
     @objc func actionForButtonNext() {
         let secondOnboardingVC = SecondOnboardingController()
         navigationController?.pushViewController(secondOnboardingVC, animated: true)
     }
-
+    
     //MARK: - button skip
     func setupButtonSkip() {
-
+        
         //constraints
         buttonSkip.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)
@@ -248,5 +262,38 @@ class FirstOnboardingController: UIViewController {
         let welcomeVC = WelcomeViewController()
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
+    
+//    private func megaFunc() {
+//        if let path = Bundle.main.path(forResource: "csvjson", ofType: "json") {
+//            do {
+//                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+//                let decodedData = try JSONDecoder().decode([Country].self, from: data)
+//                var dict: [String: [CountryParams]] = .init()
+//                decodedData.forEach { country in
+//                    dict[country.Passport] = .init()
+//                }
+//                decodedData.forEach { country in
+//                    let params = CountryParams(Destination: country.Destination, Requirement: country.Requirement)
+//                    dict[country.Passport]?.append(params)
+//                }
+//                print(dict)
+//                let encoded = try? JSONEncoder().encode(dict)
+//                print(encoded!)
+//                if let documentDirectory = FileManager.default.urls(for: .documentDirectory,
+//                                                                    in: .userDomainMask).first {
+//                    let pathWithFilename = documentDirectory.appendingPathComponent("myJsonString.json")
+//                    do {
+//                        try encoded?.write(to: pathWithFilename)
+//                    } catch {
+//                        // Handle error
+//                    }
+//                }
+//            } catch {
+//                print(error.localizedDescription)
+//                // handle error
+//            }
+//        }
+//        print("123")
+//    }
 }
 

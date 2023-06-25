@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:418530616832:ios:e7d38d22e578f414221ae5</string>
+	<key>DATABASE_URL</key>
+	<string>https://globalentry-fcda0-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

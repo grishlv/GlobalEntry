@@ -35,8 +35,8 @@ final class SignupPresenter {
 }
 
 // MARK: - SignupInputProtocol
-
 extension SignupPresenter: SignupInputProtocol {
+    
     func signUpWithGoogle(with data: GIDSignInResult) {
         interactor.signUpWithGoogle(with: data) { [weak self] result in
             guard let self else { return }
