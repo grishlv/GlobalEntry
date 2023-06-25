@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class WelcomeViewController: UIViewController {
-
+    
     //MARK: - image group of circles
     private lazy var imageViewGroupOfCircles: UIImageView = {
         let imageViewGroupOfCircles = UIImageView()
@@ -97,7 +97,7 @@ class WelcomeViewController: UIViewController {
         view.addSubview(buttonLogIn)
         return buttonLogIn
     }()
-
+    
     //MARK: - later button
     private lazy var buttonLater: UIButton = {
         let buttonLater = UIButton()
@@ -113,7 +113,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-
+        
         setupGroupOfCircle()
         setupImageTop()
         setupImageRight()
@@ -138,7 +138,7 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - image top
     func setupImageTop() {
-
+        
         //constraints
         imageViewTop.snp.makeConstraints( { make in
             make.leading.equalTo(imageViewGroupOfCircles.snp.leading).inset(45)
@@ -146,7 +146,7 @@ class WelcomeViewController: UIViewController {
             make.size.equalTo(42)
         })
     }
-
+    
     //MARK: - image right
     func setupImageRight() {
         
@@ -171,7 +171,7 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - label header
     func setupLabelHeader() {
-            
+        
         //constraints
         labelHeader.snp.makeConstraints( { make in
             make.leading.equalTo(imageViewGroupOfCircles.snp.leading)
@@ -207,7 +207,7 @@ class WelcomeViewController: UIViewController {
         //MARK: - create action on the next view
         buttonSignUp.addTarget(self, action: #selector(actionForSignupButton), for: .touchUpInside)
     }
-
+    
     //MARK: - action to the next view
     @objc func actionForSignupButton() {
         let singupModule = SingupModuleAssembly.assemble()
@@ -237,7 +237,7 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - button later
     func setupButtonLater() {
- 
+        
         //constraints
         buttonLater.snp.makeConstraints( { make in
             make.centerX.equalToSuperview()
@@ -254,7 +254,7 @@ class WelcomeViewController: UIViewController {
     //MARK: - action for button later
     @objc func actionForButtonLater() {
         
-        let chooseVC = TestChoosePassportContoller()
+        let chooseVC = ChoosePassportViewController()
         navigationController?.pushViewController(chooseVC, animated: true)
     }
 }

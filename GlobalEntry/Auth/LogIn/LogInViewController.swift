@@ -14,7 +14,7 @@ import FirebaseFirestore
 import GoogleSignIn
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
-        
+    
     //MARK: - header label
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -87,7 +87,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(GIDSignInButton)
         return GIDSignInButton
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
@@ -135,7 +135,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(48)
         })
     }
-
+    
     //MARK: - button log in
     func setupButtonLogIn() {
         
@@ -165,7 +165,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         //MARK: - create action on the next view
         GIDSignInButton.addTarget(self, action: #selector(actionForGoogleButton), for: .touchUpInside)
     }
-
+    
     func validateFields() -> String? {
         
         //Check that all fields are filled in
@@ -215,7 +215,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     //MARK: - action to the next view with google button
     @objc func actionForGoogleButton() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-
+        
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
@@ -283,7 +283,7 @@ extension UITextField {
         else {
             print("Please fill the field.")
             return false }
-
+        
         guard text.contains(word) else {
             print("Wrong word. Please check again.")
             return false

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class SecondOnboardingController: UIViewController {
-
+    
     //MARK: - left circle
     private lazy var imageViewCircleLeft: UIImageView = {
         let imageViewCircleLeft = UIImageView()
@@ -72,7 +72,7 @@ class SecondOnboardingController: UIViewController {
         view.addSubview(imageLeftBorder)
         return imageLeftBorder
     }()
-
+    
     //MARK: - shape star
     private lazy var imageViewStar: UIImageView = {
         let imageViewStar = UIImageView()
@@ -120,7 +120,7 @@ class SecondOnboardingController: UIViewController {
         view.addSubview(viewLineThird)
         return viewLineThird
     }()
-
+    
     //MARK: - button next
     private lazy var buttonNext: UIButton = {
         let buttonNext = UIButton()
@@ -148,7 +148,7 @@ class SecondOnboardingController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         view.clipsToBounds = true
-
+        
         setupSwipeByGestureForward()
         setupSwipeByGestureBack()
         setupCircleLeft()
@@ -175,7 +175,7 @@ class SecondOnboardingController: UIViewController {
         let thirdOnboardingVC = ThirdOnboardingController()
         navigationController?.pushViewController(thirdOnboardingVC, animated: true)
     }
-
+    
     //MARK: - go back by gesture recognizer
     func setupSwipeByGestureBack() {
         let goBack = UISwipeGestureRecognizer(target: self, action: #selector(swipeFuncBack(gesture:)))
@@ -191,7 +191,7 @@ class SecondOnboardingController: UIViewController {
     
     //MARK: - circle left
     func setupCircleLeft() {
-
+        
         //constraints
         imageViewCircleLeft.snp.makeConstraints( { make in
             make.leading.equalToSuperview().inset(-130)
@@ -213,7 +213,7 @@ class SecondOnboardingController: UIViewController {
     
     //MARK: - image main
     func setupImageMain() {
-
+        
         //constraints
         imageViewMain.snp.makeConstraints( { make in
             make.centerX.equalToSuperview().inset(82)
@@ -254,7 +254,7 @@ class SecondOnboardingController: UIViewController {
     
     //MARK: - shape star
     func setupImageStar() {
-
+        
         //constraints
         imageViewStar.snp.makeConstraints( { make in
             make.trailing.equalTo(imageViewMain.snp.trailing).offset(50)
@@ -277,7 +277,7 @@ class SecondOnboardingController: UIViewController {
     
     //MARK: - view swipe lines
     func setupSwipeLines() {
-
+        
         //constraints for the first line
         viewLineFirst.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)
@@ -286,7 +286,7 @@ class SecondOnboardingController: UIViewController {
             make.width.equalTo(22)
             make.height.equalTo(6)
         })
-
+        
         //constraints to the second current line
         viewLineSecond.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(46)
@@ -295,7 +295,7 @@ class SecondOnboardingController: UIViewController {
             make.width.equalTo(22)
             make.height.equalTo(6)
         })
-
+        
         //constraints to the third line
         viewLineThird.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(72)
@@ -305,10 +305,10 @@ class SecondOnboardingController: UIViewController {
             make.height.equalTo(6)
         })
     }
-
+    
     //MARK: - button next
     func setupButtonNext() {
-
+        
         //constraints
         buttonNext.snp.makeConstraints({ make in
             make.trailing.equalToSuperview().inset(20)
@@ -326,10 +326,10 @@ class SecondOnboardingController: UIViewController {
         let thirdOnboardingVC = ThirdOnboardingController()
         navigationController?.pushViewController(thirdOnboardingVC, animated: true)
     }
-
+    
     //MARK: - button skip
     func setupButtonSkip() {
-
+        
         //constraints
         buttonSkip.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)

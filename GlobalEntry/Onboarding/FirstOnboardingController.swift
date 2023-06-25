@@ -125,7 +125,7 @@ class FirstOnboardingController: UIViewController {
         setupButtonNext()
         setupButtonSkip()
         
-//        megaFunc()
+        //        megaFunc()
         
         let goForward = UISwipeGestureRecognizer(target: self, action: #selector(swipeFunc(gesture:)))
         goForward.direction = .left
@@ -262,38 +262,4 @@ class FirstOnboardingController: UIViewController {
         let welcomeVC = WelcomeViewController()
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
-    
-//    private func megaFunc() {
-//        if let path = Bundle.main.path(forResource: "csvjson", ofType: "json") {
-//            do {
-//                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-//                let decodedData = try JSONDecoder().decode([Country].self, from: data)
-//                var dict: [String: [CountryParams]] = .init()
-//                decodedData.forEach { country in
-//                    dict[country.Passport] = .init()
-//                }
-//                decodedData.forEach { country in
-//                    let params = CountryParams(Destination: country.Destination, Requirement: country.Requirement)
-//                    dict[country.Passport]?.append(params)
-//                }
-//                print(dict)
-//                let encoded = try? JSONEncoder().encode(dict)
-//                print(encoded!)
-//                if let documentDirectory = FileManager.default.urls(for: .documentDirectory,
-//                                                                    in: .userDomainMask).first {
-//                    let pathWithFilename = documentDirectory.appendingPathComponent("myJsonString.json")
-//                    do {
-//                        try encoded?.write(to: pathWithFilename)
-//                    } catch {
-//                        // Handle error
-//                    }
-//                }
-//            } catch {
-//                print(error.localizedDescription)
-//                // handle error
-//            }
-//        }
-//        print("123")
-//    }
 }
-

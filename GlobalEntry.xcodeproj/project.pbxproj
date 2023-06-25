@@ -52,8 +52,6 @@
 		78C651152A2658CF00E8F30E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78C651142A2658CF00E8F30E /* GoogleService-Info.plist */; };
 		78F9404C2A4085410040E733 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 78F9404B2A4085410040E733 /* Realm */; };
 		78F9404E2A4085410040E733 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78F9404D2A4085410040E733 /* RealmSwift */; };
-		78F940522A44B42A0040E733 /* TestChoosePassportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F940512A44B4290040E733 /* TestChoosePassportController.swift */; };
-		78F940542A44B4640040E733 /* TestCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F940532A44B4640040E733 /* TestCountry.swift */; };
 		A49AB816EF93A76E83A8AAB9 /* Pods_GlobalEntryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565468D2AFF99EDA716D6339 /* Pods_GlobalEntryTests.framework */; };
 		E16A9881466E55A64CDA039D /* Pods_GlobalEntry_GlobalEntryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1CBD8EC4C94F485C8E88BB /* Pods_GlobalEntry_GlobalEntryUITests.framework */; };
 /* End PBXBuildFile section */
@@ -117,8 +115,6 @@
 		78B6A5E92A1D1880008DF2F1 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		78C650E72A2388FE00E8F30E /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		78C651142A2658CF00E8F30E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		78F940512A44B4290040E733 /* TestChoosePassportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestChoosePassportController.swift; sourceTree = "<group>"; };
-		78F940532A44B4640040E733 /* TestCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCountry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,7 +223,6 @@
 				78B6A5EC2A1D20CC008DF2F1 /* Model */,
 				78B6A5EB2A1D1891008DF2F1 /* Services */,
 				782F861529E8349E006B3106 /* ChoosePassportViewController.swift */,
-				78F940512A44B4290040E733 /* TestChoosePassportController.swift */,
 			);
 			path = ChoosePassport;
 			sourceTree = "<group>";
@@ -397,7 +392,6 @@
 			isa = PBXGroup;
 			children = (
 				78C650E72A2388FE00E8F30E /* Country.swift */,
-				78F940532A44B4640040E733 /* TestCountry.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -637,11 +631,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78F940522A44B42A0040E733 /* TestChoosePassportController.swift in Sources */,
 				78B1623129D98467002CD5A9 /* SignupPresenter .swift in Sources */,
 				52ACEA6329F3099400EEED74 /* Assembly.swift in Sources */,
 				783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */,
-				78F940542A44B4640040E733 /* TestCountry.swift in Sources */,
 				783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */,
 				782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */,
 				7839825E29F2CF4E00D30821 /* Validator.swift in Sources */,

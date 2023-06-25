@@ -6,16 +6,12 @@
 
 import Foundation
 import UIKit
-import Firebase
-import FirebaseCore
-import FirebaseDatabase
+import RealmSwift
 
 class ChoosePassportViewController: UIViewController {
     
-    private var country = [Country]()
-    private var filtered = [Country]()
-    private var searching = false
-    private var ref: DatabaseReference!
+    private var passports: Results<Country>?
+    private var filtered: Results<Country>?
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -63,7 +59,7 @@ class ChoosePassportViewController: UIViewController {
         setupLabelHeader()
         setupSearchBar()
         setupTableView()
-//        fetchCountry()
+        setupFetchData()
         hideKeyboardWhenTappedAround()
         
         tableView.delegate = self
@@ -72,7 +68,7 @@ class ChoosePassportViewController: UIViewController {
     
     //MARK: - setup label header
     private func setupLabelHeader() {
-
+        
         //constraints
         labelHeader.snp.makeConstraints({ make in
             make.top.equalToSuperview().inset(75)
@@ -108,12 +104,12 @@ class ChoosePassportViewController: UIViewController {
                 clearButton.setImage(clearButton.currentImage?.withRenderingMode(.alwaysTemplate), for: .normal)
                 clearButton.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 0.5)
             }
-    
+            
             //setup color and font conf to text
             let attributes: [NSAttributedString.Key: Any] = [
-                    .foregroundColor: UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1),
-                    .font: UIFont(name: "Inter-Medium", size: 16)
-                ]
+                .foregroundColor: UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1),
+                .font: UIFont(name: "Inter-Medium", size: 16)
+            ]
             textfield.attributedPlaceholder = NSAttributedString(string: "Search", attributes: attributes)
             textfield.textColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
         }
@@ -131,17 +127,54 @@ class ChoosePassportViewController: UIViewController {
             make.height.equalTo(700)
         })
     }
+    
+    //MARK: - setup fetch data
+    private func setupFetchData() {
+        
+        guard let filePath = Bundle.main.path(forResource: "jsonDataNew", ofType: "json") else {
+            return
+        }
+        
+        do {
+            let fileURL = URL(fileURLWithPath: filePath)
+            let jsonData = try Data(contentsOf: fileURL)
+            let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
+            
+            if let jsonDict = json as? [String: Any], let jsonArray = jsonDict["country"] as? [[String: Any]] {
+                let realm = try Realm()
+                
+                try realm.write {
+                    for countryDict in jsonArray {
+                        let country = Country()
+                        country.passport = countryDict["passport"] as? String ?? ""
+                        
+                        if let featuresArray = countryDict["features"] as? [[String: Any]] {
+                            for featureDict in featuresArray {
+                                let feature = Feature()
+                                feature.destination = featureDict["destination"] as? String ?? ""
+                                feature.requirement = featureDict["requirement"] as? String ?? ""
+                                
+                                country.features.append(feature)
+                            }
+                        }
+                        realm.add(country)
+                    }
+                }
+                passports = realm.objects(Country.self)
+                filtered = passports
+            }
+            tableView.reloadData()
+        } catch {
+            print("Error:", error)
+        }
+    }
 }
 
 //MARK: - table view configuration
 extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if searching {
-            return filtered.count
-        } else {
-            return country.count
-        }
+        filtered?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -160,12 +193,7 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-        if searching {
-            cell.textLabel?.text = filtered[indexPath.section].passport
-        } else {
-            cell.textLabel?.text = country[indexPath.section].passport
-        }
+        cell.textLabel?.text = filtered?[indexPath.section].passport
         
         cell.backgroundColor = .white
         cell.textLabel?.textColor = .black
@@ -183,21 +211,37 @@ extension ChoosePassportViewController: UISearchBarDelegate {
     
     //MARK: - search filter
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filtered = searchText.isEmpty ? country : country.filter ({ ($0.passport.lowercased().dropFirst(2).hasPrefix(searchText.lowercased())) })
-        searching = true
+        
+        if searchText.isEmpty {
+            filtered = passports
+        } else {
+            let predicate = NSPredicate(format: "passport BEGINSWITH[cd] %@", searchText)
+            let filteredPassports = passports?.filter(predicate).sorted(byKeyPath: "passport", ascending: true)
+            
+            // Convert filteredPassports to Results<Country> type
+            let filteredResults = try? Realm().objects(Country.self).filter(predicate)
+            
+            // Remove duplicates by grouping passports based on unique names
+            let uniquePassports = filteredResults?
+                .sorted(byKeyPath: "passport", ascending: true)
+                .distinct(by: ["passport"])
+            
+            filtered = uniquePassports
+        }
+        
         tableView.reloadData()
     }
 }
 
 //MARK: - hide keyboard on tap everywhere
 extension ChoosePassportViewController {
-
+    
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(ChoosePassportViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
-
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }

@@ -122,7 +122,7 @@ class ThirdOnboardingController: UIViewController {
         view.addSubview(viewLineThird)
         return viewLineThird
     }()
-
+    
     //MARK: - button next
     private lazy var buttonNext: UIButton = {
         let buttonNext = UIButton()
@@ -150,7 +150,7 @@ class ThirdOnboardingController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         view.clipsToBounds = true
-                   
+        
         setupSwipeByGestureForward()
         setupSwipeByGestureBack()
         setupCircleLeft()
@@ -177,7 +177,7 @@ class ThirdOnboardingController: UIViewController {
         let welcomeVC = WelcomeViewController()
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
-
+    
     //MARK: - go back by gesture recognizer
     func setupSwipeByGestureBack() {
         let goBack = UISwipeGestureRecognizer(target: self, action: #selector(swipeFuncBack(gesture:)))
@@ -204,7 +204,7 @@ class ThirdOnboardingController: UIViewController {
     
     //MARK: - circle right
     func setupCircleRight() {
-
+        
         //constraints
         imageViewCircleRight.snp.makeConstraints( { make in
             make.leading.equalToSuperview().offset(200)
@@ -257,7 +257,7 @@ class ThirdOnboardingController: UIViewController {
     
     //MARK: - view shape custom circle
     func setupShapeCustomCircle() {
-
+        
         //constraints
         imageViewCustomCircle.snp.makeConstraints( { make in
             make.trailing.equalToSuperview().inset(40)
@@ -280,7 +280,7 @@ class ThirdOnboardingController: UIViewController {
     
     //MARK: - swipe lines
     func setupSwipeLines() {
-
+        
         //constraints to the first line
         viewLineFirst.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)
@@ -289,7 +289,7 @@ class ThirdOnboardingController: UIViewController {
             make.width.equalTo(22)
             make.height.equalTo(6)
         })
-
+        
         //constraints to the second line
         viewLineSecond.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(46)
@@ -298,7 +298,7 @@ class ThirdOnboardingController: UIViewController {
             make.width.equalTo(22)
             make.height.equalTo(6)
         })
-
+        
         //constraints to the third line
         viewLineThird.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(72)
@@ -308,10 +308,10 @@ class ThirdOnboardingController: UIViewController {
             make.height.equalTo(6)
         })
     }
-
+    
     //MARK: - button next
     func setupButtonNext() {
-
+        
         //constraints
         buttonNext.snp.makeConstraints({ make in
             make.trailing.equalToSuperview().inset(20)
@@ -330,10 +330,10 @@ class ThirdOnboardingController: UIViewController {
         let welcomeVC = WelcomeViewController()
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
-
+    
     //MARK: - button skip
     func setupButtonSkip() {
-
+        
         //constraints
         buttonSkip.snp.makeConstraints({ make in
             make.leading.equalToSuperview().inset(20)
@@ -341,11 +341,11 @@ class ThirdOnboardingController: UIViewController {
             make.width.equalTo(30)
             make.height.equalTo(20)
         })
-    
-    //MARK: - create action on the welcome view controller
-    buttonSkip.addTarget(self, action: #selector(actionForButtonSkip), for: .touchUpInside)
+        
+        //MARK: - create action on the welcome view controller
+        buttonSkip.addTarget(self, action: #selector(actionForButtonSkip), for: .touchUpInside)
     }
-
+    
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
         let welcomeVC = WelcomeViewController()

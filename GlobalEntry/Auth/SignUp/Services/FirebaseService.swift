@@ -23,15 +23,15 @@ protocol FirebaseServiceProtocol {
 }
 
 final class FirebaseService: FirebaseServiceProtocol {
-
+    
     func auth() {
         // todo
     }
-
+    
     func register() {
         // todo
     }
-
+    
     func authWithUsername(user: Register, completion: @escaping (Result<Void, Error>) -> Void) {
         
         Auth.auth().createUser(withEmail: user.email, password: user.password) { (result, error) in
@@ -55,7 +55,7 @@ final class FirebaseService: FirebaseServiceProtocol {
                 "email": user.email,
                 "name": user.name
             ]
-
+            
             db.collection("users")
                 .document(resultUser.uid)
                 .setData(dataArr) { error in
@@ -67,16 +67,16 @@ final class FirebaseService: FirebaseServiceProtocol {
                 }
         }
     }
-
+    
     func authWithGoogle(with data: GIDSignInResult, completion: @escaping (Result<Void, Error>) -> Void) {
         
         guard let idToken = data.user.idToken?.tokenString else { return }
         let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                        accessToken: data.user.accessToken.tokenString)
-
+        
         let email = data.user.profile?.email
         let name = data.user.profile?.name
-
+        
         Auth.auth().signIn(with: credential) { result, error in
             guard result != nil else {
                 if let error = error {
