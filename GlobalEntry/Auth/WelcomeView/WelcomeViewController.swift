@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class WelcomeViewController: UIViewController {
+final class WelcomeViewController: UIViewController {
     
     //MARK: - image group of circles
     private lazy var imageViewGroupOfCircles: UIImageView = {
@@ -98,6 +98,15 @@ class WelcomeViewController: UIViewController {
         return buttonLogIn
     }()
     
+    //MARK: - activity indicator
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .gray
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        return activityIndicator
+    }()
+    
     //MARK: - later button
     private lazy var buttonLater: UIButton = {
         let buttonLater = UIButton()
@@ -122,6 +131,7 @@ class WelcomeViewController: UIViewController {
         setupLabelDescription()
         setupButtonSignUp()
         setupButtonLogIn()
+        setupIndicator()
         setupButtonLater()
     }
     
@@ -210,8 +220,8 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - action to the next view
     @objc func actionForSignupButton() {
-        let singupModule = SingupModuleAssembly.assemble()
-        navigationController?.pushViewController(singupModule, animated: true)
+        let signupVC = SingupModuleAssembly.assemble()
+        navigationController?.pushViewController(signupVC, animated: true)
     }
     
     //MARK: - button log in
@@ -231,8 +241,18 @@ class WelcomeViewController: UIViewController {
     
     //MARK: - action to the next view
     @objc func actionForLogInButton() {
-        let logInVC = LogInViewController()
-        navigationController?.pushViewController(logInVC, animated: true)
+        let loginVC = LoginModuleAssembly.assemble()
+        navigationController?.pushViewController(loginVC, animated: true)
+    }
+    
+    //MARK: - indicator activity view
+    func setupIndicator() {
+        
+        //constraints
+        activityIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().inset(-40)
+        }
     }
     
     //MARK: - button later
@@ -247,14 +267,17 @@ class WelcomeViewController: UIViewController {
             make.height.equalTo(32)
         })
         
-        //MARK: - skip login or sign up
+        //skip login or sign up
         buttonLater.addTarget(self, action: #selector(actionForButtonLater), for: .touchUpInside)
     }
     
     //MARK: - action for button later
     @objc func actionForButtonLater() {
-        
-        let chooseVC = ChoosePassportViewController()
-        navigationController?.pushViewController(chooseVC, animated: true)
+        let viewModel = ChoosePassportViewModel()
+        let chooseVC = ChoosePassportViewController(viewModel: viewModel)
+        activityIndicator.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.navigationController?.pushViewController(chooseVC, animated: true)
+        }
     }
 }

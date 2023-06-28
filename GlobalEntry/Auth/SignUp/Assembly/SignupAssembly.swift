@@ -11,7 +11,7 @@ final class SingupModuleAssembly {
     
     static func assemble() -> UIViewController {
         let fbService = FirebaseService()
-        let interactor = SignupInteractor(firebaseService: fbService)
+        let interactor = SignupInteractor(signupFirebaseService: fbService)
         let presenter = SignupPresenter(interactor: interactor)
         let vc = SignupViewController(presenter: presenter)
         presenter.output = vc

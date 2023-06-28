@@ -9,19 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-//struct Country: Codable {
-//    let Passport: String
-//    let Destination: String
-//    let Requirement: String
-//}
-
-struct CountryParams: Codable {
-    let Destination: String
-    let Requirement: String
-}
-
-
-class FirstOnboardingController: UIViewController {
+final class FirstOnboardingController: UIViewController {
     
     //MARK: - left circle
     private lazy var imageViewCircleLeft: UIImageView = {
@@ -124,12 +112,6 @@ class FirstOnboardingController: UIViewController {
         setupSwipeLines()
         setupButtonNext()
         setupButtonSkip()
-        
-        //        megaFunc()
-        
-        let goForward = UISwipeGestureRecognizer(target: self, action: #selector(swipeFunc(gesture:)))
-        goForward.direction = .left
-        view.addGestureRecognizer(goForward)
     }
     
     //MARK: - go forward by gesture recognizer
@@ -140,7 +122,6 @@ class FirstOnboardingController: UIViewController {
     }
     
     @objc func swipeFunc(gesture: UISwipeGestureRecognizer) {
-        print("go on the second screen")
         let secondOnboardingVC = SecondOnboardingController()
         navigationController?.pushViewController(secondOnboardingVC, animated: true)
     }
@@ -257,6 +238,7 @@ class FirstOnboardingController: UIViewController {
         //MARK: - create action on the welcome view controller
         buttonSkip.addTarget(self, action: #selector(actionForButtonSkip), for: .touchUpInside)
     }
+    
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
         let welcomeVC = WelcomeViewController()

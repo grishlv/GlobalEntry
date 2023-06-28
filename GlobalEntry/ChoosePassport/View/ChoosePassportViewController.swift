@@ -6,12 +6,11 @@
 
 import Foundation
 import UIKit
-import RealmSwift
 
-class ChoosePassportViewController: UIViewController {
+final class ChoosePassportViewController: UIViewController {
     
-    private var passports: Results<Country>?
-    private var filtered: Results<Country>?
+    private var activityIndicator: UIActivityIndicatorView?
+    private let viewModel: ChoosePassportViewModel
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -27,6 +26,10 @@ class ChoosePassportViewController: UIViewController {
     //MARK: - search bar
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        
+        //custom UI
+        setupCustomSearchBar(searchBar)
+        
         searchBar.barTintColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         searchBar.searchTextField.backgroundColor = UIColor(red: 238/255, green: 239/255, blue: 244/255, alpha: 1)
         searchBar.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
@@ -34,6 +37,7 @@ class ChoosePassportViewController: UIViewController {
         searchBar.setImage(UIImage(named: "ic_clear"), for: .clear, state: .normal)
         searchBar.delegate = self
         view.addSubview(searchBar)
+
         return searchBar
     }()
     
@@ -59,11 +63,16 @@ class ChoosePassportViewController: UIViewController {
         setupLabelHeader()
         setupSearchBar()
         setupTableView()
-        setupFetchData()
         hideKeyboardWhenTappedAround()
+        viewModel.fetchData()
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        activityIndicator?.stopAnimating()
     }
     
     //MARK: - setup label header
@@ -89,7 +98,112 @@ class ChoosePassportViewController: UIViewController {
             make.width.equalTo(345)
             make.height.equalTo(48)
         })
+    }
+    
+    //MARK: - setup table view
+    private func setupTableView() {
         
+        //constraints
+        tableView.snp.makeConstraints({ make in
+            make.top.equalTo(searchBar.snp.bottom).inset(-20)
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.width.equalTo(345)
+            make.height.equalTo(700)
+        })
+    }
+    
+    // Initialize the view controller with the view model
+    init(viewModel: ChoosePassportViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+//MARK: - ChoosePassportViewModelDelegate
+extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
+    func didSelectCountry(at index: Int) {
+        // Handle country selection here
+        // ...
+    }
+}
+//MARK: - table view configuration
+extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.filtered?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 12
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = view.backgroundColor
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = viewModel.filtered?[indexPath.section].passport
+        
+        cell.backgroundColor = .white
+        cell.textLabel?.textColor = .black
+        cell.textLabel?.font = UIFont(name: "Inter-Medium", size: 18)
+        cell.layer.cornerRadius = 10
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = CGColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        cell.clipsToBounds = true
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectCountry(at: indexPath.section)
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.filtered?[section].passport
+    }
+}
+
+//MARK: - search bar configuration
+extension ChoosePassportViewController: UISearchBarDelegate {
+    
+    //MARK: - search filter
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.performSearch(with: searchText)
+        tableView.reloadData()
+    }
+}
+
+//MARK: - hide keyboard on tap everywhere
+extension ChoosePassportViewController {
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ChoosePassportViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+//MARK: - setup custom UI to search bar 
+extension ChoosePassportViewController {
+    
+    func setupCustomSearchBar(_ searchBar: UISearchBar) {
         //setup custom UI
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
             
@@ -113,136 +227,5 @@ class ChoosePassportViewController: UIViewController {
             textfield.attributedPlaceholder = NSAttributedString(string: "Search", attributes: attributes)
             textfield.textColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
         }
-    }
-    
-    //MARK: - setup table view
-    private func setupTableView() {
-        
-        //constraints
-        tableView.snp.makeConstraints({ make in
-            make.top.equalTo(searchBar.snp.bottom).inset(-20)
-            make.leading.equalToSuperview().inset(20)
-            make.trailing.equalToSuperview().inset(20)
-            make.width.equalTo(345)
-            make.height.equalTo(700)
-        })
-    }
-    
-    //MARK: - setup fetch data
-    private func setupFetchData() {
-        
-        guard let filePath = Bundle.main.path(forResource: "jsonDataNew", ofType: "json") else {
-            return
-        }
-        
-        do {
-            let fileURL = URL(fileURLWithPath: filePath)
-            let jsonData = try Data(contentsOf: fileURL)
-            let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
-            
-            if let jsonDict = json as? [String: Any], let jsonArray = jsonDict["country"] as? [[String: Any]] {
-                let realm = try Realm()
-                
-                try realm.write {
-                    for countryDict in jsonArray {
-                        let country = Country()
-                        country.passport = countryDict["passport"] as? String ?? ""
-                        
-                        if let featuresArray = countryDict["features"] as? [[String: Any]] {
-                            for featureDict in featuresArray {
-                                let feature = Feature()
-                                feature.destination = featureDict["destination"] as? String ?? ""
-                                feature.requirement = featureDict["requirement"] as? String ?? ""
-                                
-                                country.features.append(feature)
-                            }
-                        }
-                        realm.add(country)
-                    }
-                }
-                passports = realm.objects(Country.self)
-                filtered = passports
-            }
-            tableView.reloadData()
-        } catch {
-            print("Error:", error)
-        }
-    }
-}
-
-//MARK: - table view configuration
-extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        filtered?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 12
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = view.backgroundColor
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = filtered?[indexPath.section].passport
-        
-        cell.backgroundColor = .white
-        cell.textLabel?.textColor = .black
-        cell.textLabel?.font = UIFont(name: "Inter-Medium", size: 18)
-        cell.layer.cornerRadius = 10
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = CGColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-        cell.clipsToBounds = true
-        return cell
-    }
-}
-
-//MARK: - search bar configuration
-extension ChoosePassportViewController: UISearchBarDelegate {
-    
-    //MARK: - search filter
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        if searchText.isEmpty {
-            filtered = passports
-        } else {
-            let predicate = NSPredicate(format: "passport BEGINSWITH[cd] %@", searchText)
-            let filteredPassports = passports?.filter(predicate).sorted(byKeyPath: "passport", ascending: true)
-            
-            // Convert filteredPassports to Results<Country> type
-            let filteredResults = try? Realm().objects(Country.self).filter(predicate)
-            
-            // Remove duplicates by grouping passports based on unique names
-            let uniquePassports = filteredResults?
-                .sorted(byKeyPath: "passport", ascending: true)
-                .distinct(by: ["passport"])
-            
-            filtered = uniquePassports
-        }
-        
-        tableView.reloadData()
-    }
-}
-
-//MARK: - hide keyboard on tap everywhere
-extension ChoosePassportViewController {
-    
-    func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ChoosePassportViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }

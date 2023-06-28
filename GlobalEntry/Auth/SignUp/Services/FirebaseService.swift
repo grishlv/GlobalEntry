@@ -11,26 +11,16 @@ import FirebaseAuth
 import FirebaseFirestore
 import GoogleSignIn
 
-enum CustomError: Error {
+enum SignUpCustomError: Error {
     case TechError
 }
 
 protocol FirebaseServiceProtocol {
-    func auth()
-    func register()
     func authWithUsername(user: Register, completion: @escaping (Result<Void, Error>) -> Void)
     func authWithGoogle(with data: GIDSignInResult, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class FirebaseService: FirebaseServiceProtocol {
-    
-    func auth() {
-        // todo
-    }
-    
-    func register() {
-        // todo
-    }
     
     func authWithUsername(user: Register, completion: @escaping (Result<Void, Error>) -> Void) {
         
@@ -40,7 +30,7 @@ final class FirebaseService: FirebaseServiceProtocol {
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    completion(.failure(CustomError.TechError))
+                    completion(.failure(SignUpCustomError.TechError))
                 }
                 return
             }
@@ -82,26 +72,25 @@ final class FirebaseService: FirebaseServiceProtocol {
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    completion(.failure(CustomError.TechError))
+                    completion(.failure(SignUpCustomError.TechError))
                 }
                 return
             }
-            let db = Firestore.firestore()
             
+            let db = Firestore.firestore()
             let dataArr = [
                 "email": email,
                 "name": name
             ]
             
-            db.collection("users")
-                .document(credential.provider)
-                .setData(dataArr) { error in
-                    guard let error else {
-                        completion(.success(()))
-                        return
-                    }
+            let provider = credential.provider
+            db.collection("users").document(provider).setData(dataArr) { error in
+                if let error = error {
                     completion(.failure(error))
+                } else {
+                    completion(.success(()))
                 }
+            }
         }
     }
 }

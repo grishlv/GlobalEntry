@@ -19,11 +19,6 @@ protocol SignUpOutput: AnyObject {
     func didRecieveValidateError(with text: String)
 }
 
-protocol AlertActions: AnyObject {
-    func alertErrorCreate()
-    func alertErrorSafeData()
-}
-
 final class SignupPresenter {
     weak var output: SignUpOutput?
     private let interactor: SingupInteractorProtoctol

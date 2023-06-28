@@ -8,25 +8,24 @@
 import Foundation
 import GoogleSignIn
 
-
 protocol SingupInteractorProtoctol {
     func signUpWithGoogle(with data: GIDSignInResult, completion: @escaping (Result<Void, Error>) -> Void)
     func signUpWithUsername(with user: Register, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class SignupInteractor {
-    private let firebaseService: FirebaseServiceProtocol
+    private let signupFirebaseService: FirebaseServiceProtocol
 
-    init(firebaseService: FirebaseServiceProtocol) {
-        self.firebaseService = firebaseService
+    init(signupFirebaseService: FirebaseServiceProtocol) {
+        self.signupFirebaseService = signupFirebaseService
     }
 }
 
 extension SignupInteractor: SingupInteractorProtoctol {
     func signUpWithGoogle(with data: GIDSignInResult, completion: @escaping (Result<Void, Error>) -> Void) {
-        firebaseService.authWithGoogle(with: data, completion: completion)
+        signupFirebaseService.authWithGoogle(with: data, completion: completion)
     }
     func signUpWithUsername(with user: Register, completion: @escaping (Result<Void, Error>) -> Void) {
-        firebaseService.authWithUsername(user: user, completion: completion)
+        signupFirebaseService.authWithUsername(user: user, completion: completion)
     }
 }

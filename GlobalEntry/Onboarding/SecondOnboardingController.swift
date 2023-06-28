@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class SecondOnboardingController: UIViewController {
+final class SecondOnboardingController: UIViewController {
     
     //MARK: - left circle
     private lazy var imageViewCircleLeft: UIImageView = {
@@ -171,7 +171,6 @@ class SecondOnboardingController: UIViewController {
     }
     
     @objc func swipeFuncForward(gesture: UISwipeGestureRecognizer) {
-        print("go on the third screen")
         let thirdOnboardingVC = ThirdOnboardingController()
         navigationController?.pushViewController(thirdOnboardingVC, animated: true)
     }
@@ -184,7 +183,6 @@ class SecondOnboardingController: UIViewController {
     }
     
     @objc func swipeFuncBack(gesture: UISwipeGestureRecognizer) {
-        print("go on the first screen")
         let firstOnboardingVC = FirstOnboardingController()
         navigationController?.popViewController(animated: true)
     }

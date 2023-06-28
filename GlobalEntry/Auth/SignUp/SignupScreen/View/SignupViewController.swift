@@ -13,6 +13,8 @@ import GoogleSignIn
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
     
+    private let presenter: SignupInputProtocol
+    
     //MARK: - header label
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -83,6 +85,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         textFieldConfirmPassword.tag = 3
         textFieldConfirmPassword.isSecureTextEntry.toggle()
         
+        //add common style parameters
         setupCommonStyleForTextFields(textFieldConfirmPassword)
         textFieldConfirmPassword.enablePasswordToggle()
         view.addSubview(textFieldConfirmPassword)
@@ -96,7 +99,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         buttonSignUp.layer.cornerRadius = 10
         buttonSignUp.setTitle("Sign up", for: .normal)
         buttonSignUp.titleLabel?.font = UIFont(name: "Inter-SemiBold", size: 14)
-        
         view.addSubview(buttonSignUp)
         return buttonSignUp
     }()
@@ -112,22 +114,28 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         GIDSignInButton.layer.shadowOpacity = 1.0
         GIDSignInButton.layer.shadowRadius = 20
         GIDSignInButton.layer.masksToBounds = false
-        
         view.addSubview(GIDSignInButton)
         return GIDSignInButton
     }()
-
-    private let presenter: SignupInputProtocol
-
+    
+    //MARK: - activity indicator
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .gray
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        return activityIndicator
+    }()
+    
     init(presenter: SignupInputProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
@@ -138,6 +146,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         setupTextFieldPassword()
         setupTextFieldConfirmPassword()
         setupTapToHideKeyboard()
+        setupIndicator()
         setupButtonSignUp()
         setupButtonGoogle()
     }
@@ -202,6 +211,16 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         })
     }
     
+    //MARK: - indicator activity view
+    private func setupIndicator() {
+        
+        //constraints
+        activityIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().inset(-40)
+        }
+    }
+    
     //MARK: - button sign up
     private func setupButtonSignUp() {
         
@@ -232,46 +251,42 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         GIDSignInButton.addTarget(self, action: #selector(actionForGoogleButton), for: .touchUpInside)
     }
     
-    private func validateFields() -> Bool {
-        if textFieldName.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            textFieldEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            textFieldPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            textFieldPassword.text != textFieldConfirmPassword.text {
-            showAlert(with: "Please fill in all fields.")
-            return false
-        }
-        return true
-    }
-    
     //MARK: - action to the next screen
     @objc func actionForSignupButton() {
-        let validate = validateFields()
         
-        guard let email = textFieldEmail.text,
-              let name = textFieldName.text,
-              let password = textFieldPassword.text else { return }
-
-        let user = Register(name: name, email: email, password: password)
-        presenter.signUpWithUsername(user: user)
+        let isValid = loginValidateFields()
+        
+        if isValid {
+            guard let email = textFieldEmail.text,
+                  let name = textFieldName.text,
+                  let password = textFieldPassword.text else { return }
+            
+            let user = Register(name: name, email: email, password: password)
+            self.presenter.signUpWithUsername(user: user)
+        }
     }
     
     //MARK: - action to the next view with google button
     @objc func actionForGoogleButton() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-
+        
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-
+        
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self] result, error in
             guard let result else { return }
-            presenter.signUpWithGoogle(with: result)
+            self.presenter.signUpWithGoogle(with: result)
         }
     }
     
     private func transitionNext() {
-        let chooseVC = ChoosePassportViewController()
-        navigationController?.pushViewController(chooseVC, animated: true)
+        let viewModel = ChoosePassportViewModel()
+        let chooseVC = ChoosePassportViewController(viewModel: viewModel)
+        activityIndicator.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.navigationController?.pushViewController(chooseVC, animated: true)
+        }
     }
     
     //MARK: - tap to hide keyboard from any point on view
@@ -280,17 +295,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tap)
     }
     
-    //MARK: - add common style functions for text fields
-    private func setupCommonStyleForTextFields(_ textField: UITextField) {
-        textField.leftViewMode = .always
-        textField.textColor = UIColor(red: 126/255, green: 131/255, blue: 137/255, alpha: 1)
-        textField.font = UIFont(name: "Inter-Regular", size: 14)
-        textField.backgroundColor = UIColor(red: 237/255, green: 238/255, blue: 242/255, alpha: 1)
-        textField.layer.cornerRadius = 10
-    }
-
     private func showAlert(with text: String) {
-        let alertError = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
+        let alertError = UIAlertController(title: "Sign Up Failed", message: text, preferredStyle: .alert)
         alertError.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertError, animated: true)
     }
@@ -321,9 +327,13 @@ extension UITextField {
         self.isSecureTextEntry = !self.isSecureTextEntry
         setPasswordToggleImage(sender as! UIButton)
     }
+}
+
+//MARK: - text field improvements
+extension SignupViewController {
     
     //MARK: - add switch between text fields with button return
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //try to find next responder
         if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
             nextField.becomeFirstResponder()
@@ -334,21 +344,13 @@ extension UITextField {
         return false
     }
     
-}
-
-//MARK: - validate text field that it's not empty
-extension UITextField {
-    private func isValid(_ word: String) -> Bool {
-        guard let text = self.text, !text.isEmpty
-        else {
-            print("Please fill the field.")
-            return false }
-        
-        guard text.contains(word) else {
-            print("Wrong word. Please check again.")
-            return false
-        }
-        return true
+    //MARK: - add common style functions for text fields
+    private func setupCommonStyleForTextFields(_ textField: UITextField) {
+        textField.leftViewMode = .always
+        textField.textColor = UIColor(red: 126/255, green: 131/255, blue: 137/255, alpha: 1)
+        textField.font = UIFont(name: "Inter-Regular", size: 14)
+        textField.backgroundColor = UIColor(red: 237/255, green: 238/255, blue: 242/255, alpha: 1)
+        textField.layer.cornerRadius = 10
     }
 }
 
@@ -362,12 +364,54 @@ extension UIButton {
     }
 }
 
+extension SignupViewController {
+    
+    //MARK: - add fields validation
+    private func loginValidateFields() -> Bool {
+        
+        guard let name = textFieldName.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let email = textFieldEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let password = textFieldPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let confirmPassword = textFieldConfirmPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        else { return false }
+        
+        if name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty {
+            showAlert(with: "Some fields are empty. Please fill in all fields.")
+            return false
+        }
+        
+        if !Validator.isValidUsername(for: name) {
+            showAlert(with: "Invalid name format.")
+            return false
+        }
+        
+        if !Validator.isValidEmail(for: email) {
+            showAlert(with: "Invalid email format. Please try again.")
+            return false
+        }
+        
+        if !Validator.isPasswordValid(for: password) {
+            showAlert(with: "Invalid password format. It should contain at least one digit and be between 6 and 32 characters long.")
+            return false
+        }
+        
+        if password != confirmPassword {
+            showAlert(with: "Passwords don't match. Please try again.")
+            return false
+        }
+
+        return true
+    }
+}
+
 extension SignupViewController: SignUpOutput {
     func didRecieveValidateError(with text: String) {
         showAlert(with: text)
     }
-
+    
     func didRegisterEnd() {
         transitionNext()
     }
 }
+
+
