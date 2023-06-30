@@ -117,6 +117,10 @@ final class LogInViewController: UIViewController, UITextFieldDelegate {
         setupButtonGoogle()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     //MARK: - label header
     private func setupLabelHeader() {
         

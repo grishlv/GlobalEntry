@@ -99,7 +99,7 @@ final class FirstOnboardingController: UIViewController {
         view.addSubview(buttonSkip)
         return buttonSkip
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)

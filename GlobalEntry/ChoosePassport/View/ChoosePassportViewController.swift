@@ -108,6 +108,7 @@ final class ChoosePassportViewController: UIViewController {
             make.top.equalTo(searchBar.snp.bottom).inset(-20)
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(20)
             make.width.equalTo(345)
             make.height.equalTo(700)
         })

@@ -162,7 +162,7 @@ final class SecondOnboardingController: UIViewController {
         setupButtonNext()
         setupButtonSkip()
     }
-    
+
     //MARK: - go forward by gesture recognizer
     func setupSwipeByGestureForward() {
         let goForward = UISwipeGestureRecognizer(target: self, action: #selector(swipeFuncForward(gesture:)))
@@ -346,4 +346,3 @@ final class SecondOnboardingController: UIViewController {
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
 }
-

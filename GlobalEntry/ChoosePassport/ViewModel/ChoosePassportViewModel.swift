@@ -19,6 +19,7 @@ final class ChoosePassportViewModel {
     public var filtered: Results<Country>?
     
     //MARK: - fetch data
+    
     public func fetchData() {
         guard let filePath = Bundle.main.path(forResource: "jsonDataNew", ofType: "json") else {
             return
@@ -33,6 +34,9 @@ final class ChoosePassportViewModel {
                 let realm = try Realm()
                 
                 try realm.write {
+                    
+                    realm.deleteAll()
+                    
                     for countryDict in jsonArray {
                         let country = Country()
                         country.passport = countryDict["passport"] as? String ?? ""
@@ -49,6 +53,7 @@ final class ChoosePassportViewModel {
                         realm.add(country)
                     }
                 }
+                
                 passports = realm.objects(Country.self)
                 filtered = passports
             }
