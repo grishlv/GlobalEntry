@@ -99,12 +99,12 @@ final class WelcomeViewController: UIViewController {
     }()
     
     //MARK: - activity indicator
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = .gray
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(activityIndicator)
-        return activityIndicator
+    private lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .gray
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spinner)
+        return spinner
     }()
     
     //MARK: - later button
@@ -131,7 +131,7 @@ final class WelcomeViewController: UIViewController {
         setupLabelDescription()
         setupButtonSignUp()
         setupButtonLogIn()
-        setupIndicator()
+        setupSpinner()
         setupButtonLater()
     }
     
@@ -246,10 +246,10 @@ final class WelcomeViewController: UIViewController {
     }
     
     //MARK: - indicator activity view
-    func setupIndicator() {
+    func setupSpinner() {
         
         //constraints
-        activityIndicator.snp.makeConstraints { make in
+        spinner.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().inset(-40)
         }
@@ -274,8 +274,8 @@ final class WelcomeViewController: UIViewController {
     //MARK: - action for button later
     @objc func actionForButtonLater() {
         let viewModel = ChoosePassportViewModel()
-        let chooseVC = ChoosePassportViewController(viewModel: viewModel)
-        activityIndicator.startAnimating()
+        let chooseVC = ChoosePassportViewController(viewModel: viewModel, tabBar: TabController.init())
+        spinner.startAnimating()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.navigationController?.pushViewController(chooseVC, animated: true)
         }

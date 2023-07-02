@@ -27,6 +27,12 @@
 		781B5CA42A49DA56004F29A4 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CA32A49DA56004F29A4 /* LoginPresenter.swift */; };
 		781B5CA82A49DAE6004F29A4 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CA72A49DAE6004F29A4 /* LoginInteractor.swift */; };
 		781B5CAC2A4B1790004F29A4 /* LoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CAB2A4B1790004F29A4 /* LoginAssembly.swift */; };
+		781B5CB32A5196F4004F29A4 /* jsonDataNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 781B5CB22A5196F2004F29A4 /* jsonDataNew.json */; };
+		781B5CB92A51A4F8004F29A4 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */; };
+		781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CBA2A51A53E004F29A4 /* MapViewController.swift */; };
+		781B5CBD2A51A555004F29A4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CBC2A51A555004F29A4 /* ProfileViewController.swift */; };
+		781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC12A51A5C0004F29A4 /* TabController.swift */; };
+		781B5CC52A51AAD1004F29A4 /* ChoosePassportAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */; };
 		782F860E29E6E4D6006B3106 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F860D29E6E4D5006B3106 /* LogInViewController.swift */; };
 		782F861029E6F715006B3106 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 782F860F29E6F715006B3106 /* FirebaseFirestore */; };
 		782F861229E6F719006B3106 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 782F861129E6F719006B3106 /* FirebaseFirestoreSwift */; };
@@ -40,7 +46,6 @@
 		783B36F229CB5D420029BD6D /* GlobalEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36F129CB5D420029BD6D /* GlobalEntryTests.swift */; };
 		783B36FC29CB5D420029BD6D /* GlobalEntryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36FB29CB5D420029BD6D /* GlobalEntryUITests.swift */; };
 		783B36FE29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36FD29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift */; };
-		7865E50A2A46EDA50009F3D4 /* jsonDataNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 7865E5092A46EDA50009F3D4 /* jsonDataNew.json */; };
 		789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */; };
 		789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */; };
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
@@ -101,6 +106,12 @@
 		781B5CA32A49DA56004F29A4 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		781B5CA72A49DAE6004F29A4 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		781B5CAB2A4B1790004F29A4 /* LoginAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembly.swift; sourceTree = "<group>"; };
+		781B5CB22A5196F2004F29A4 /* jsonDataNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = jsonDataNew.json; path = ../../../../../json_GlobalEntry/jsonDataNew.json; sourceTree = "<group>"; };
+		781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
+		781B5CBA2A51A53E004F29A4 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		781B5CBC2A51A555004F29A4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		781B5CC12A51A5C0004F29A4 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportAssembly.swift; sourceTree = "<group>"; };
 		782F860D29E6E4D5006B3106 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		782F861529E8349E006B3106 /* ChoosePassportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportViewController.swift; sourceTree = "<group>"; };
 		7839825D29F2CF4E00D30821 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
@@ -116,7 +127,6 @@
 		783B36F729CB5D420029BD6D /* GlobalEntryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlobalEntryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		783B36FB29CB5D420029BD6D /* GlobalEntryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEntryUITests.swift; sourceTree = "<group>"; };
 		783B36FD29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEntryUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		7865E5092A46EDA50009F3D4 /* jsonDataNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonDataNew.json; sourceTree = "<group>"; };
 		789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingController.swift; sourceTree = "<group>"; };
 		789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingController.swift; sourceTree = "<group>"; };
@@ -238,7 +248,7 @@
 		781B5C982A49A609004F29A4 /* JsonData */ = {
 			isa = PBXGroup;
 			children = (
-				7865E5092A46EDA50009F3D4 /* jsonDataNew.json */,
+				781B5CB22A5196F2004F29A4 /* jsonDataNew.json */,
 			);
 			path = JsonData;
 			sourceTree = "<group>";
@@ -309,6 +319,46 @@
 			path = Assembly;
 			sourceTree = "<group>";
 		};
+		781B5CB42A51A476004F29A4 /* Favourites */ = {
+			isa = PBXGroup;
+			children = (
+				781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */,
+			);
+			path = Favourites;
+			sourceTree = "<group>";
+		};
+		781B5CB52A51A497004F29A4 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				781B5CBA2A51A53E004F29A4 /* MapViewController.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
+		781B5CB72A51A4C0004F29A4 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				781B5CBC2A51A555004F29A4 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		781B5CBE2A51A572004F29A4 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				781B5CC12A51A5C0004F29A4 /* TabController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		781B5CC32A51AABE004F29A4 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
 		782F860C29E6E4B4006B3106 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +373,7 @@
 		782F861429E83465006B3106 /* ChoosePassport */ = {
 			isa = PBXGroup;
 			children = (
+				781B5CC32A51AABE004F29A4 /* Assembly */,
 				78B6A5EC2A1D20CC008DF2F1 /* Model */,
 				781B5C972A49A5ED004F29A4 /* View */,
 				781B5C992A49A61E004F29A4 /* ViewModel */,
@@ -377,7 +428,11 @@
 				78B1621B29D6EFE3002CD5A9 /* Onboarding */,
 				78B1622529D73758002CD5A9 /* Auth */,
 				782F861429E83465006B3106 /* ChoosePassport */,
+				781B5CBE2A51A572004F29A4 /* TabBar */,
 				781B5C942A489339004F29A4 /* MainScreen */,
+				781B5CB42A51A476004F29A4 /* Favourites */,
+				781B5CB52A51A497004F29A4 /* MapView */,
+				781B5CB72A51A4C0004F29A4 /* Profile */,
 				783B36E829CB5D420029BD6D /* Info.plist */,
 				78C651142A2658CF00E8F30E /* GoogleService-Info.plist */,
 			);
@@ -632,9 +687,9 @@
 				52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */,
 				52ACEA5529F2D9BE00EEED74 /* Inter-Regular.ttf in Resources */,
 				52ACEA5829F2D9BE00EEED74 /* Inter-Black.ttf in Resources */,
+				781B5CB32A5196F4004F29A4 /* jsonDataNew.json in Resources */,
 				52ACEA5929F2D9BE00EEED74 /* Inter-SemiBold.ttf in Resources */,
 				52ACEA5229F2D9BE00EEED74 /* Inter-Light.ttf in Resources */,
-				7865E50A2A46EDA50009F3D4 /* jsonDataNew.json in Resources */,
 				78C651152A2658CF00E8F30E /* GoogleService-Info.plist in Resources */,
 				52ACEA5329F2D9BE00EEED74 /* Inter-Thin.ttf in Resources */,
 			);
@@ -725,18 +780,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				781B5CB92A51A4F8004F29A4 /* FavouritesViewController.swift in Sources */,
 				78B1623129D98467002CD5A9 /* SignupPresenter .swift in Sources */,
 				781B5C962A489363004F29A4 /* MainScreenViewController.swift in Sources */,
 				52ACEA6329F3099400EEED74 /* SignupAssembly.swift in Sources */,
 				781B5C9B2A49A653004F29A4 /* ChoosePassportViewModel.swift in Sources */,
 				783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */,
 				783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */,
+				781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */,
 				781B5CA12A49D903004F29A4 /* FirebaseServiceLogin.swift in Sources */,
+				781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */,
 				782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */,
+				781B5CBD2A51A555004F29A4 /* ProfileViewController.swift in Sources */,
 				7839825E29F2CF4E00D30821 /* Validator.swift in Sources */,
 				781B5CA42A49DA56004F29A4 /* LoginPresenter.swift in Sources */,
 				52ACEA6129F307D200EEED74 /* SingnupInteractor.swift in Sources */,
 				78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */,
+				781B5CC52A51AAD1004F29A4 /* ChoosePassportAssembly.swift in Sources */,
 				781B5CA82A49DAE6004F29A4 /* LoginInteractor.swift in Sources */,
 				78B1622C29D738C8002CD5A9 /* Register.swift in Sources */,
 				52ACEA5F29F3010600EEED74 /* FirebaseService.swift in Sources */,

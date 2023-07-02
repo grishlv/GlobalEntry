@@ -9,8 +9,9 @@ import UIKit
 
 final class ChoosePassportViewController: UIViewController {
     
-    private var activityIndicator: UIActivityIndicatorView?
+    private var spinner: UIActivityIndicatorView?
     private let viewModel: ChoosePassportViewModel
+    private var tabBar: TabController
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -37,7 +38,6 @@ final class ChoosePassportViewController: UIViewController {
         searchBar.setImage(UIImage(named: "ic_clear"), for: .clear, state: .normal)
         searchBar.delegate = self
         view.addSubview(searchBar)
-
         return searchBar
     }()
     
@@ -47,7 +47,6 @@ final class ChoosePassportViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.sectionHeaderTopPadding = 0
         tableView.rowHeight = 60.0
-        tableView.allowsSelection = false
         tableView.keyboardDismissMode = .onDrag
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
@@ -68,11 +67,13 @@ final class ChoosePassportViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        viewModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        activityIndicator?.stopAnimating()
+        spinner?.stopAnimating()
     }
     
     //MARK: - setup label header
@@ -115,8 +116,9 @@ final class ChoosePassportViewController: UIViewController {
     }
     
     // Initialize the view controller with the view model
-    init(viewModel: ChoosePassportViewModel) {
+    init(viewModel: ChoosePassportViewModel, tabBar: TabController) {
         self.viewModel = viewModel
+        self.tabBar = tabBar
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -125,14 +127,6 @@ final class ChoosePassportViewController: UIViewController {
     }
 }
 
-
-//MARK: - ChoosePassportViewModelDelegate
-extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
-    func didSelectCountry(at index: Int) {
-        // Handle country selection here
-        // ...
-    }
-}
 //MARK: - table view configuration
 extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -169,11 +163,34 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectCountry(at: indexPath.section)
+        
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        cell.contentView.backgroundColor = .white
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if let countryName = viewModel.filtered?[indexPath.section].passport {
+            didSelectCountry(countryName)
+        }
     }
-
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return viewModel.filtered?[section].passport
+    }
+}
+
+//MARK: - ChoosePassportViewModelDelegate
+extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
+    
+    func didSelectCountry(_ passportName: String) {
+        let tabBar = tabBar
+        
+        let firstVC = MainScreenViewController(viewModel: viewModel)
+        firstVC.labelCountry = passportName
+        navigationController?.pushViewController(firstVC, animated: true)
+        
+        if let index = tabBar.viewControllers?.firstIndex(where: { $0 is MainScreenViewController }) {
+            tabBar.selectedIndex = index
+        }
     }
 }
 

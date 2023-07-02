@@ -87,12 +87,12 @@ final class LogInViewController: UIViewController, UITextFieldDelegate {
     }()
     
     //MARK: - activity indicator
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = .gray
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(activityIndicator)
-        return activityIndicator
+    private lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .gray
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spinner)
+        return spinner
     }()
     
     init(presenterLogin: LoginInputProtocol) {
@@ -112,7 +112,7 @@ final class LogInViewController: UIViewController, UITextFieldDelegate {
         setupTextFieldEmail()
         setupTextFieldPassword()
         setupTapToHideKeyboard()
-        setupIndicator()
+        setupSpinner()
         setupButtonLogIn()
         setupButtonGoogle()
     }
@@ -173,10 +173,10 @@ final class LogInViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - indicator activity view
-    func setupIndicator() {
+    func setupSpinner() {
         
         //constraints
-        activityIndicator.snp.makeConstraints { make in
+        spinner.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().inset(-40)
         }
@@ -232,8 +232,8 @@ final class LogInViewController: UIViewController, UITextFieldDelegate {
     
     func transitionNext() {
         let viewModel = ChoosePassportViewModel()
-        let chooseVC = ChoosePassportViewController(viewModel: viewModel)
-        activityIndicator.startAnimating()
+        let chooseVC = ChoosePassportViewController(viewModel: viewModel, tabBar: TabController.init())
+        spinner.startAnimating()
         DispatchQueue.main.async {
             self.navigationController?.pushViewController(chooseVC, animated: true)
         }

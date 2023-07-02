@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 protocol ChoosePassportViewModelDelegate: AnyObject {
-    func didSelectCountry(at index: Int)
+    func didSelectCountry(_ passportName: String)
 }
 
 final class ChoosePassportViewModel {
@@ -80,9 +80,5 @@ final class ChoosePassportViewModel {
             
             filtered = uniquePassports
         }
-    }
-    
-    func didSelectCountry(at index: Int) {
-        delegate?.didSelectCountry(at: index)
     }
 }
