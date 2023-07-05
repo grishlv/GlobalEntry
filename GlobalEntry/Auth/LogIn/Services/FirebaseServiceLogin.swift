@@ -55,7 +55,7 @@ final class FirebaseServiceLogin: FirebaseServiceProtocolLogin {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                        accessToken: data.user.accessToken.tokenString)
         let email = data.user.profile?.email
-        let name = data.user.profile?.name
+        let _ = data.user.profile?.name
         
         Auth.auth().signIn(with: credential) { result, error in
             
@@ -69,7 +69,7 @@ final class FirebaseServiceLogin: FirebaseServiceProtocolLogin {
             }
             
             let db = Firestore.firestore()
-            let dataArr = [
+            let _ = [
                 "email": email
             ]
             

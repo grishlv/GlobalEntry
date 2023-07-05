@@ -12,15 +12,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
+        
         if let windowScene = scene as? UIWindowScene {
-            
             let window = UIWindow(windowScene: windowScene)
-            let navController = UINavigationController()
-            let viewController = FirstOnboardingController()
-            navController.viewControllers = [viewController]
-            
-            window.rootViewController = navController
+
+            if UserDefaultsManager.shared.isWelcomeScreenShown {
+                if UserDefaultsManager.shared.isPassportSelected {
+                    let tabBarController = TabController()
+//                    window.rootViewController = tabBarController
+                    if let navController = tabBarController.viewControllers?.first as? UINavigationController,
+                       let _ = navController.viewControllers.first as? MainScreenViewController {
+                        tabBarController.selectedIndex = 0
+                        window.rootViewController = tabBarController
+                    }
+                } else {
+                    let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+                    let navController = UINavigationController(rootViewController: choosePassportVC)
+                    window.rootViewController = navController
+                }
+            } else {
+                let firstVC = FirstOnboardingController()
+                let navController = UINavigationController(rootViewController: firstVC)
+                window.rootViewController = navController
+                UserDefaultsManager.shared.isWelcomeScreenShown = true
+            }
             self.window = window
             window.makeKeyAndVisible()
         }

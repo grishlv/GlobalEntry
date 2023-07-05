@@ -10,8 +10,8 @@ import UIKit
 final class ChoosePassportViewController: UIViewController {
     
     private var spinner: UIActivityIndicatorView?
+    private var tabBar: UITabBarController?
     private let viewModel: ChoosePassportViewModel
-    private var tabBar: TabController
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -166,11 +166,11 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
         
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         cell.contentView.backgroundColor = .white
-        tableView.deselectRow(at: indexPath, animated: true)
         
         if let countryName = viewModel.filtered?[indexPath.section].passport {
             didSelectCountry(countryName)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -182,14 +182,15 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
 extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
     
     func didSelectCountry(_ passportName: String) {
-        let tabBar = tabBar
-        
-        let firstVC = MainScreenViewController(viewModel: viewModel)
-        firstVC.labelCountry = passportName
-        navigationController?.pushViewController(firstVC, animated: true)
-        
-        if let index = tabBar.viewControllers?.firstIndex(where: { $0 is MainScreenViewController }) {
-            tabBar.selectedIndex = index
+        if let tabBarController = self.tabBar as? TabController {
+            if let navController = tabBarController.viewControllers?.first as? UINavigationController,
+               let mainScreenViewController = navController.viewControllers.first as? MainScreenViewController {
+                if let country = viewModel.passports?.filter("passport == %@", passportName).first {
+                    mainScreenViewController.features = Array(country.features)
+                }
+            }
+            tabBarController.selectedIndex = 0
+            navigationController?.pushViewController(tabBarController, animated: true)
         }
     }
 }
@@ -240,7 +241,7 @@ extension ChoosePassportViewController {
             //setup color and font conf to text
             let attributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1),
-                .font: UIFont(name: "Inter-Medium", size: 16)
+                .font: UIFont(name: "Inter-Medium", size: 16) ?? 0
             ]
             textfield.attributedPlaceholder = NSAttributedString(string: "Search", attributes: attributes)
             textfield.textColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)

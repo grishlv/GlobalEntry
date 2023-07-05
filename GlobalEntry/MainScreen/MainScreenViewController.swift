@@ -12,8 +12,7 @@ import SnapKit
 final class MainScreenViewController: UIViewController {
     
     var labelCountry: String?
-    var viewModel: ChoosePassportViewModel
-    private var features: [Feature] = []
+    var features: [Feature] = []
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -25,7 +24,7 @@ final class MainScreenViewController: UIViewController {
         view.addSubview(labelHeader)
         return labelHeader
     }()
-
+    
     //MARK: - search bar
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -52,24 +51,20 @@ final class MainScreenViewController: UIViewController {
         return tableView
     }()
     
+    private var searchBarTopConstraint: Constraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupLabelHeader()
         setupLabelCountry()
         setupSearchBar()
         setupTableView()
         
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        tableView.contentInset = UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
-        
-        if let passport = labelCountry {
-            if let country = viewModel.passports?.filter("passport == %@", passport).first {
-                features = Array(country.features)
-            }
-            tableView.reloadData()
-        }
     }
     
     //MARK: - setup label header
@@ -86,12 +81,9 @@ final class MainScreenViewController: UIViewController {
     
     //MARK: - setup search bar
     private func setupSearchBar() {
-        
-        //constraints
         searchBar.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(120)
-            make.leading.equalToSuperview().inset(10)
-            make.trailing.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(120) // Store the top constraint reference
+            make.leading.trailing.equalToSuperview().inset(10)
             make.width.equalTo(345)
             make.height.equalTo(48)
         })
@@ -125,30 +117,14 @@ final class MainScreenViewController: UIViewController {
         //constraints
         tableView.snp.makeConstraints({ make in
             make.top.equalTo(searchBar.snp.bottom).inset(-20)
-            make.leading.equalToSuperview().inset(20)
-            make.trailing.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.width.equalTo(345)
-            make.height.equalTo(700)
+            make.height.equalTo(650)
         })
     }
     
-    func tabBarSetup() {
-        
-        let tabBarController = TabController()
-        
-        // Create your view controllers for the tab bar
-        let firstVC = MainScreenViewController(viewModel: ChoosePassportViewModel.init())
-        let secondVC = FavouritesViewController()
-        let thirdVC = MapViewController()
-        let fourthVC = ProfileViewController()
-
-        tabBarController.viewControllers = [firstVC, secondVC, thirdVC, fourthVC]
-    }
-    
-    // Initialize the view controller with the view model
-    init(viewModel: ChoosePassportViewModel) {
-        self.viewModel = viewModel
+    init(features: [Feature]) {
+        self.features = features
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -193,13 +169,27 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let feature = features[section]
         return feature.destination
     }
-}
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let searchBarHeight: CGFloat = 48
+        let searchBarTopOffset: CGFloat = 120
+        
+        let newOffset = max(-offsetY - searchBarHeight, -searchBarTopOffset)
+        searchBarTopConstraint?.update(offset: newOffset)
+        
+        // Scroll the table view to the top by adjusting the content offset
+        if offsetY < -40 { // Adjust the offset threshold as needed
+            scrollView.setContentOffset(CGPoint(x: 0, y: -40), animated: false)
+        }
+    }
 
+}
 
 //MARK: - setup custom UI to search bar
 extension MainScreenViewController {
@@ -223,7 +213,7 @@ extension MainScreenViewController {
             //setup color and font conf to text
             let attributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1),
-                .font: UIFont(name: "Inter-Medium", size: 16)
+                .font: UIFont(name: "Inter-Medium", size: 16) ?? 0
             ]
             textfield.attributedPlaceholder = NSAttributedString(string: "Search", attributes: attributes)
             textfield.textColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)

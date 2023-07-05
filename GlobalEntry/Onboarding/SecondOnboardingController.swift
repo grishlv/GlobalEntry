@@ -183,7 +183,6 @@ final class SecondOnboardingController: UIViewController {
     }
     
     @objc func swipeFuncBack(gesture: UISwipeGestureRecognizer) {
-        let firstOnboardingVC = FirstOnboardingController()
         navigationController?.popViewController(animated: true)
     }
     

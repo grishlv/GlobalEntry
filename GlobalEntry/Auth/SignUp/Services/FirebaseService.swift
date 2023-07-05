@@ -84,7 +84,7 @@ final class FirebaseService: FirebaseServiceProtocol {
             ]
             
             let provider = credential.provider
-            db.collection("users").document(provider).setData(dataArr) { error in
+            db.collection("users").document(provider).setData(dataArr as [String : Any]) { error in
                 if let error = error {
                     completion(.failure(error))
                 } else {

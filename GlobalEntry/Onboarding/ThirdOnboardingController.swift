@@ -185,7 +185,6 @@ final class ThirdOnboardingController: UIViewController {
     }
     
     @objc func swipeFuncBack(gesture: UISwipeGestureRecognizer) {
-        let firstOnboardingVC = SecondOnboardingController()
         navigationController?.popViewController(animated: true)
     }
     

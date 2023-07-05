@@ -27,12 +27,13 @@
 		781B5CA42A49DA56004F29A4 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CA32A49DA56004F29A4 /* LoginPresenter.swift */; };
 		781B5CA82A49DAE6004F29A4 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CA72A49DAE6004F29A4 /* LoginInteractor.swift */; };
 		781B5CAC2A4B1790004F29A4 /* LoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CAB2A4B1790004F29A4 /* LoginAssembly.swift */; };
-		781B5CB32A5196F4004F29A4 /* jsonDataNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 781B5CB22A5196F2004F29A4 /* jsonDataNew.json */; };
 		781B5CB92A51A4F8004F29A4 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */; };
 		781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CBA2A51A53E004F29A4 /* MapViewController.swift */; };
 		781B5CBD2A51A555004F29A4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CBC2A51A555004F29A4 /* ProfileViewController.swift */; };
 		781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC12A51A5C0004F29A4 /* TabController.swift */; };
 		781B5CC52A51AAD1004F29A4 /* ChoosePassportAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */; };
+		781B5CC72A52C91A004F29A4 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC62A52C91A004F29A4 /* UserDefaultsManager.swift */; };
+		781B5CC92A55BEF7004F29A4 /* jsonDataNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 781B5CC82A55BEF5004F29A4 /* jsonDataNew.json */; };
 		782F860E29E6E4D6006B3106 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F860D29E6E4D5006B3106 /* LogInViewController.swift */; };
 		782F861029E6F715006B3106 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 782F860F29E6F715006B3106 /* FirebaseFirestore */; };
 		782F861229E6F719006B3106 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 782F861129E6F719006B3106 /* FirebaseFirestoreSwift */; };
@@ -106,12 +107,13 @@
 		781B5CA32A49DA56004F29A4 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		781B5CA72A49DAE6004F29A4 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		781B5CAB2A4B1790004F29A4 /* LoginAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembly.swift; sourceTree = "<group>"; };
-		781B5CB22A5196F2004F29A4 /* jsonDataNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = jsonDataNew.json; path = ../../../../../json_GlobalEntry/jsonDataNew.json; sourceTree = "<group>"; };
 		781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		781B5CBA2A51A53E004F29A4 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		781B5CBC2A51A555004F29A4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		781B5CC12A51A5C0004F29A4 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportAssembly.swift; sourceTree = "<group>"; };
+		781B5CC62A52C91A004F29A4 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		781B5CC82A55BEF5004F29A4 /* jsonDataNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonDataNew.json; sourceTree = "<group>"; };
 		782F860D29E6E4D5006B3106 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		782F861529E8349E006B3106 /* ChoosePassportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportViewController.swift; sourceTree = "<group>"; };
 		7839825D29F2CF4E00D30821 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
@@ -248,7 +250,7 @@
 		781B5C982A49A609004F29A4 /* JsonData */ = {
 			isa = PBXGroup;
 			children = (
-				781B5CB22A5196F2004F29A4 /* jsonDataNew.json */,
+				781B5CC82A55BEF5004F29A4 /* jsonDataNew.json */,
 			);
 			path = JsonData;
 			sourceTree = "<group>";
@@ -471,6 +473,7 @@
 			children = (
 				783B36DA29CB5D3D0029BD6D /* AppDelegate.swift */,
 				783B36DC29CB5D3D0029BD6D /* SceneDelegate.swift */,
+				781B5CC62A52C91A004F29A4 /* UserDefaultsManager.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -687,7 +690,7 @@
 				52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */,
 				52ACEA5529F2D9BE00EEED74 /* Inter-Regular.ttf in Resources */,
 				52ACEA5829F2D9BE00EEED74 /* Inter-Black.ttf in Resources */,
-				781B5CB32A5196F4004F29A4 /* jsonDataNew.json in Resources */,
+				781B5CC92A55BEF7004F29A4 /* jsonDataNew.json in Resources */,
 				52ACEA5929F2D9BE00EEED74 /* Inter-SemiBold.ttf in Resources */,
 				52ACEA5229F2D9BE00EEED74 /* Inter-Light.ttf in Resources */,
 				78C651152A2658CF00E8F30E /* GoogleService-Info.plist in Resources */,
@@ -803,6 +806,7 @@
 				789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */,
 				781B5C9E2A49D8BC004F29A4 /* Login.swift in Sources */,
 				789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */,
+				781B5CC72A52C91A004F29A4 /* UserDefaultsManager.swift in Sources */,
 				781B5CAC2A4B1790004F29A4 /* LoginAssembly.swift in Sources */,
 				783B36DD29CB5D3D0029BD6D /* SceneDelegate.swift in Sources */,
 				78C650E82A2388FE00E8F30E /* Country.swift in Sources */,
