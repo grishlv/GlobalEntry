@@ -14,11 +14,13 @@ final class MainScreenViewController: UIViewController {
     var labelCountry: String?
     var features: [Feature] = []
     
+    let countryImages = ["afghanistan", "albania", "algeria", "andorra", "angola", "antiguaAndBarbuda", "argentina", "armenia", "australia", "austria", "azerbaijan", "bahamas", "bahrain", "bangladesh", "barbados", "belarus", "belgium", "belize", "benin", "bhutan", "bolivia", "bosniaAndHerzegovina", "botswana", "brazil", "brunei", "bulgaria", "burkinaFaso", "burundi", "cambodia", "cameroon", "canada", "capeVerde", "centralAfricanRepublic", "chad", "chile", "china", "colombia", "comoros", "congo", "costaRica", "croatia", "cuba", "cyprus", "czechRepublic", "democraticCongo", "denmark", "djibouti", "dominica", "dominicanRepublic", "ecuador", "egypt", "elSalvador", "equatorialGuinea", "eritrea", "estonia", "ethiopia", "fiji", "finland", "france", "gabon", "gambia", "georgia", "germany", "ghana", "greece", "grenada", "guatemala", "guineaBissau", "guineaNext", "guyana", "haiti", "honduras", "hongKong", "hungary", "iceland", "india", "indonesia", "iran", "iraq", "ireland", "israel", "italy", "ivoryCoast", "jamaica", "japan", "jordan", "kazakhstan", "kenya", "kiribati", "kosovo", "kuwait", "kyrgyzstan", "laos", "latvia", "lebanon", "lesotho", "liberia", "libya", "liechtenstein", "lithuania", "luxembourg", "macao", "madagascar", "malawi", "malaysia", "maldives", "mali", "malta", "marshallIslands", "mauritania", "mauritius", "mexico", "mirconesia", "moldova", "monaco", "mongolia", "montenegro", "morocco", "mozambique", "myanmar", "namibia", "nauru", "nepal", "netherlands", "newZealand", "nicaragua", "niger", "nigeria", "northKorea", "northMacedonia", "norway", "oman", "pakistan", "palau", "palestine", "panama", "papuaNewGuinea", "paraguay", "peru", "philippines", "poland", "portugal", "qatar", "romania", "russia", "rwanda", "saintKittsAndNevis", "saintLucia", "saintVincentAndTheGrenadines", "samoa", "sanMarino", "saoTomeAndPrincipe", "saudiArabia", "senegal", "serbia", "seychelles", "sierraLeone", "singapore", "slovakia", "slovenia", "solomonIslands", "somalia", "southAfrica", "southKorea", "southSudan", "spain", "sriLanka", "sudan", "suriname", "swaziland", "sweden", "switzerland", "syria", "taiwan", "tajikistan", "tanzania", "thailand", "timor-leste", "togo", "tonga", "trinidadAndTobago", "tunisia", "turkey", "turkmenistan", "tuvalu", "uganda", "ukraine", "unitedArabEmirates", "unitedKingdom", "unitedStates", "uruguay", "uzbekistan", "vanuatu", "vatican", "venezuela", "vietnam", "yemen", "zambia", "zimbabwe"]
+    
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
         labelHeader.text = "Your country list"
-        labelHeader.font = UIFont(name: "Inter-Bold", size: 28)
+        labelHeader.font = UIFont(name: "Inter-Bold", size: 30)
         labelHeader.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
         labelHeader.numberOfLines = 1
         view.addSubview(labelHeader)
@@ -28,8 +30,10 @@ final class MainScreenViewController: UIViewController {
     //MARK: - search bar
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        
         //custom UI
         setupCustomSearchBar(searchBar)
+        
         searchBar.barTintColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         searchBar.searchTextField.backgroundColor = UIColor(red: 238/255, green: 239/255, blue: 244/255, alpha: 1)
         searchBar.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
@@ -44,32 +48,27 @@ final class MainScreenViewController: UIViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.sectionHeaderTopPadding = 0
-        tableView.rowHeight = 60.0
+        tableView.rowHeight = 110.0
         tableView.keyboardDismissMode = .onDrag
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
         return tableView
     }()
-    
-    private var searchBarTopConstraint: Constraint?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupLabelHeader()
-        setupLabelCountry()
         setupSearchBar()
         setupTableView()
-        
-        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-        tableView.contentInset = UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
+        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
     }
     
     //MARK: - setup label header
     private func setupLabelHeader() {
-        
+
         //constraints
         labelHeader.snp.makeConstraints({ make in
             make.top.equalToSuperview().inset(75)
@@ -81,34 +80,14 @@ final class MainScreenViewController: UIViewController {
     
     //MARK: - setup search bar
     private func setupSearchBar() {
+        
+        //constraints
         searchBar.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(120) // Store the top constraint reference
+            make.top.equalTo(labelHeader.snp.bottom).inset(-16)
             make.leading.trailing.equalToSuperview().inset(10)
             make.width.equalTo(345)
             make.height.equalTo(48)
         })
-    }
-    
-    //MARK: - setup label country
-    private func setupLabelCountry() {
-        
-        if let passportName = labelCountry {
-            let label = UILabel()
-            label.text = passportName
-            label.textColor = .black
-            label.textAlignment = .center
-            label.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
-            label.center = view.center
-            view.addSubview(label)
-            
-            //constraints
-            label.snp.makeConstraints({ make in
-                make.top.equalToSuperview().inset(160)
-                make.leading.equalToSuperview().inset(20)
-                make.width.equalTo(345)
-                make.height.equalTo(48)
-            })
-        }
     }
     
     //MARK: - setup table view
@@ -116,10 +95,9 @@ final class MainScreenViewController: UIViewController {
         
         //constraints
         tableView.snp.makeConstraints({ make in
-            make.top.equalTo(searchBar.snp.bottom).inset(-20)
+            make.top.equalTo(searchBar.safeAreaLayoutGuide.snp.bottomMargin)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.width.equalTo(345)
-            make.height.equalTo(650)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         })
     }
     
@@ -157,8 +135,13 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         let feature = features[indexPath.section]
+        let image = UIImage(named: countryImages[indexPath.section])
         
         cell.textLabel?.text = "\(feature.destination): \(feature.requirement)"
+        cell.imageView?.image = image
+        cell.imageView?.sizeToFit()
+        cell.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        cell.imageView?.clipsToBounds = true
         cell.backgroundColor = .white
         cell.textLabel?.textColor = .black
         cell.textLabel?.font = UIFont(name: "Inter-Medium", size: 18)
@@ -174,42 +157,27 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
         let feature = features[section]
         return feature.destination
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let searchBarHeight: CGFloat = 48
-        let searchBarTopOffset: CGFloat = 120
-        
-        let newOffset = max(-offsetY - searchBarHeight, -searchBarTopOffset)
-        searchBarTopConstraint?.update(offset: newOffset)
-        
-        // Scroll the table view to the top by adjusting the content offset
-        if offsetY < -40 { // Adjust the offset threshold as needed
-            scrollView.setContentOffset(CGPoint(x: 0, y: -40), animated: false)
-        }
-    }
-
 }
 
 //MARK: - setup custom UI to search bar
 extension MainScreenViewController {
-    
+
     func setupCustomSearchBar(_ searchBar: UISearchBar) {
         //setup custom UI
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
-            
+
             //setup color to search icon
             if let leftView = textfield.leftView as? UIImageView {
                 leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
                 leftView.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
             }
-            
+
             //setup color to clear button
             if let clearButton = textfield.value(forKey: "clearButton") as? UIButton {
                 clearButton.setImage(clearButton.currentImage?.withRenderingMode(.alwaysTemplate), for: .normal)
                 clearButton.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 0.5)
             }
-            
+
             //setup color and font conf to text
             let attributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1),

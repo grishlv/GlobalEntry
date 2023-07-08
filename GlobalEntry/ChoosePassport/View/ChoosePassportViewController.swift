@@ -17,7 +17,7 @@ final class ChoosePassportViewController: UIViewController {
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
         labelHeader.text = "Choose your passport"
-        labelHeader.font = UIFont(name: "Inter-Bold", size: 28)
+        labelHeader.font = UIFont(name: "Inter-Bold", size: 30)
         labelHeader.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
         labelHeader.numberOfLines = 1
         view.addSubview(labelHeader)
@@ -93,9 +93,8 @@ final class ChoosePassportViewController: UIViewController {
         
         //constraints
         searchBar.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(120)
-            make.leading.equalToSuperview().inset(10)
-            make.trailing.equalToSuperview().inset(10)
+            make.top.equalTo(labelHeader.snp.bottom).inset(-16)
+            make.leading.trailing.equalToSuperview().inset(10)
             make.width.equalTo(345)
             make.height.equalTo(48)
         })
@@ -106,12 +105,9 @@ final class ChoosePassportViewController: UIViewController {
         
         //constraints
         tableView.snp.makeConstraints({ make in
-            make.top.equalTo(searchBar.snp.bottom).inset(-20)
-            make.leading.equalToSuperview().inset(20)
-            make.trailing.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(20)
-            make.width.equalTo(345)
-            make.height.equalTo(700)
+            make.top.equalTo(searchBar.safeAreaLayoutGuide.snp.bottomMargin)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         })
     }
     
