@@ -4,15 +4,16 @@
 //
 //  Created by Grigoriy Shilyaev on 25.06.23.
 //
-
 import Foundation
 import UIKit
 import SnapKit
+import RealmSwift
 
-final class MainScreenViewController: UIViewController {
+final class MainScreenViewController: UIViewController, UISearchBarDelegate, ChoosePassportViewModelDelegate {
     
     var labelCountry: String?
     var features: [Feature] = []
+    private var viewModel: ChoosePassportViewModel = ChoosePassportViewModel()
     
     let countryImages = ["afghanistan", "albania", "algeria", "andorra", "angola", "antiguaAndBarbuda", "argentina", "armenia", "australia", "austria", "azerbaijan", "bahamas", "bahrain", "bangladesh", "barbados", "belarus", "belgium", "belize", "benin", "bhutan", "bolivia", "bosniaAndHerzegovina", "botswana", "brazil", "brunei", "bulgaria", "burkinaFaso", "burundi", "cambodia", "cameroon", "canada", "capeVerde", "centralAfricanRepublic", "chad", "chile", "china", "colombia", "comoros", "congo", "costaRica", "croatia", "cuba", "cyprus", "czechRepublic", "democraticCongo", "denmark", "djibouti", "dominica", "dominicanRepublic", "ecuador", "egypt", "elSalvador", "equatorialGuinea", "eritrea", "estonia", "ethiopia", "fiji", "finland", "france", "gabon", "gambia", "georgia", "germany", "ghana", "greece", "grenada", "guatemala", "guineaBissau", "guineaNext", "guyana", "haiti", "honduras", "hongKong", "hungary", "iceland", "india", "indonesia", "iran", "iraq", "ireland", "israel", "italy", "ivoryCoast", "jamaica", "japan", "jordan", "kazakhstan", "kenya", "kiribati", "kosovo", "kuwait", "kyrgyzstan", "laos", "latvia", "lebanon", "lesotho", "liberia", "libya", "liechtenstein", "lithuania", "luxembourg", "macao", "madagascar", "malawi", "malaysia", "maldives", "mali", "malta", "marshallIslands", "mauritania", "mauritius", "mexico", "mirconesia", "moldova", "monaco", "mongolia", "montenegro", "morocco", "mozambique", "myanmar", "namibia", "nauru", "nepal", "netherlands", "newZealand", "nicaragua", "niger", "nigeria", "northKorea", "northMacedonia", "norway", "oman", "pakistan", "palau", "palestine", "panama", "papuaNewGuinea", "paraguay", "peru", "philippines", "poland", "portugal", "qatar", "romania", "russia", "rwanda", "saintKittsAndNevis", "saintLucia", "saintVincentAndTheGrenadines", "samoa", "sanMarino", "saoTomeAndPrincipe", "saudiArabia", "senegal", "serbia", "seychelles", "sierraLeone", "singapore", "slovakia", "slovenia", "solomonIslands", "somalia", "southAfrica", "southKorea", "southSudan", "spain", "sriLanka", "sudan", "suriname", "swaziland", "sweden", "switzerland", "syria", "taiwan", "tajikistan", "tanzania", "thailand", "timor-leste", "togo", "tonga", "trinidadAndTobago", "tunisia", "turkey", "turkmenistan", "tuvalu", "uganda", "ukraine", "unitedArabEmirates", "unitedKingdom", "unitedStates", "uruguay", "uzbekistan", "vanuatu", "vatican", "venezuela", "vietnam", "yemen", "zambia", "zimbabwe"]
     
@@ -39,6 +40,7 @@ final class MainScreenViewController: UIViewController {
         searchBar.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
         searchBar.backgroundImage = UIImage()
         searchBar.setImage(UIImage(named: "ic_clear"), for: .clear, state: .normal)
+        searchBar.delegate = self
         view.addSubview(searchBar)
         return searchBar
     }()
@@ -61,9 +63,13 @@ final class MainScreenViewController: UIViewController {
         setupLabelHeader()
         setupSearchBar()
         setupTableView()
+        searchBar(searchBar, textDidChange: "")
         tableView.delegate = self
         tableView.dataSource = self
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        
+        viewModel.delegate = self
+        viewModel.fetchData()
     }
     
     //MARK: - setup label header
@@ -109,6 +115,15 @@ final class MainScreenViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func didSelectCountry(_ passportName: String) {
+        // Filter the features based on the selected passport
+        let selectedCountry = viewModel.passports?.filter("passport == %@", passportName).first
+        features = Array(selectedCountry?.features ?? List<Feature>())
+        
+        // Reload the table view with the filtered features
+        tableView.reloadData()
+    }
 }
 
 extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
@@ -123,6 +138,11 @@ extension MainScreenViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 12
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.performSearch(with: searchText)
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
