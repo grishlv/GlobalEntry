@@ -146,15 +146,20 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = viewModel.filtered?[indexPath.section].passport
         
-        cell.backgroundColor = .white
-        cell.textLabel?.textColor = .black
+        cell.textLabel?.text = viewModel.filtered?[indexPath.section].passport
+        cell.textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
         cell.textLabel?.font = UIFont(name: "Inter-Medium", size: 18)
+        
+        let selectedBackgroundView = UIView()
+        selectedBackgroundView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+        selectedBackgroundView.layer.cornerRadius = 10
+        cell.selectedBackgroundView = selectedBackgroundView
+
         cell.layer.cornerRadius = 10
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = CGColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        cell.backgroundColor = .white
         cell.clipsToBounds = true
+        
         return cell
     }
     
@@ -180,7 +185,7 @@ extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
     func didSelectCountry(_ passportName: String) {
         if let tabBarController = self.tabBar as? TabController {
             if let navController = tabBarController.viewControllers?.first as? UINavigationController,
-               let mainScreenViewController = navController.viewControllers.first as? MainScreenViewController {
+               let mainScreenViewController = navController.viewControllers.first as? MainViewController {
                 if let country = viewModel.passports?.filter("passport == %@", passportName).first {
                     mainScreenViewController.features = Array(country.features)
                 }

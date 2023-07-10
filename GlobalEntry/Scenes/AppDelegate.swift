@@ -10,6 +10,7 @@ import Firebase
 import FirebaseCore
 import FirebaseDatabase
 import FirebaseFirestore
+import FirebaseStorage
 import GoogleSignIn
 
 @main

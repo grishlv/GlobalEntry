@@ -20,12 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     let tabBarController = TabController()
                     tabBarController.selectedIndex = 0
                     let navController = UINavigationController(rootViewController: tabBarController)
-                    window.rootViewController = tabBarController
+                    window.rootViewController = navController
                 } else {
                     let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
                     let navController = UINavigationController(rootViewController: choosePassportVC)
-                    window.rootViewController = navController
-                }
+                    window.rootViewController = navController                }
             } else {
                 let firstVC = FirstOnboardingController()
                 let navController = UINavigationController(rootViewController: firstVC)
