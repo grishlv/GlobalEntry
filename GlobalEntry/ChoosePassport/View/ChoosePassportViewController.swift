@@ -48,6 +48,7 @@ final class ChoosePassportViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.rowHeight = 60.0
         tableView.keyboardDismissMode = .onDrag
+        tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
         return tableView

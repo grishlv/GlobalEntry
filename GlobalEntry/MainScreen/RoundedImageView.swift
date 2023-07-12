@@ -8,11 +8,29 @@
 import UIKit
 
 class RoundedImageView: UIImageView {
-    var cornerRadius: CGFloat = 0
+
+    var cornerRadius: CGFloat {
+        didSet {
+            setRoundedCorners()
+        }
+    }
+    
+    init(cornerRadius: CGFloat = 0) {
+        self.cornerRadius = cornerRadius
+        super.init(frame: .zero)
+        setRoundedCorners()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        setRoundedCorners()
+    }
+    
+    private func setRoundedCorners() {
         // Apply corner radius to specific corners
         let maskPath = UIBezierPath(roundedRect: bounds,
                                     byRoundingCorners: [.topRight, .bottomRight],
@@ -23,3 +41,4 @@ class RoundedImageView: UIImageView {
         layer.mask = maskLayer
     }
 }
+

@@ -10,13 +10,14 @@ import UIKit
 import SnapKit
 import Firebase
 import FirebaseStorage
+import Kingfisher
 
 final class MainViewController: UIViewController {
-    
+
     var labelCountry: String?
     var features: [Feature] = []
-    var loadedImages: [String: UIImage] = [:]
-    
+    var filteredFeatures: [Feature] = []
+
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -51,7 +52,8 @@ final class MainViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.rowHeight = 110.0
         tableView.keyboardDismissMode = .onDrag
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.separatorStyle = .none
+        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
         return tableView
     }()
@@ -64,6 +66,8 @@ final class MainViewController: UIViewController {
         setupTableView()
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
+        filteredFeatures = features
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
     }
     
@@ -115,7 +119,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return features.count
+        return filteredFeatures.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -131,176 +135,107 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.backgroundColor = view.backgroundColor
         return headerView
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
+        let feature = filteredFeatures[indexPath.section]
+        let destination = feature.destination
+        let requirement = feature.requirement
+
+        let fullText = "\(destination)\nStaying: \(requirement)"
+
+        let attributedString = NSMutableAttributedString(string: fullText)
+
+        // Define the attributes for the whole text
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1),
+            .font: UIFont(name: "Inter-Bold", size: 18)!
+        ]
+
+        // Apply the attributes to the whole text
+        attributedString.addAttributes(attributes, range: NSRange(location: 0, length: fullText.count))
+
+        // Define the attributes for the "Staying: requirement" part
+        let requirementAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(red: 99/255, green: 99/255, blue: 102/255, alpha: 1),
+            .font: UIFont(name: "Inter-Bold", size: 14)!
+        ]
+
+        // Apply the attributes to the "Staying: requirement" part
+        attributedString.addAttributes(requirementAttributes, range: (fullText as NSString).range(of: "Staying: \(requirement)"))
+
+        // Define paragraph style with custom spacing
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 5
+
+        // Apply paragraph style to the attributed string
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+
         
-        let feature = features[indexPath.section]
-        cell.textLabel?.text = "\(feature.destination): \(feature.requirement)"
-        cell.textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
-        cell.textLabel?.numberOfLines = 2
-        cell.textLabel?.font = UIFont(name: "Inter-Bold", size: 18)
-        
-        cell.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1).cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cell.layer.shadowRadius = 4
-        cell.layer.masksToBounds = false
-        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.layer.cornerRadius).cgPath
-        
-        cell.backgroundColor = .white
-        cell.layer.cornerRadius = 10
-        
-        let imageURL = feature.imageURL
-        
-        //Check if the image is already loaded from cache
-        if let loadedImage = loadedImages[imageURL] {
-            cell.imageView?.image = loadedImage
-        } else {
-            //The image is not in cache, show the grey view
-            let greyView = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 110))
-            greyView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
-            let cornerRadius: CGFloat = 10
-            let maskPath = UIBezierPath(roundedRect: greyView.bounds,
-                                        byRoundingCorners: [.topRight, .bottomRight],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-            let maskLayer = CAShapeLayer()
-            maskLayer.path = maskPath.cgPath
-            greyView.layer.mask = maskLayer
-            
-            let selectedBackgroundView = UIView()
-            selectedBackgroundView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
-            selectedBackgroundView.layer.cornerRadius = 10
-            cell.selectedBackgroundView = selectedBackgroundView
-            
-            cell.contentView.addSubview(greyView)
-            greyView.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.trailing.equalToSuperview()
-                make.width.equalTo(140)
-                make.height.equalTo(110)
-            }
-            
-            // Download the image asynchronously
-            let storageRef = Storage.storage().reference().child("images/\(imageURL).jpg")
-            storageRef.downloadURL { [weak self] url, error in
-                if let imageURL = url {
-                    let session = URLSession.shared
-                    let task = session.dataTask(with: imageURL) { [weak self] (data, response, error) in
-                        if let error = error {
-                            print("error: \(error)")
-                        } else if let data = data, let image = UIImage(data: data) {
-                            // Store the loaded image in cache
-                            self?.loadedImages[imageURL.absoluteString] = image
-                            
-                            DispatchQueue.main.async {
-                                // Check if the cell is still visible at this indexPath
-                                if let currentCell = tableView.cellForRow(at: indexPath) {
-                                    greyView.removeFromSuperview()
-                                    
-                                    let imageView = RoundedImageView(image: image)
-                                    imageView.cornerRadius = 10
-                                    currentCell.imageView?.image = image
-                                    currentCell.contentView.addSubview(imageView)
-                                    
-                                    imageView.snp.makeConstraints { make in
-                                        make.centerY.equalToSuperview()
-                                        make.trailing.equalToSuperview()
-                                        make.width.equalTo(140)
-                                        make.height.equalTo(110)
-                                    }
-                                    currentCell.imageView?.image = nil
-                                    currentCell.imageView?.isHidden = true
-                                    currentCell.setNeedsLayout()
-                                }
+        // Set the attributed string to the textLabel
+        cell.textLabel?.attributedText = attributedString
+
+        cell.roundedImageView.kf.cancelDownloadTask()
+        cell.roundedImageView.image = UIImage(named: "placeholderImage")
+
+        // If the image URL is not empty, download the image.
+        if !feature.imageURL.isEmpty {
+            let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
+
+            // Download the image URL.
+            DispatchQueue.global(qos: .background).async {
+                storageRef.downloadURL { [weak cell] url, error in
+                    guard let imageURL = url, let strongCell = cell else {
+                        print("Failed to get image URL: \(error?.localizedDescription ?? "")")
+                        return
+                    }
+
+                    DispatchQueue.main.async {
+                        strongCell.roundedImageView.kf.indicatorType = .activity
+                        strongCell.roundedImageView.kf.setImage(
+                            with: imageURL,
+                            placeholder: UIImage(named: "placeholderImage"),
+                            options: [
+                                .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
+                                .scaleFactor(UIScreen.main.scale),
+                                .transition(.fade(0.2)),
+                                .cacheOriginalImage
+                            ])
+                        { result in
+                            switch result {
+                            case .success(let value):
+                                print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                                strongCell.setNeedsLayout()
+                            case .failure(let error):
+                                print("Job failed: \(error.localizedDescription)")
                             }
                         }
                     }
-                    task.resume()
-                } else {
-                    print("errorHard")
                 }
             }
+        } else {
+            // If the image URL is empty, hide the image view.
+            cell.roundedImageView.isHidden = true
         }
+
         return cell
     }
-    
-    
-    //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ImageTableViewCell
-    //
-    //        let feature = features[indexPath.section]
-    //        cell.textLabel?.text = "\(feature.destination): \(feature.requirement)"
-    //        // Configure other properties of the cell
-    //
-    //        let imageURL = feature.imageURL
-    //
-    //        // Check if the image is already loaded from cache
-    //        if let cachedImage = ImageCache.shared.image(forKey: imageURL) {
-    //            cell.imageView?.image = cachedImage
-    //        } else {
-    //            // The image is not in cache, show the grey view
-    //            let greyView = UIView(frame: CGRect(x: 0, y: 0, width: 140, height: 110))
-    //            greyView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
-    //            let cornerRadius: CGFloat = 10
-    //            let maskPath = UIBezierPath(roundedRect: greyView.bounds,
-    //                                        byRoundingCorners: [.topRight, .bottomRight],
-    //                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-    //            let maskLayer = CAShapeLayer()
-    //            maskLayer.path = maskPath.cgPath
-    //            greyView.layer.mask = maskLayer
-    //
-    //            let selectedBackgroundView = UIView()
-    //            selectedBackgroundView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
-    //            selectedBackgroundView.layer.cornerRadius = 10
-    //            cell.selectedBackgroundView = selectedBackgroundView
-    //
-    //            cell.contentView.addSubview(greyView)
-    //            greyView.snp.makeConstraints { make in
-    //                make.centerY.equalToSuperview()
-    //                make.trailing.equalToSuperview()
-    //                make.width.equalTo(140)
-    //                make.height.equalTo(110)
-    //            }
-    //
-    //            // Download the image asynchronously
-    //            let storageRef = Storage.storage().reference().child("images/\(imageURL).jpg")
-    //            let placeholderImage = UIImage(named: "placeholder") // Placeholder image while loading
-    //            cell.imageView?.image = placeholderImage
-    //
-    //            storageRef.downloadURL { url, error in
-    //                if let imageURL = url {
-    //                    let session = URLSession.shared
-    //                    let task = session.dataTask(with: imageURL) { (data, response, error) in
-    //                        if let error = error {
-    //                            print("error: \(error)")
-    //                        } else if let data = data, let image = UIImage(data: data) {
-    //                            // Store the loaded image in cache
-    //                            ImageCache.shared.storeImage(image, forKey: imageURL.absoluteString)
-    //
-    //                            DispatchQueue.main.async {
-    //                                // Check if the cell is still visible at this indexPath
-    //                                if let currentCell = tableView.cellForRow(at: indexPath), currentCell.imageView?.image == placeholderImage {
-    //                                    greyView.removeFromSuperview()
-    //
-    //                                    cell.imageView?.image = image
-    //                                    cell.setNeedsLayout()
-    //                                }
-    //                            }
-    //                        }
-    //                    }
-    //                    task.resume()
-    //                } else {
-    //                    print("errorHard")
-    //                }
-    //            }
-    //        }
-    //
-    //        return cell
-    //    }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let feature = features[section]
         return feature.destination
+    }
+}
+
+extension MainViewController: UISearchBarDelegate {
+    // MARK: - UISearchBarDelegate
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredFeatures = features
+        } else {
+            filteredFeatures = features.filter { $0.destination.lowercased().starts(with: searchText.lowercased()) }
+        }
+        tableView.reloadData()
     }
 }
 
@@ -347,3 +282,4 @@ extension MainViewController {
         view.endEditing(true)
     }
 }
+

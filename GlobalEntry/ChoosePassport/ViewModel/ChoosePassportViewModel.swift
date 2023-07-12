@@ -21,7 +21,7 @@ final class ChoosePassportViewModel {
     //MARK: - fetch data
     
     public func fetchData() {
-        guard let filePath = Bundle.main.path(forResource: "updatedJsonData", ofType: "json") else {
+        guard let filePath = Bundle.main.path(forResource: "updatedNewData", ofType: "json") else {
             return
         }
         
