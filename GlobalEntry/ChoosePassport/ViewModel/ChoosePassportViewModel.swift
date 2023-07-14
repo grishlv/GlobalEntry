@@ -21,9 +21,22 @@ final class ChoosePassportViewModel {
     //MARK: - fetch data
     
     public func fetchData() {
-        guard let filePath = Bundle.main.path(forResource: "updatedNewData", ofType: "json") else {
+        guard let filePath = Bundle.main.path(forResource: "updatedNew", ofType: "json") else {
             return
         }
+        
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    // Perform migration if the schema version is less than 1
+                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
+                        // Add the 'isFavorite' property with the default value of false
+                        newObject?["isFavorite"] = false
+                    }
+                }
+            }
+        )
         
         do {
             let fileURL = URL(fileURLWithPath: filePath)
@@ -31,7 +44,7 @@ final class ChoosePassportViewModel {
             let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
             
             if let jsonDict = json as? [String: Any], let jsonArray = jsonDict["country"] as? [[String: Any]] {
-                let realm = try Realm()
+                let realm = try Realm(configuration: config)
                 
                 try realm.write {
                     
@@ -47,6 +60,7 @@ final class ChoosePassportViewModel {
                                 feature.destination = featureDict["destination"] as? String ?? ""
                                 feature.requirement = featureDict["requirement"] as? String ?? ""
                                 feature.imageURL = featureDict["imageURL"] as? String ?? ""
+                                feature.isFavorite = featureDict["isFavorite"] as? Bool ?? false
 
                                 country.features.append(feature)
                             }

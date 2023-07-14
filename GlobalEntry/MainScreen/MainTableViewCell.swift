@@ -14,12 +14,26 @@ final class MainTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    let heartImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "heart")
+        imageView.tintColor = .white
+        return imageView
+    }()
+    
+    let filledHeartImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "heart.fill")
+        imageView.tintColor = .white
+        return imageView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         // Text configurations
-//        textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
-//        textLabel?.font = UIFont(name: "Inter-Bold", size: 18)
         textLabel?.numberOfLines = 0
         
         // Cell background configurations
@@ -33,12 +47,24 @@ final class MainTableViewCell: UITableViewCell {
         self.selectedBackgroundView = selectedBackgroundView
         
         contentView.addSubview(roundedImageView)
+        contentView.addSubview(heartImageView)
+        contentView.addSubview(filledHeartImageView)
         
         roundedImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview()
             make.width.equalTo(140)
             make.height.equalTo(110)
+        }
+        
+        heartImageView.snp.makeConstraints { make in
+            make.top.equalTo(roundedImageView.snp.top).offset(10)
+            make.trailing.equalTo(roundedImageView.snp.trailing).offset(-10)
+            make.width.height.equalTo(25)
+        }
+
+        filledHeartImageView.snp.makeConstraints { make in
+            make.edges.equalTo(heartImageView)
         }
         
         textLabel?.snp.makeConstraints { make in

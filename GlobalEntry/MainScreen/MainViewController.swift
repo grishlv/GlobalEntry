@@ -11,6 +11,7 @@ import SnapKit
 import Firebase
 import FirebaseStorage
 import Kingfisher
+import RealmSwift
 
 final class MainViewController: UIViewController {
 
@@ -27,6 +28,14 @@ final class MainViewController: UIViewController {
         labelHeader.numberOfLines = 1
         view.addSubview(labelHeader)
         return labelHeader
+    }()
+    
+    //MARK: - slider filter
+    private lazy var filterSlider: UIImageView = {
+        let filterSlider = UIImageView()
+        filterSlider.image = UIImage(named: "filter")
+        view.addSubview(filterSlider)
+        return filterSlider
     }()
     
     //MARK: - search bar
@@ -64,6 +73,7 @@ final class MainViewController: UIViewController {
         setupLabelHeader()
         setupSearchBar()
         setupTableView()
+        setupFilterSlider()
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
@@ -106,6 +116,18 @@ final class MainViewController: UIViewController {
         })
     }
     
+    //MARK: - setup filter slider
+    private func setupFilterSlider() {
+        
+        //constraints
+        filterSlider.snp.makeConstraints({ make in
+            make.top.equalToSuperview().inset(90)
+            make.trailing.equalTo(tableView.snp.trailing)
+            make.width.equalTo(filterSlider)
+            make.height.equalTo(filterSlider)
+        })
+    }
+    
     init(features: [Feature]) {
         self.features = features
         super.init(nibName: nil, bundle: nil)
@@ -141,8 +163,23 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let feature = filteredFeatures[indexPath.section]
         let destination = feature.destination
         let requirement = feature.requirement
-
         let fullText = "\(destination)\nStaying: \(requirement)"
+
+        let isFavorite = feature.isFavorite
+        cell.heartImageView.isHidden = isFavorite
+        cell.filledHeartImageView.isHidden = !isFavorite
+        
+        // Handle the tap on the heart icon
+        cell.heartImageView.isUserInteractionEnabled = true
+        cell.filledHeartImageView.isUserInteractionEnabled = true
+        
+        let tapGestureEmpty = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
+        let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
+        
+        cell.heartImageView.addGestureRecognizer(tapGestureEmpty)
+        cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
+        cell.heartImageView.tag = indexPath.section
+        cell.filledHeartImageView.tag = indexPath.section
 
         let attributedString = NSMutableAttributedString(string: fullText)
 
@@ -219,6 +256,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         return cell
+    }
+    
+    @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
+        guard let index = sender.view?.tag else { return }
+        let feature = filteredFeatures[index]
+
+        // Access the shared instance or global variable of the Realm object
+        let realm = try! Realm()
+
+        // Update the "isFavorite" property of the selected feature
+        try? realm.write {
+            feature.isFavorite = !feature.isFavorite
+        }
+
+        // Reload the table view to reflect the updated favorite status
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

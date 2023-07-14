@@ -31,7 +31,6 @@
 		781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CBA2A51A53E004F29A4 /* MapViewController.swift */; };
 		781B5CBD2A51A555004F29A4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CBC2A51A555004F29A4 /* ProfileViewController.swift */; };
 		781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC12A51A5C0004F29A4 /* TabController.swift */; };
-		781B5CC52A51AAD1004F29A4 /* ChoosePassportAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */; };
 		781B5CC72A52C91A004F29A4 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CC62A52C91A004F29A4 /* UserDefaultsManager.swift */; };
 		782F860E29E6E4D6006B3106 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F860D29E6E4D5006B3106 /* LogInViewController.swift */; };
 		782F861029E6F715006B3106 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 782F860F29E6F715006B3106 /* FirebaseFirestore */; };
@@ -50,7 +49,7 @@
 		786074F42A5B5C0100B1BED2 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074F32A5B5C0100B1BED2 /* RoundedImageView.swift */; };
 		786074FD2A5D679F00B1BED2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 786074FC2A5D679F00B1BED2 /* Kingfisher */; };
 		786074FF2A5DA8E000B1BED2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */; };
-		786075062A5EF9B700B1BED2 /* updatedNewData.json in Resources */ = {isa = PBXBuildFile; fileRef = 786075052A5EF9B700B1BED2 /* updatedNewData.json */; };
+		7860750A2A607D2E00B1BED2 /* updatedNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 786075092A607D2E00B1BED2 /* updatedNew.json */; };
 		789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */; };
 		789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */; };
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
@@ -115,7 +114,6 @@
 		781B5CBA2A51A53E004F29A4 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		781B5CBC2A51A555004F29A4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		781B5CC12A51A5C0004F29A4 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
-		781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportAssembly.swift; sourceTree = "<group>"; };
 		781B5CC62A52C91A004F29A4 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		782F860D29E6E4D5006B3106 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		782F861529E8349E006B3106 /* ChoosePassportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportViewController.swift; sourceTree = "<group>"; };
@@ -135,7 +133,7 @@
 		786074E92A598CA600B1BED2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		786074F32A5B5C0100B1BED2 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
-		786075052A5EF9B700B1BED2 /* updatedNewData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = updatedNewData.json; sourceTree = "<group>"; };
+		786075092A607D2E00B1BED2 /* updatedNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = updatedNew.json; sourceTree = "<group>"; };
 		789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingController.swift; sourceTree = "<group>"; };
 		789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingController.swift; sourceTree = "<group>"; };
@@ -261,7 +259,7 @@
 		781B5C982A49A609004F29A4 /* JsonData */ = {
 			isa = PBXGroup;
 			children = (
-				786075052A5EF9B700B1BED2 /* updatedNewData.json */,
+				786075092A607D2E00B1BED2 /* updatedNew.json */,
 			);
 			path = JsonData;
 			sourceTree = "<group>";
@@ -364,14 +362,6 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
-		781B5CC32A51AABE004F29A4 /* Assembly */ = {
-			isa = PBXGroup;
-			children = (
-				781B5CC42A51AAD1004F29A4 /* ChoosePassportAssembly.swift */,
-			);
-			path = Assembly;
-			sourceTree = "<group>";
-		};
 		782F860C29E6E4B4006B3106 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,7 +376,6 @@
 		782F861429E83465006B3106 /* ChoosePassport */ = {
 			isa = PBXGroup;
 			children = (
-				781B5CC32A51AABE004F29A4 /* Assembly */,
 				78B6A5EC2A1D20CC008DF2F1 /* Model */,
 				781B5C972A49A5ED004F29A4 /* View */,
 				781B5C992A49A61E004F29A4 /* ViewModel */,
@@ -700,6 +689,7 @@
 				52ACEA5129F2D9BE00EEED74 /* Inter-Medium.ttf in Resources */,
 				52ACEA5629F2D9BE00EEED74 /* Inter-ExtraBold.ttf in Resources */,
 				783B36E729CB5D420029BD6D /* LaunchScreen.storyboard in Resources */,
+				7860750A2A607D2E00B1BED2 /* updatedNew.json in Resources */,
 				783B36E429CB5D420029BD6D /* Assets.xcassets in Resources */,
 				52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */,
 				52ACEA5529F2D9BE00EEED74 /* Inter-Regular.ttf in Resources */,
@@ -707,7 +697,6 @@
 				52ACEA5929F2D9BE00EEED74 /* Inter-SemiBold.ttf in Resources */,
 				52ACEA5229F2D9BE00EEED74 /* Inter-Light.ttf in Resources */,
 				78C651152A2658CF00E8F30E /* GoogleService-Info.plist in Resources */,
-				786075062A5EF9B700B1BED2 /* updatedNewData.json in Resources */,
 				52ACEA5329F2D9BE00EEED74 /* Inter-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -815,7 +804,6 @@
 				781B5CA42A49DA56004F29A4 /* LoginPresenter.swift in Sources */,
 				52ACEA6129F307D200EEED74 /* SingnupInteractor.swift in Sources */,
 				78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */,
-				781B5CC52A51AAD1004F29A4 /* ChoosePassportAssembly.swift in Sources */,
 				781B5CA82A49DAE6004F29A4 /* LoginInteractor.swift in Sources */,
 				78B1622C29D738C8002CD5A9 /* Register.swift in Sources */,
 				52ACEA5F29F3010600EEED74 /* FirebaseService.swift in Sources */,

@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let firstVC = FirstOnboardingController()
                 let navController = UINavigationController(rootViewController: firstVC)
                 window.rootViewController = navController
-                UserDefaultsManager.shared.isWelcomeScreenShown = true
+//                UserDefaultsManager.shared.isWelcomeScreenShown = true
             }
             self.window = window
             window.makeKeyAndVisible()
