@@ -21,7 +21,7 @@ final class ChoosePassportViewModel {
     //MARK: - fetch data
     
     public func fetchData() {
-        guard let filePath = Bundle.main.path(forResource: "updatedNew", ofType: "json") else {
+        guard let filePath = Bundle.main.path(forResource: "jsonFileNew", ofType: "json") else {
             return
         }
         
@@ -61,6 +61,7 @@ final class ChoosePassportViewModel {
                                 feature.requirement = featureDict["requirement"] as? String ?? ""
                                 feature.imageURL = featureDict["imageURL"] as? String ?? ""
                                 feature.isFavorite = featureDict["isFavorite"] as? Bool ?? false
+                                feature.id = featureDict["id"] as? String ?? ""
                                 
                                 country.features.append(feature)
                             }

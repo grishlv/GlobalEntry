@@ -17,4 +17,5 @@ class Feature: Object {
     @objc dynamic var requirement: String = ""
     @objc dynamic var imageURL: String = ""
     @objc dynamic var isFavorite: Bool = false
+    @objc dynamic var id: String = ""
 }

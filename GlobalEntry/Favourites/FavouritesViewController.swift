@@ -138,8 +138,8 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     
                     DispatchQueue.main.async {
-                        strongCell.roundedImageView.kf.indicatorType = .activity
-                        strongCell.roundedImageView.kf.setImage(
+                        strongCell.imageView?.kf.indicatorType = .activity
+                        strongCell.imageView?.kf.setImage(
                             with: imageURL,
                             placeholder: UIImage(named: "placeholderImage"),
                             options: [
@@ -162,7 +162,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             // If the image URL is empty, hide the image view.
-            cell.roundedImageView.isHidden = true
+            cell.imageView?.isHidden = true
         }
         return cell
     }
@@ -170,6 +170,9 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         let feature = favoriteFeatures[index]
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
         
         // Access the shared instance or global variable of the Realm object
         let realm = try! Realm()
@@ -181,7 +184,13 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         
         NotificationCenter.default.post(name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
 
-        // Reload the table view to reflect the updated favorite status
-        tableView.reloadData()
+        // Get the cell associated with the tapped button
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell else {
+            return
+        }
+        
+        // Update the icon based on the "isFavorite" property
+        cell.heartImageView.isHidden = feature.isFavorite
+        cell.filledHeartImageView.isHidden = !feature.isFavorite
     }
 }

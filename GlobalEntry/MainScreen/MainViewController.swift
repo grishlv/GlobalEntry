@@ -79,6 +79,7 @@ final class MainViewController: UIViewController {
         searchBar.delegate = self
         filteredFeatures = features
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
     }
     
@@ -169,12 +170,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
         let feature = filteredFeatures[indexPath.section]
-        let fullText = "\(feature.destination)\nStaying: \(feature.requirement)"
         let tapGestureEmpty = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
+        cell.uniqueId = feature.id
         cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
         cell.heartImageView.addGestureRecognizer(tapGestureEmpty)
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
@@ -184,49 +186,44 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         // If the image URL is not empty, download the image.
         if !feature.imageURL.isEmpty {
             let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
-            
-            // Download the image URL.
-            DispatchQueue.global(qos: .background).async {
-                storageRef.downloadURL { [weak cell] url, error in
-                    guard let imageURL = url, let strongCell = cell else {
-                        print("Failed to get image URL: \(error?.localizedDescription ?? "")")
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        strongCell.roundedImageView.kf.indicatorType = .activity
-                        strongCell.roundedImageView.kf.setImage(
-                            with: imageURL,
-                            placeholder: UIImage(named: "placeholderImage"),
-                            options: [
-                                .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
-                                .scaleFactor(UIScreen.main.scale),
-                                .transition(.fade(0.2)),
-                                .cacheOriginalImage
-                            ])
-                        { result in
-                            switch result {
-                            case .success(let value):
-                                print("Task done for: \(value.source.url?.absoluteString ?? "")")
-                                strongCell.setNeedsLayout()
-                            case .failure(let error):
-                                print("Job failed: \(error.localizedDescription)")
+            storageRef.downloadURL { [weak cell] url, error in
+                guard let imageURL = url, let strongCell = cell, error == nil else {
+                    print("Failed to get image URL: \(error?.localizedDescription ?? "")")
+                    return
+                }
+                KingfisherManager.shared.retrieveImage(with: imageURL, options: [
+                    .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(0.2)),
+                    .cacheOriginalImage
+                ]) { [weak cell] result in
+                    guard let cell = cell else { return }
+                    switch result {
+                    case .success(let value):
+                        // Check if the cell is still meant to display this image
+                        if cell.uniqueId == feature.id {
+                            DispatchQueue.main.async {
+                                cell.imageView?.image = value.image
+                                cell.setNeedsLayout()
                             }
                         }
+                    case .failure(let error):
+                        print("Job failed: \(error.localizedDescription)")
                     }
                 }
             }
         } else {
-            // If the image URL is empty, hide the image view.
-            cell.roundedImageView.isHidden = true
+            cell.imageView?.isHidden = true
         }
-        
         return cell
     }
     
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         let feature = filteredFeatures[index]
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
         
         // Access the shared instance or global variable of the Realm object
         let realm = try! Realm()
@@ -236,8 +233,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             feature.isFavorite = !feature.isFavorite
         }
         
-        // Reload the table view to reflect the updated favorite status
-        tableView.reloadData()
+        // Get the cell associated with the tapped button
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell else {
+            return
+        }
+        
+        // Update the icon based on the "isFavorite" property
+        cell.heartImageView.isHidden = feature.isFavorite
+        cell.filledHeartImageView.isHidden = !feature.isFavorite
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -300,8 +303,4 @@ extension MainViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-}
-
-protocol FavoriteDelegate: AnyObject {
-    func didUpdateFavoriteStatus(for feature: Feature)
 }

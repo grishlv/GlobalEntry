@@ -46,10 +46,9 @@
 		783B36FC29CB5D420029BD6D /* GlobalEntryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36FB29CB5D420029BD6D /* GlobalEntryUITests.swift */; };
 		783B36FE29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783B36FD29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift */; };
 		786074EA2A598CA600B1BED2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074E92A598CA600B1BED2 /* MainViewModel.swift */; };
-		786074F42A5B5C0100B1BED2 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074F32A5B5C0100B1BED2 /* RoundedImageView.swift */; };
 		786074FD2A5D679F00B1BED2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 786074FC2A5D679F00B1BED2 /* Kingfisher */; };
 		786074FF2A5DA8E000B1BED2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */; };
-		7860750A2A607D2E00B1BED2 /* updatedNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 786075092A607D2E00B1BED2 /* updatedNew.json */; };
+		7860750E2A632E7D00B1BED2 /* jsonFileNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 7860750D2A632E7D00B1BED2 /* jsonFileNew.json */; };
 		789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */; };
 		789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */; };
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
@@ -131,9 +130,8 @@
 		783B36FB29CB5D420029BD6D /* GlobalEntryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEntryUITests.swift; sourceTree = "<group>"; };
 		783B36FD29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEntryUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		786074E92A598CA600B1BED2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		786074F32A5B5C0100B1BED2 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
-		786075092A607D2E00B1BED2 /* updatedNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = updatedNew.json; sourceTree = "<group>"; };
+		7860750D2A632E7D00B1BED2 /* jsonFileNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonFileNew.json; sourceTree = "<group>"; };
 		789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingController.swift; sourceTree = "<group>"; };
 		789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingController.swift; sourceTree = "<group>"; };
@@ -243,7 +241,6 @@
 				781B5C952A489363004F29A4 /* MainViewController.swift */,
 				786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */,
 				786074E92A598CA600B1BED2 /* MainViewModel.swift */,
-				786074F32A5B5C0100B1BED2 /* RoundedImageView.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -259,7 +256,7 @@
 		781B5C982A49A609004F29A4 /* JsonData */ = {
 			isa = PBXGroup;
 			children = (
-				786075092A607D2E00B1BED2 /* updatedNew.json */,
+				7860750D2A632E7D00B1BED2 /* jsonFileNew.json */,
 			);
 			path = JsonData;
 			sourceTree = "<group>";
@@ -689,7 +686,7 @@
 				52ACEA5129F2D9BE00EEED74 /* Inter-Medium.ttf in Resources */,
 				52ACEA5629F2D9BE00EEED74 /* Inter-ExtraBold.ttf in Resources */,
 				783B36E729CB5D420029BD6D /* LaunchScreen.storyboard in Resources */,
-				7860750A2A607D2E00B1BED2 /* updatedNew.json in Resources */,
+				7860750E2A632E7D00B1BED2 /* jsonFileNew.json in Resources */,
 				783B36E429CB5D420029BD6D /* Assets.xcassets in Resources */,
 				52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */,
 				52ACEA5529F2D9BE00EEED74 /* Inter-Regular.ttf in Resources */,
@@ -794,7 +791,6 @@
 				786074EA2A598CA600B1BED2 /* MainViewModel.swift in Sources */,
 				783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */,
 				783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */,
-				786074F42A5B5C0100B1BED2 /* RoundedImageView.swift in Sources */,
 				781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */,
 				781B5CA12A49D903004F29A4 /* FirebaseServiceLogin.swift in Sources */,
 				781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */,

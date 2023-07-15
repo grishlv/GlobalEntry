@@ -9,11 +9,6 @@ import UIKit
 
 final class MainTableViewCell: UITableViewCell {
     
-    let roundedImageView: RoundedImageView = {
-        let imageView = RoundedImageView(cornerRadius: 10)
-        return imageView
-    }()
-    
     let heartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -30,11 +25,14 @@ final class MainTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    var uniqueId: String? 
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         // Text configurations
         textLabel?.numberOfLines = 0
+        imageView?.clipsToBounds = true
         
         // Cell background configurations
         backgroundColor = .white
@@ -46,11 +44,10 @@ final class MainTableViewCell: UITableViewCell {
         selectedBackgroundView.layer.cornerRadius = 10
         self.selectedBackgroundView = selectedBackgroundView
         
-        contentView.addSubview(roundedImageView)
         contentView.addSubview(heartImageView)
         contentView.addSubview(filledHeartImageView)
         
-        roundedImageView.snp.makeConstraints { make in
+        imageView!.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview()
             make.width.equalTo(140)
@@ -58,8 +55,8 @@ final class MainTableViewCell: UITableViewCell {
         }
         
         heartImageView.snp.makeConstraints { make in
-            make.top.equalTo(roundedImageView.snp.top).offset(10)
-            make.trailing.equalTo(roundedImageView.snp.trailing).offset(-10)
+            make.top.equalTo(imageView!.snp.top).offset(10)
+            make.trailing.equalTo(imageView!.snp.trailing).offset(-10)
             make.width.height.equalTo(25)
         }
 
@@ -70,7 +67,7 @@ final class MainTableViewCell: UITableViewCell {
         textLabel?.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(9)
             make.leading.equalToSuperview().offset(13)
-            make.trailing.lessThanOrEqualTo(roundedImageView.snp.leading).offset(-10)
+            make.trailing.lessThanOrEqualTo(imageView!.snp.leading).offset(-10)
         }
     }
     
@@ -79,9 +76,10 @@ final class MainTableViewCell: UITableViewCell {
     }
     
     func configureCell(feature: Feature, destination: String, requirement: String) {
-        let fullText = "\(destination)\nStaying: \(requirement)"
         
+        let fullText = "\(destination)\nStaying: \(requirement)"
         let isFavorite = feature.isFavorite
+        
         heartImageView.isHidden = isFavorite
         filledHeartImageView.isHidden = !isFavorite
         
@@ -116,17 +114,28 @@ final class MainTableViewCell: UITableViewCell {
         // Apply paragraph style to the attributed string
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
-        
         // Set the attributed string to the textLabel
         textLabel?.attributedText = attributedString
         
-        roundedImageView.kf.cancelDownloadTask()
-        roundedImageView.image = UIImage(named: "placeholderImage")
+        imageView?.kf.cancelDownloadTask()
+        imageView?.image = UIImage(named: "placeholderImage")
+        
+        layoutIfNeeded()
+        applyCornerRadiusToImageView()
+    }
+    
+    func applyCornerRadiusToImageView() {
+        let path = UIBezierPath(roundedRect: imageView!.bounds,
+                                byRoundingCorners: [.topRight, .bottomRight],
+                                cornerRadii: CGSize(width: 10, height: 10))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        imageView!.layer.mask = mask
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.roundedImageView.kf.cancelDownloadTask()
-        self.roundedImageView.image = UIImage(named: "placeholderImage")
+        self.imageView?.kf.cancelDownloadTask()
+        self.imageView?.image = UIImage(named: "placeholderImage")
     }
 }
