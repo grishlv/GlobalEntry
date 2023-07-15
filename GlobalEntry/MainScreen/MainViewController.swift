@@ -79,6 +79,16 @@ final class MainViewController: UIViewController {
         searchBar.delegate = self
         filteredFeatures = features
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+    }
+    
+    // Method to reload table view
+    @objc func reloadTableData() {
+        tableView.reloadData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
     }
     
     //MARK: - setup label header
@@ -161,60 +171,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
         let feature = filteredFeatures[indexPath.section]
-        let destination = feature.destination
-        let requirement = feature.requirement
-        let fullText = "\(destination)\nStaying: \(requirement)"
-        
-        let isFavorite = feature.isFavorite
-        cell.heartImageView.isHidden = isFavorite
-        cell.filledHeartImageView.isHidden = !isFavorite
-        
-        // Handle the tap on the heart icon
-        cell.heartImageView.isUserInteractionEnabled = true
-        cell.filledHeartImageView.isUserInteractionEnabled = true
-        
+        let fullText = "\(feature.destination)\nStaying: \(feature.requirement)"
         let tapGestureEmpty = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
+        cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
         cell.heartImageView.addGestureRecognizer(tapGestureEmpty)
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.heartImageView.tag = indexPath.section
         cell.filledHeartImageView.tag = indexPath.section
-        
-        let attributedString = NSMutableAttributedString(string: fullText)
-        
-        // Define the attributes for the whole text
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1),
-            .font: UIFont(name: "Inter-Bold", size: 18)!
-        ]
-        
-        // Apply the attributes to the whole text
-        attributedString.addAttributes(attributes, range: NSRange(location: 0, length: fullText.count))
-        
-        // Define the attributes for the "Staying: requirement" part
-        let requirementAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor(red: 99/255, green: 99/255, blue: 102/255, alpha: 1),
-            .font: UIFont(name: "Inter-Bold", size: 14)!
-        ]
-        
-        // Apply the attributes to the "Staying: requirement" part
-        attributedString.addAttributes(requirementAttributes, range: (fullText as NSString).range(of: "Staying: \(requirement)"))
-        
-        // Define paragraph style with custom spacing
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = 5
-        
-        // Apply paragraph style to the attributed string
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
-        
-        
-        // Set the attributed string to the textLabel
-        cell.textLabel?.attributedText = attributedString
-        
-        cell.roundedImageView.kf.cancelDownloadTask()
-        cell.roundedImageView.image = UIImage(named: "placeholderImage")
-        
+
         // If the image URL is not empty, download the image.
         if !feature.imageURL.isEmpty {
             let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
@@ -334,4 +300,8 @@ extension MainViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+}
+
+protocol FavoriteDelegate: AnyObject {
+    func didUpdateFavoriteStatus(for feature: Feature)
 }

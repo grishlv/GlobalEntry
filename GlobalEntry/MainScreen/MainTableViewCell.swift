@@ -78,9 +78,50 @@ final class MainTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(with feature: Feature, image: UIImage?) {
-        textLabel?.text = "\(feature.destination): \(feature.requirement)"
-        roundedImageView.image = image ?? UIImage(named: "placeholderImage")
+    func configureCell(feature: Feature, destination: String, requirement: String) {
+        let fullText = "\(destination)\nStaying: \(requirement)"
+        
+        let isFavorite = feature.isFavorite
+        heartImageView.isHidden = isFavorite
+        filledHeartImageView.isHidden = !isFavorite
+        
+        // Handle the tap on the heart icon
+        heartImageView.isUserInteractionEnabled = true
+        filledHeartImageView.isUserInteractionEnabled = true
+        
+        let attributedString = NSMutableAttributedString(string: fullText)
+        
+        // Define the attributes for the whole text
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1),
+            .font: UIFont(name: "Inter-Bold", size: 18)!
+        ]
+        
+        // Apply the attributes to the whole text
+        attributedString.addAttributes(attributes, range: NSRange(location: 0, length: fullText.count))
+        
+        // Define the attributes for the "Staying: requirement" part
+        let requirementAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(red: 99/255, green: 99/255, blue: 102/255, alpha: 1),
+            .font: UIFont(name: "Inter-Bold", size: 14)!
+        ]
+        
+        // Apply the attributes to the "Staying: requirement" part
+        attributedString.addAttributes(requirementAttributes, range: (fullText as NSString).range(of: "Staying: \(requirement)"))
+        
+        // Define paragraph style with custom spacing
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 5
+        
+        // Apply paragraph style to the attributed string
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        
+        
+        // Set the attributed string to the textLabel
+        textLabel?.attributedText = attributedString
+        
+        roundedImageView.kf.cancelDownloadTask()
+        roundedImageView.image = UIImage(named: "placeholderImage")
     }
     
     override func prepareForReuse() {

@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import SnapKit
 import RealmSwift
+import Kingfisher
+import FirebaseStorage
 
 final class FavouritesViewController: UIViewController {
     
@@ -116,16 +118,52 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
         let feature = favoriteFeatures[indexPath.section]
-        
-        cell.configureCell(with: feature, image: nil)
-        
-        cell.heartImageView.isHidden = true
-        cell.filledHeartImageView.isHidden = false
-        
+        let fullText = "\(feature.destination)\nStaying: \(feature.requirement)"
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
+        
+        cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.filledHeartImageView.tag = indexPath.section
-        
+
+        // If the image URL is not empty, download the image.
+        if !feature.imageURL.isEmpty {
+            let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
+            
+            // Download the image URL.
+            DispatchQueue.global(qos: .background).async {
+                storageRef.downloadURL { [weak cell] url, error in
+                    guard let imageURL = url, let strongCell = cell else {
+                        print("Failed to get image URL: \(error?.localizedDescription ?? "")")
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        strongCell.roundedImageView.kf.indicatorType = .activity
+                        strongCell.roundedImageView.kf.setImage(
+                            with: imageURL,
+                            placeholder: UIImage(named: "placeholderImage"),
+                            options: [
+                                .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
+                                .scaleFactor(UIScreen.main.scale),
+                                .transition(.fade(0.2)),
+                                .cacheOriginalImage
+                            ])
+                        { result in
+                            switch result {
+                            case .success(let value):
+                                print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                                strongCell.setNeedsLayout()
+                            case .failure(let error):
+                                print("Job failed: \(error.localizedDescription)")
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            // If the image URL is empty, hide the image view.
+            cell.roundedImageView.isHidden = true
+        }
         return cell
     }
     
@@ -138,9 +176,11 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         
         // Update the "isFavorite" property of the selected feature
         try? realm.write {
-            feature.isFavorite = false
+            feature.isFavorite = !feature.isFavorite
         }
         
+        NotificationCenter.default.post(name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+
         // Reload the table view to reflect the updated favorite status
         tableView.reloadData()
     }
