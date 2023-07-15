@@ -61,7 +61,7 @@ final class ChoosePassportViewModel {
                                 feature.requirement = featureDict["requirement"] as? String ?? ""
                                 feature.imageURL = featureDict["imageURL"] as? String ?? ""
                                 feature.isFavorite = featureDict["isFavorite"] as? Bool ?? false
-
+                                
                                 country.features.append(feature)
                             }
                         }
@@ -85,7 +85,7 @@ final class ChoosePassportViewModel {
         } else {
             let predicate = NSPredicate(format: "passport BEGINSWITH[cd] %@", searchText)
             filtered = passports?.filter(predicate).sorted(byKeyPath: "passport", ascending: true)
-
+            
             let filteredResults = try? Realm().objects(Country.self).filter(predicate)
             
             // Remove duplicates by grouping passports based on unique names

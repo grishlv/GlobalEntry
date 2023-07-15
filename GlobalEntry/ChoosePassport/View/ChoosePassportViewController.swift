@@ -156,7 +156,7 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
         selectedBackgroundView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         selectedBackgroundView.layer.cornerRadius = 10
         cell.selectedBackgroundView = selectedBackgroundView
-
+        
         cell.layer.cornerRadius = 10
         cell.backgroundColor = .white
         cell.clipsToBounds = true

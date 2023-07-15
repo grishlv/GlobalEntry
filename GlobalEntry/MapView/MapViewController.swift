@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class MapViewController: UIViewController {
+final class MapViewController: UIViewController {
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {

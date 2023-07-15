@@ -38,7 +38,7 @@ final class FavouritesViewController: UIViewController {
         view.addSubview(tableView)
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,7 +46,7 @@ final class FavouritesViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-
+        
         setupLabelHeader()
         setupTableView()
         loadFavoriteFeatures()
@@ -75,12 +75,12 @@ final class FavouritesViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         })
     }
-
+    
     private func loadFavoriteFeatures() {
         let realm = try! Realm()
         favoriteFeatures = realm.objects(Feature.self).filter("isFavorite == true")
     }
-
+    
     private func observeDatabaseChanges() {
         let realm = try! Realm()
         notificationToken = realm.observe { [weak self] _, _ in
@@ -88,7 +88,7 @@ final class FavouritesViewController: UIViewController {
             self?.tableView.reloadData()
         }
     }
-
+    
     deinit {
         notificationToken?.invalidate()
     }
@@ -98,7 +98,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return favoriteFeatures.count
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -106,17 +106,17 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 12
     }
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = view.backgroundColor
         return headerView
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
         let feature = favoriteFeatures[indexPath.section]
-
+        
         cell.configureCell(with: feature, image: nil)
         
         cell.heartImageView.isHidden = true
@@ -125,26 +125,23 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.filledHeartImageView.tag = indexPath.section
-
+        
         return cell
     }
     
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         let feature = favoriteFeatures[index]
-
+        
         // Access the shared instance or global variable of the Realm object
         let realm = try! Realm()
-
+        
         // Update the "isFavorite" property of the selected feature
         try? realm.write {
             feature.isFavorite = false
         }
-
+        
         // Reload the table view to reflect the updated favorite status
         tableView.reloadData()
     }
 }
-
-
-

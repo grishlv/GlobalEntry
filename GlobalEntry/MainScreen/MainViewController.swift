@@ -14,11 +14,11 @@ import Kingfisher
 import RealmSwift
 
 final class MainViewController: UIViewController {
-
+    
     var labelCountry: String?
     var features: [Feature] = []
     var filteredFeatures: [Feature] = []
-
+    
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -157,14 +157,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.backgroundColor = view.backgroundColor
         return headerView
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
         let feature = filteredFeatures[indexPath.section]
         let destination = feature.destination
         let requirement = feature.requirement
         let fullText = "\(destination)\nStaying: \(requirement)"
-
+        
         let isFavorite = feature.isFavorite
         cell.heartImageView.isHidden = isFavorite
         cell.filledHeartImageView.isHidden = !isFavorite
@@ -180,45 +180,45 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.heartImageView.tag = indexPath.section
         cell.filledHeartImageView.tag = indexPath.section
-
+        
         let attributedString = NSMutableAttributedString(string: fullText)
-
+        
         // Define the attributes for the whole text
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1),
             .font: UIFont(name: "Inter-Bold", size: 18)!
         ]
-
+        
         // Apply the attributes to the whole text
         attributedString.addAttributes(attributes, range: NSRange(location: 0, length: fullText.count))
-
+        
         // Define the attributes for the "Staying: requirement" part
         let requirementAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor(red: 99/255, green: 99/255, blue: 102/255, alpha: 1),
             .font: UIFont(name: "Inter-Bold", size: 14)!
         ]
-
+        
         // Apply the attributes to the "Staying: requirement" part
         attributedString.addAttributes(requirementAttributes, range: (fullText as NSString).range(of: "Staying: \(requirement)"))
-
+        
         // Define paragraph style with custom spacing
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacing = 5
-
+        
         // Apply paragraph style to the attributed string
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
-
+        
         
         // Set the attributed string to the textLabel
         cell.textLabel?.attributedText = attributedString
-
+        
         cell.roundedImageView.kf.cancelDownloadTask()
         cell.roundedImageView.image = UIImage(named: "placeholderImage")
-
+        
         // If the image URL is not empty, download the image.
         if !feature.imageURL.isEmpty {
             let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
-
+            
             // Download the image URL.
             DispatchQueue.global(qos: .background).async {
                 storageRef.downloadURL { [weak cell] url, error in
@@ -226,7 +226,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         print("Failed to get image URL: \(error?.localizedDescription ?? "")")
                         return
                     }
-
+                    
                     DispatchQueue.main.async {
                         strongCell.roundedImageView.kf.indicatorType = .activity
                         strongCell.roundedImageView.kf.setImage(
@@ -254,22 +254,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             // If the image URL is empty, hide the image view.
             cell.roundedImageView.isHidden = true
         }
-
+        
         return cell
     }
     
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         let feature = filteredFeatures[index]
-
+        
         // Access the shared instance or global variable of the Realm object
         let realm = try! Realm()
-
+        
         // Update the "isFavorite" property of the selected feature
         try? realm.write {
             feature.isFavorite = !feature.isFavorite
         }
-
+        
         // Reload the table view to reflect the updated favorite status
         tableView.reloadData()
     }
@@ -335,4 +335,3 @@ extension MainViewController {
         view.endEditing(true)
     }
 }
-

@@ -41,4 +41,3 @@ class RoundedImageView: UIImageView {
         layer.mask = maskLayer
     }
 }
-

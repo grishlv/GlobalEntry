@@ -89,4 +89,3 @@ final class MainTableViewCell: UITableViewCell {
         self.roundedImageView.image = UIImage(named: "placeholderImage")
     }
 }
-
