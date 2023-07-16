@@ -95,8 +95,7 @@ final class ThirdOnboardingController: UIViewController {
         return labelHeader
     }()
     
-    //MARK: - swipe lines
-    //MARK: - line first
+    //MARK: - swipe line first
     private lazy var viewLineFirst: UIView = {
         let viewLineFirst = UIView()
         viewLineFirst.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
@@ -105,7 +104,7 @@ final class ThirdOnboardingController: UIViewController {
         return viewLineFirst
     }()
     
-    //MARK: - line second
+    //MARK: - swipe line second
     private lazy var viewLineSecond: UIView = {
         let viewLineSecond = UIView()
         viewLineSecond.backgroundColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1)
@@ -114,7 +113,7 @@ final class ThirdOnboardingController: UIViewController {
         return viewLineSecond
     }()
     
-    //MARK: - line third
+    //MARK: - swipe line third
     private lazy var viewLineThird: UIView = {
         let viewLineThird = UIView()
         viewLineThird.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)

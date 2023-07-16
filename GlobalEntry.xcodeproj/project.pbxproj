@@ -49,6 +49,7 @@
 		786074FD2A5D679F00B1BED2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 786074FC2A5D679F00B1BED2 /* Kingfisher */; };
 		786074FF2A5DA8E000B1BED2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */; };
 		7860750E2A632E7D00B1BED2 /* jsonFileNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 7860750D2A632E7D00B1BED2 /* jsonFileNew.json */; };
+		786075102A63DEDF00B1BED2 /* ChooseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7860750F2A63DEDF00B1BED2 /* ChooseTableViewCell.swift */; };
 		789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */; };
 		789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */; };
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
@@ -132,6 +133,7 @@
 		786074E92A598CA600B1BED2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		7860750D2A632E7D00B1BED2 /* jsonFileNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonFileNew.json; sourceTree = "<group>"; };
+		7860750F2A63DEDF00B1BED2 /* ChooseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTableViewCell.swift; sourceTree = "<group>"; };
 		789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingController.swift; sourceTree = "<group>"; };
 		789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingController.swift; sourceTree = "<group>"; };
@@ -238,8 +240,8 @@
 		781B5C942A489339004F29A4 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				781B5C952A489363004F29A4 /* MainViewController.swift */,
-				786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */,
+				786075132A63E4CA00B1BED2 /* ViewCell */,
+				786075122A63E4C200B1BED2 /* View */,
 				786074E92A598CA600B1BED2 /* MainViewModel.swift */,
 			);
 			path = MainScreen;
@@ -375,6 +377,7 @@
 			children = (
 				78B6A5EC2A1D20CC008DF2F1 /* Model */,
 				781B5C972A49A5ED004F29A4 /* View */,
+				786075112A63E4A700B1BED2 /* ViewCell */,
 				781B5C992A49A61E004F29A4 /* ViewModel */,
 				781B5C982A49A609004F29A4 /* JsonData */,
 			);
@@ -453,6 +456,30 @@
 				783B36FD29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift */,
 			);
 			path = GlobalEntryUITests;
+			sourceTree = "<group>";
+		};
+		786075112A63E4A700B1BED2 /* ViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				7860750F2A63DEDF00B1BED2 /* ChooseTableViewCell.swift */,
+			);
+			path = ViewCell;
+			sourceTree = "<group>";
+		};
+		786075122A63E4C200B1BED2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				781B5C952A489363004F29A4 /* MainViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		786075132A63E4CA00B1BED2 /* ViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */,
+			);
+			path = ViewCell;
 			sourceTree = "<group>";
 		};
 		78B1621B29D6EFE3002CD5A9 /* Onboarding */ = {
@@ -799,6 +826,7 @@
 				7839825E29F2CF4E00D30821 /* Validator.swift in Sources */,
 				781B5CA42A49DA56004F29A4 /* LoginPresenter.swift in Sources */,
 				52ACEA6129F307D200EEED74 /* SingnupInteractor.swift in Sources */,
+				786075102A63DEDF00B1BED2 /* ChooseTableViewCell.swift in Sources */,
 				78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */,
 				781B5CA82A49DAE6004F29A4 /* LoginInteractor.swift in Sources */,
 				78B1622C29D738C8002CD5A9 /* Register.swift in Sources */,

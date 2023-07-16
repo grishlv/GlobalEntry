@@ -27,10 +27,7 @@ final class ChoosePassportViewController: UIViewController {
     //MARK: - search bar
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        
-        //custom UI
-        setupCustomSearchBar(searchBar)
-        
+        setupCustomSearchBar(searchBar) //custom UI
         searchBar.barTintColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         searchBar.searchTextField.backgroundColor = UIColor(red: 238/255, green: 239/255, blue: 244/255, alpha: 1)
         searchBar.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
@@ -49,7 +46,7 @@ final class ChoosePassportViewController: UIViewController {
         tableView.rowHeight = 60.0
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(ChooseTableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
         return tableView
     }()
@@ -68,7 +65,6 @@ final class ChoosePassportViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         viewModel.delegate = self
     }
     
@@ -84,7 +80,7 @@ final class ChoosePassportViewController: UIViewController {
         labelHeader.snp.makeConstraints({ make in
             make.top.equalToSuperview().inset(75)
             make.leading.equalToSuperview().inset(20)
-            make.width.equalTo(345)
+            make.trailing.lessThanOrEqualToSuperview().inset(20)
             make.height.equalTo(48)
         })
     }
@@ -96,7 +92,6 @@ final class ChoosePassportViewController: UIViewController {
         searchBar.snp.makeConstraints({ make in
             make.top.equalTo(labelHeader.snp.bottom).inset(-16)
             make.leading.trailing.equalToSuperview().inset(10)
-            make.width.equalTo(345)
             make.height.equalTo(48)
         })
     }
@@ -112,7 +107,6 @@ final class ChoosePassportViewController: UIViewController {
         })
     }
     
-    // Initialize the view controller with the view model
     init(viewModel: ChoosePassportViewModel, tabBar: TabController) {
         self.viewModel = viewModel
         self.tabBar = tabBar
@@ -146,21 +140,8 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ChooseTableViewCell
         cell.textLabel?.text = viewModel.filtered?[indexPath.section].passport
-        cell.textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
-        cell.textLabel?.font = UIFont(name: "Inter-Medium", size: 18)
-        
-        let selectedBackgroundView = UIView()
-        selectedBackgroundView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
-        selectedBackgroundView.layer.cornerRadius = 10
-        cell.selectedBackgroundView = selectedBackgroundView
-        
-        cell.layer.cornerRadius = 10
-        cell.backgroundColor = .white
-        cell.clipsToBounds = true
-        
         return cell
     }
     

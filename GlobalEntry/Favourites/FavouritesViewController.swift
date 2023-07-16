@@ -118,7 +118,6 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
         let feature = favoriteFeatures[indexPath.section]
-        let fullText = "\(feature.destination)\nStaying: \(feature.requirement)"
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
         cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)

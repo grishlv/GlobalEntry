@@ -29,9 +29,7 @@ final class ChoosePassportViewModel {
             schemaVersion: 1,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
-                    // Perform migration if the schema version is less than 1
                     migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        // Add the 'isFavorite' property with the default value of false
                         newObject?["isFavorite"] = false
                     }
                 }
@@ -69,7 +67,6 @@ final class ChoosePassportViewModel {
                         realm.add(country)
                     }
                 }
-                
                 passports = realm.objects(Country.self)
                 filtered = passports
             }
@@ -88,8 +85,6 @@ final class ChoosePassportViewModel {
             filtered = passports?.filter(predicate).sorted(byKeyPath: "passport", ascending: true)
             
             let filteredResults = try? Realm().objects(Country.self).filter(predicate)
-            
-            // Remove duplicates by grouping passports based on unique names
             let uniquePassports = filteredResults?
                 .sorted(byKeyPath: "passport", ascending: true)
                 .distinct(by: ["passport"])

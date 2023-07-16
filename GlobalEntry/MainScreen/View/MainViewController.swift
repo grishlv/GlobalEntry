@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import SnapKit
-import Firebase
 import FirebaseStorage
 import Kingfisher
 import RealmSwift
@@ -41,10 +40,7 @@ final class MainViewController: UIViewController {
     //MARK: - search bar
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        
-        //custom UI
-        setupCustomSearchBar(searchBar)
-        
+        setupCustomSearchBar(searchBar) //custom UI
         searchBar.barTintColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         searchBar.searchTextField.backgroundColor = UIColor(red: 238/255, green: 239/255, blue: 244/255, alpha: 1)
         searchBar.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
@@ -69,6 +65,11 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadTableData),
+                                               name: NSNotification.Name("FavouriteStatusChanged"),
+                                               object: nil)
         
         setupLabelHeader()
         setupSearchBar()
@@ -78,18 +79,16 @@ final class MainViewController: UIViewController {
         tableView.dataSource = self
         searchBar.delegate = self
         filteredFeatures = features
-        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
     }
     
-    // Method to reload table view
     @objc func reloadTableData() {
         tableView.reloadData()
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: NSNotification.Name("FavouriteStatusChanged"),
+                                                  object: nil)
     }
     
     //MARK: - setup label header
@@ -99,7 +98,7 @@ final class MainViewController: UIViewController {
         labelHeader.snp.makeConstraints({ make in
             make.top.equalToSuperview().inset(75)
             make.leading.equalToSuperview().inset(20)
-            make.width.equalTo(345)
+            make.trailing.lessThanOrEqualToSuperview().inset(20)
             make.height.equalTo(48)
         })
     }
@@ -111,7 +110,6 @@ final class MainViewController: UIViewController {
         searchBar.snp.makeConstraints({ make in
             make.top.equalTo(labelHeader.snp.bottom).inset(-16)
             make.leading.trailing.equalToSuperview().inset(10)
-            make.width.equalTo(345)
             make.height.equalTo(48)
         })
     }
@@ -182,12 +180,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.heartImageView.tag = indexPath.section
         cell.filledHeartImageView.tag = indexPath.section
-
+        
         // If the image URL is not empty, download the image.
         if !feature.imageURL.isEmpty {
             let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
             storageRef.downloadURL { [weak cell] url, error in
-                guard let imageURL = url, let strongCell = cell, error == nil else {
+                guard let imageURL = url, error == nil else {
                     print("Failed to get image URL: \(error?.localizedDescription ?? "")")
                     return
                 }
@@ -225,20 +223,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
         
-        // Access the shared instance or global variable of the Realm object
         let realm = try! Realm()
         
-        // Update the "isFavorite" property of the selected feature
         try? realm.write {
             feature.isFavorite = !feature.isFavorite
         }
         
-        // Get the cell associated with the tapped button
         guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell else {
             return
         }
         
-        // Update the icon based on the "isFavorite" property
         cell.heartImageView.isHidden = feature.isFavorite
         cell.filledHeartImageView.isHidden = !feature.isFavorite
     }
