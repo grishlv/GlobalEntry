@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TabController: UITabBarController {
+final class TabController: UITabBarController, UITabBarControllerDelegate {
     
     var viewModel = ChoosePassportViewModel()
     
@@ -16,6 +16,12 @@ final class TabController: UITabBarController {
         super.viewDidLoad()
         navigationItem.setHidesBackButton(true, animated: true)
         setupTabs()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        configureTabBarAppearance()
     }
     
     func setupTabs() {
@@ -35,6 +41,21 @@ final class TabController: UITabBarController {
         let profile = createNav(with: "Profile", and: UIImage(systemName: "person.circle"), vc: FavouritesViewController())
         
         setViewControllers([search, favourites, map, profile], animated: true)
+    }
+    
+    func configureTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        // Customize the appearance of the tab bar
+        appearance.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        appearance.shadowImage = createLine(color: UIColor(red: 229/255, green: 229/255, blue: 234/255, alpha: 1), size: CGSize(width: tabBar.frame.size.width, height: 1))
+        
+        // Customize the system icon and text colors
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1)
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1)]
+        
+        tabBar.standardAppearance = appearance
     }
     
     private func createNav(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {

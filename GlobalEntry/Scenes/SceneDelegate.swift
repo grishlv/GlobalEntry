@@ -24,12 +24,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 } else {
                     let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
                     let navController = UINavigationController(rootViewController: choosePassportVC)
-                    window.rootViewController = navController                }
+                    window.rootViewController = navController
+                    UserDefaultsManager.shared.isPassportSelected = true
+                }
             } else {
                 let firstVC = FirstOnboardingController()
                 let navController = UINavigationController(rootViewController: firstVC)
                 window.rootViewController = navController
-//                UserDefaultsManager.shared.isWelcomeScreenShown = true
+                UserDefaultsManager.shared.isWelcomeScreenShown = true
             }
             self.window = window
             window.makeKeyAndVisible()

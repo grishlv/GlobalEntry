@@ -340,7 +340,7 @@ final class SecondOnboardingController: UIViewController {
     
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
-        let welcomeVC = WelcomeViewController()
-        navigationController?.pushViewController(welcomeVC, animated: true)
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        navigationController?.pushViewController(chooseVC, animated: true)
     }
 }

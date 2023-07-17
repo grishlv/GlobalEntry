@@ -15,8 +15,7 @@ import RealmSwift
 final class MainViewController: UIViewController {
     
     var labelCountry: String?
-    var features: [Feature] = []
-    var filteredFeatures: [Feature] = []
+    var viewModel = CountryViewModel()
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -78,9 +77,38 @@ final class MainViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
-        filteredFeatures = features
+        
+//        viewModel.$filteredFeatures
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                self?.tableView.reloadData()
+//            }
+//            .store(in: &viewModel.cancellables)
+//
+        if let passportCountry = UserDefaults.standard.string(forKey: "passportCountry") {
+            viewModel.loadCountryData(passportCountry)
+        }
     }
     
+    func loadCountryData(_ passportCountry: String) {
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
+                        newObject?["isFavorite"] = false
+                    }
+                }
+            }
+        )
+        
+        let realm = try! Realm(configuration: config)
+        if let country = realm.objects(Country.self).filter("passport == %@", passportCountry).first {
+            self.features = Array(country.features)
+            self.filteredFeatures = self.features
+            tableView.reloadData()
+        }
+    }
     @objc func reloadTableData() {
         tableView.reloadData()
     }
@@ -223,7 +251,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
         
-        let realm = try! Realm()
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
+                        newObject?["isFavorite"] = false
+                    }
+                }
+            }
+        )
+        
+        let realm = try! Realm(configuration: config)
         
         try? realm.write {
             feature.isFavorite = !feature.isFavorite

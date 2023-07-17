@@ -172,8 +172,8 @@ final class ThirdOnboardingController: UIViewController {
     }
     
     @objc func swipeFuncForward(gesture: UISwipeGestureRecognizer) {
-        let welcomeVC = WelcomeViewController()
-        navigationController?.pushViewController(welcomeVC, animated: true)
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        navigationController?.pushViewController(chooseVC, animated: true)
     }
     
     //MARK: - go back by gesture recognizer
@@ -323,8 +323,8 @@ final class ThirdOnboardingController: UIViewController {
     //MARK: - action button to the next view
     @objc func actionForNextButton() {
         
-        let welcomeVC = WelcomeViewController()
-        navigationController?.pushViewController(welcomeVC, animated: true)
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        navigationController?.pushViewController(chooseVC, animated: true)
     }
     
     //MARK: - button skip
@@ -344,7 +344,7 @@ final class ThirdOnboardingController: UIViewController {
     
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
-        let welcomeVC = WelcomeViewController()
-        navigationController?.pushViewController(welcomeVC, animated: true)
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        navigationController?.pushViewController(chooseVC, animated: true)
     }
 }

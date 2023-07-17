@@ -240,9 +240,9 @@
 		781B5C942A489339004F29A4 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				786075132A63E4CA00B1BED2 /* ViewCell */,
 				786075122A63E4C200B1BED2 /* View */,
-				786074E92A598CA600B1BED2 /* MainViewModel.swift */,
+				786075132A63E4CA00B1BED2 /* ViewCell */,
+				78AD18452A6552C000403213 /* MainViewModel */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -480,6 +480,14 @@
 				786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */,
 			);
 			path = ViewCell;
+			sourceTree = "<group>";
+		};
+		78AD18452A6552C000403213 /* MainViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				786074E92A598CA600B1BED2 /* MainViewModel.swift */,
+			);
+			path = MainViewModel;
 			sourceTree = "<group>";
 		};
 		78B1621B29D6EFE3002CD5A9 /* Onboarding */ = {

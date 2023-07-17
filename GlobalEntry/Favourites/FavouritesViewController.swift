@@ -62,7 +62,7 @@ final class FavouritesViewController: UIViewController {
         labelHeader.snp.makeConstraints({ make in
             make.top.equalToSuperview().inset(75)
             make.leading.equalToSuperview().inset(20)
-            make.width.equalTo(345)
+            make.trailing.lessThanOrEqualToSuperview().inset(20)
             make.height.equalTo(48)
         })
     }
@@ -78,13 +78,36 @@ final class FavouritesViewController: UIViewController {
         })
     }
     
-    private func loadFavoriteFeatures() {
-        let realm = try! Realm()
+    public func loadFavoriteFeatures() {
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
+                        newObject?["isFavorite"] = false
+                    }
+                }
+            }
+        )
+
+        let realm = try! Realm(configuration: config)
         favoriteFeatures = realm.objects(Feature.self).filter("isFavorite == true")
     }
+
     
-    private func observeDatabaseChanges() {
-        let realm = try! Realm()
+    public func observeDatabaseChanges() {
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
+                        newObject?["isFavorite"] = false
+                    }
+                }
+            }
+        )
+        
+        let realm = try! Realm(configuration: config)
         notificationToken = realm.observe { [weak self] _, _ in
             self?.loadFavoriteFeatures()
             self?.tableView.reloadData()
@@ -115,6 +138,12 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         return headerView
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Reset the navigation bar appearance
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
         let feature = favoriteFeatures[indexPath.section]
@@ -123,44 +152,34 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.filledHeartImageView.tag = indexPath.section
-
-        // If the image URL is not empty, download the image.
+        
         if !feature.imageURL.isEmpty {
             let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
-            
-            // Download the image URL.
-            DispatchQueue.global(qos: .background).async {
-                storageRef.downloadURL { [weak cell] url, error in
-                    guard let imageURL = url, let strongCell = cell else {
-                        print("Failed to get image URL: \(error?.localizedDescription ?? "")")
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        strongCell.imageView?.kf.indicatorType = .activity
-                        strongCell.imageView?.kf.setImage(
-                            with: imageURL,
-                            placeholder: UIImage(named: "placeholderImage"),
-                            options: [
-                                .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
-                                .scaleFactor(UIScreen.main.scale),
-                                .transition(.fade(0.2)),
-                                .cacheOriginalImage
-                            ])
-                        { result in
-                            switch result {
-                            case .success(let value):
-                                print("Task done for: \(value.source.url?.absoluteString ?? "")")
-                                strongCell.setNeedsLayout()
-                            case .failure(let error):
-                                print("Job failed: \(error.localizedDescription)")
-                            }
+            storageRef.downloadURL { [weak cell] url, error in
+                guard let imageURL = url, error == nil else {
+                    print("Failed to get image URL: \(error?.localizedDescription ?? "")")
+                    return
+                }
+                KingfisherManager.shared.retrieveImage(with: imageURL, options: [
+                    .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(0.2)),
+                    .cacheOriginalImage
+                ]) { [weak cell] result in
+                    guard let cell = cell else { return }
+                    switch result {
+                    case .success(let value):
+                        // Check if the cell is still meant to display this image
+                        DispatchQueue.main.async {
+                            cell.imageView?.image = value.image
+                            cell.setNeedsLayout()
                         }
+                    case .failure(let error):
+                        print("Job failed: \(error.localizedDescription)")
                     }
                 }
             }
         } else {
-            // If the image URL is empty, hide the image view.
             cell.imageView?.isHidden = true
         }
         return cell
@@ -173,23 +192,32 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
         
-        // Access the shared instance or global variable of the Realm object
-        let realm = try! Realm()
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
+                        newObject?["isFavorite"] = false
+                    }
+                }
+            }
+        )
+
+        let realm = try! Realm(configuration: config)
         
-        // Update the "isFavorite" property of the selected feature
-        try? realm.write {
-            feature.isFavorite = !feature.isFavorite
+        do {
+            try realm.write {
+                feature.isFavorite = !feature.isFavorite
+            }
+        } catch {
+            print("Failed to update favorite status: \(error.localizedDescription)")
         }
         
         NotificationCenter.default.post(name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
-
-        // Get the cell associated with the tapped button
-        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell else {
-            return
-        }
         
-        // Update the icon based on the "isFavorite" property
-        cell.heartImageView.isHidden = feature.isFavorite
-        cell.filledHeartImageView.isHidden = !feature.isFavorite
+        // refresh the cell views
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [IndexPath(row: 0, section: index)], with: .none)
+        tableView.endUpdates()
     }
 }
