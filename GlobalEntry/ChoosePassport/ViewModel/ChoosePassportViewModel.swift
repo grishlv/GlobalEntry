@@ -25,24 +25,13 @@ final class ChoosePassportViewModel {
             return
         }
         
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
-            }
-        )
-        
         do {
             let fileURL = URL(fileURLWithPath: filePath)
             let jsonData = try Data(contentsOf: fileURL)
             let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
             
             if let jsonDict = json as? [String: Any], let jsonArray = jsonDict["country"] as? [[String: Any]] {
-                let realm = try Realm(configuration: config)
+                let realm = try Realm()
                 
                 try realm.write {
                     

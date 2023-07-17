@@ -168,7 +168,7 @@ extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
             if let navController = tabBarController.viewControllers?.first as? UINavigationController,
                let mainScreenViewController = navController.viewControllers.first as? MainViewController {
                 if let country = viewModel.passports?.filter("passport == %@", passportName).first {
-                    mainScreenViewController.features = Array(country.features)
+                    mainScreenViewController.viewModel.features = Array(country.features)
                 }
             }
             tabBarController.selectedIndex = 0

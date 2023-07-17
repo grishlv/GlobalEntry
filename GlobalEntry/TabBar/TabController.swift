@@ -35,7 +35,7 @@ final class TabController: UITabBarController, UITabBarControllerDelegate {
 
         tabBar.standardAppearance = appearance
         
-        let search = createNav(with: "Search", and: UIImage(systemName: "magnifyingglass"), vc: MainViewController(features: []))
+        let search = createNav(with: "Search", and: UIImage(systemName: "magnifyingglass"), vc: MainViewController(viewModel: MainViewModel.init()))
         let favourites = createNav(with: "Favourites", and: UIImage(systemName: "heart"), vc: FavouritesViewController())
         let map = createNav(with: "On the map", and: UIImage(systemName: "map"), vc: MapViewController())
         let profile = createNav(with: "Profile", and: UIImage(systemName: "person.circle"), vc: FavouritesViewController())

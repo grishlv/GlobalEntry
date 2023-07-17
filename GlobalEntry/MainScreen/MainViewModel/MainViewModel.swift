@@ -6,14 +6,47 @@
 //
 
 import Foundation
+import UIKit
+import FirebaseStorage
+import Kingfisher
 import RealmSwift
 import Combine
 
-class CountryViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
     @Published var features: [Feature] = []
     @Published var filteredFeatures: [Feature] = []
 
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
+    
+    func getImage(for feature: Feature, uniqueId: String, completion: @escaping (String, UIImage?) -> Void) {
+        guard !feature.imageURL.isEmpty else {
+            completion(uniqueId, nil)
+            return
+        }
+
+        let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
+        storageRef.downloadURL { url, error in
+            guard let imageURL = url, error == nil else {
+                print("Failed to get image URL: \(error?.localizedDescription ?? "")")
+                completion(uniqueId, nil)
+                return
+            }
+            KingfisherManager.shared.retrieveImage(with: imageURL, options: [
+                .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ]) { result in
+                switch result {
+                case .success(let value):
+                    completion(uniqueId, value.image)
+                case .failure(let error):
+                    print("Job failed: \(error.localizedDescription)")
+                    completion(uniqueId, nil)
+                }
+            }
+        }
+    }
 
     func loadCountryData(_ passportCountry: String) {
         let config = Realm.Configuration(

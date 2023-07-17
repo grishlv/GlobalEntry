@@ -15,7 +15,7 @@ import RealmSwift
 final class MainViewController: UIViewController {
     
     var labelCountry: String?
-    var viewModel = CountryViewModel()
+    var viewModel = MainViewModel()
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -65,58 +65,36 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reloadTableData),
-                                               name: NSNotification.Name("FavouriteStatusChanged"),
-                                               object: nil)
         
         setupLabelHeader()
         setupSearchBar()
         setupTableView()
         setupFilterSlider()
+        hideKeyboardWhenTappedAround()
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
         
-//        viewModel.$filteredFeatures
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                self?.tableView.reloadData()
-//            }
-//            .store(in: &viewModel.cancellables)
-//
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+        
+        viewModel.$filteredFeatures
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &viewModel.cancellables)
+
         if let passportCountry = UserDefaults.standard.string(forKey: "passportCountry") {
             viewModel.loadCountryData(passportCountry)
         }
     }
-    
-    func loadCountryData(_ passportCountry: String) {
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
-            }
-        )
-        
-        let realm = try! Realm(configuration: config)
-        if let country = realm.objects(Country.self).filter("passport == %@", passportCountry).first {
-            self.features = Array(country.features)
-            self.filteredFeatures = self.features
-            tableView.reloadData()
-        }
-    }
+
     @objc func reloadTableData() {
         tableView.reloadData()
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name("FavouriteStatusChanged"),
-                                                  object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
     }
     
     //MARK: - setup label header
@@ -165,8 +143,8 @@ final class MainViewController: UIViewController {
         })
     }
     
-    init(features: [Feature]) {
-        self.features = features
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -178,7 +156,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filteredFeatures.count
+        return viewModel.filteredFeatures.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -198,7 +176,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
-        let feature = filteredFeatures[indexPath.section]
+        let feature = viewModel.filteredFeatures[indexPath.section]
         let tapGestureEmpty = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
@@ -209,89 +187,45 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.heartImageView.tag = indexPath.section
         cell.filledHeartImageView.tag = indexPath.section
         
-        // If the image URL is not empty, download the image.
-        if !feature.imageURL.isEmpty {
-            let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
-            storageRef.downloadURL { [weak cell] url, error in
-                guard let imageURL = url, error == nil else {
-                    print("Failed to get image URL: \(error?.localizedDescription ?? "")")
-                    return
-                }
-                KingfisherManager.shared.retrieveImage(with: imageURL, options: [
-                    .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(0.2)),
-                    .cacheOriginalImage
-                ]) { [weak cell] result in
-                    guard let cell = cell else { return }
-                    switch result {
-                    case .success(let value):
-                        // Check if the cell is still meant to display this image
-                        if cell.uniqueId == feature.id {
-                            DispatchQueue.main.async {
-                                cell.imageView?.image = value.image
-                                cell.setNeedsLayout()
-                            }
-                        }
-                    case .failure(let error):
-                        print("Job failed: \(error.localizedDescription)")
-                    }
+        viewModel.getImage(for: feature, uniqueId: feature.id) { [weak cell] (id, image) in
+            DispatchQueue.main.async {
+                if cell?.uniqueId == id {
+                    cell?.imageView?.image = image
+                    cell?.setNeedsLayout()
                 }
             }
-        } else {
-            cell.imageView?.isHidden = true
         }
+//        else {
+//            cell.imageView?.isHidden = true
+//        }
         return cell
     }
     
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
-        let feature = filteredFeatures[index]
+        let feature = viewModel.filteredFeatures[index]
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
-        
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
-            }
-        )
-        
-        let realm = try! Realm(configuration: config)
-        
+
+        let realm = try! Realm()
         try? realm.write {
             feature.isFavorite = !feature.isFavorite
         }
         
-        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell else {
-            return
-        }
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell
+        else { return }
         
         cell.heartImageView.isHidden = feature.isFavorite
         cell.filledHeartImageView.isHidden = !feature.isFavorite
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let feature = features[section]
-        return feature.destination
-    }
 }
 
+// MARK: - UISearchBarDelegate
 extension MainViewController: UISearchBarDelegate {
-    // MARK: - UISearchBarDelegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            filteredFeatures = features
-        } else {
-            filteredFeatures = features.filter { $0.destination.lowercased().starts(with: searchText.lowercased()) }
-        }
-        tableView.reloadData()
-    }
+         viewModel.filterFeatures(with: searchText)
+     }
 }
 
 //MARK: - setup custom UI to search bar

@@ -79,35 +79,15 @@ final class FavouritesViewController: UIViewController {
     }
     
     public func loadFavoriteFeatures() {
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
-            }
-        )
 
-        let realm = try! Realm(configuration: config)
+        let realm = try! Realm()
         favoriteFeatures = realm.objects(Feature.self).filter("isFavorite == true")
     }
 
     
     public func observeDatabaseChanges() {
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
-            }
-        )
-        
-        let realm = try! Realm(configuration: config)
+
+        let realm = try! Realm()
         notificationToken = realm.observe { [weak self] _, _ in
             self?.loadFavoriteFeatures()
             self?.tableView.reloadData()
@@ -191,19 +171,8 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
-        
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
-            }
-        )
 
-        let realm = try! Realm(configuration: config)
+        let realm = try! Realm()
         
         do {
             try realm.write {
