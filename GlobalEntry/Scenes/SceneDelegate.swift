@@ -13,31 +13,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            if UserDefaultsManager.shared.isWelcomeScreenShown {
-                if UserDefaultsManager.shared.isPassportSelected {
-                    let tabBarController = TabController()
-                    tabBarController.selectedIndex = 0
-                    let navController = UINavigationController(rootViewController: tabBarController)
-                    window.rootViewController = navController
-                } else {
-                    let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
-                    let navController = UINavigationController(rootViewController: choosePassportVC)
-                    window.rootViewController = navController
-                    UserDefaultsManager.shared.isPassportSelected = true
-                }
-            } else {
+            
+            if !UserDefaultsManager.shared.isWelcomeScreenShown {
+                // Show the welcome screen
                 let firstVC = FirstOnboardingController()
                 let navController = UINavigationController(rootViewController: firstVC)
                 window.rootViewController = navController
                 UserDefaultsManager.shared.isWelcomeScreenShown = true
+            } else if !UserDefaultsManager.shared.isPassportSelected {
+                // Show the choose passport screen
+                let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+                let navController = UINavigationController(rootViewController: choosePassportVC)
+                window.rootViewController = navController
+                UserDefaultsManager.shared.isPassportSelected = true
+            } else {
+                // Show the main screen
+                let tabBarController = TabController()
+                tabBarController.selectedIndex = 0
+                let navController = UINavigationController(rootViewController: tabBarController)
+                window.rootViewController = navController
             }
+            
             self.window = window
             window.makeKeyAndVisible()
         }
-        
+
         // Realm configuration
         let config = Realm.Configuration(
             schemaVersion: 1,

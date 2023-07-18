@@ -8,9 +8,8 @@
 import Foundation
 import UIKit
 import SnapKit
-import FirebaseStorage
-import Kingfisher
 import RealmSwift
+import Combine
 
 final class MainViewController: UIViewController {
     
@@ -190,14 +189,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         viewModel.getImage(for: feature, uniqueId: feature.id) { [weak cell] (id, image) in
             DispatchQueue.main.async {
                 if cell?.uniqueId == id {
-                    cell?.imageView?.image = image
-                    cell?.setNeedsLayout()
+                    cell?.updateImage(image: image)
                 }
             }
         }
-//        else {
-//            cell.imageView?.isHidden = true
-//        }
         return cell
     }
     
