@@ -13,7 +13,6 @@ import Combine
 
 final class MainViewController: UIViewController {
     
-    var labelCountry: String?
     var viewModel = MainViewModel()
     
     //MARK: - label header
@@ -82,12 +81,12 @@ final class MainViewController: UIViewController {
                 self?.tableView.reloadData()
             }
             .store(in: &viewModel.cancellables)
-
+        
         if let passportCountry = UserDefaults.standard.string(forKey: "passportCountry") {
             viewModel.loadCountryData(passportCountry)
         }
     }
-
+    
     @objc func reloadTableData() {
         tableView.reloadData()
     }
@@ -180,11 +179,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
         cell.uniqueId = feature.id
-        cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
         cell.heartImageView.addGestureRecognizer(tapGestureEmpty)
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.heartImageView.tag = indexPath.section
         cell.filledHeartImageView.tag = indexPath.section
+        
+        DispatchQueue.main.async {
+            cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
+        }
         
         viewModel.getImage(for: feature, uniqueId: feature.id) { [weak cell] (id, image) in
             DispatchQueue.main.async {
@@ -202,7 +204,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
-
+        
         let realm = try! Realm()
         try? realm.write {
             feature.isFavorite = !feature.isFavorite
@@ -219,8 +221,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - UISearchBarDelegate
 extension MainViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-         viewModel.filterFeatures(with: searchText)
-     }
+        viewModel.filterFeatures(with: searchText)
+    }
 }
 
 //MARK: - setup custom UI to search bar

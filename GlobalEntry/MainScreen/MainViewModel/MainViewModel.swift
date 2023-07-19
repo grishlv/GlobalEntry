@@ -13,14 +13,14 @@ import RealmSwift
 import Combine
 
 class MainViewModel: ObservableObject {
+    
+    var cancellables = Set<AnyCancellable>()
     @Published var features: [Feature] = []
     @Published var filteredFeatures: [Feature] = []
-
-    var cancellables = Set<AnyCancellable>()
     
     func getImage(for feature: Feature, uniqueId: String, completion: @escaping (String, UIImage?) -> Void) {
         guard !feature.imageURL.isEmpty else {
-            completion(uniqueId, nil)
+            completion(uniqueId, UIImage(named: "placeholderImage"))
             return
         }
 
@@ -28,7 +28,7 @@ class MainViewModel: ObservableObject {
         storageRef.downloadURL { url, error in
             guard let imageURL = url, error == nil else {
                 print("Failed to get image URL: \(error?.localizedDescription ?? "")")
-                completion(uniqueId, nil)
+                completion(uniqueId, UIImage(named: "placeholderImage"))
                 return
             }
             KingfisherManager.shared.retrieveImage(with: imageURL, options: [
@@ -42,47 +42,32 @@ class MainViewModel: ObservableObject {
                     completion(uniqueId, value.image)
                 case .failure(let error):
                     print("Job failed: \(error.localizedDescription)")
-                    completion(uniqueId, nil)
+                    completion(uniqueId, UIImage(named: "placeholderImage"))
                 }
             }
         }
     }
 
     func loadCountryData(_ passportCountry: String) {
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
+        do {
+            let realm = try Realm()
+            if let country = realm.objects(Country.self).filter("passport == %@", passportCountry).first {
+                self.features = Array(country.features)
+                self.filteredFeatures = self.features
             }
-        )
-        
-        let realm = try! Realm(configuration: config)
-        if let country = realm.objects(Country.self).filter("passport == %@", passportCountry).first {
-            self.features = Array(country.features)
-            self.filteredFeatures = self.features
+        } catch {
+            print("Failed to update favorite status or open Realm: \(error.localizedDescription)")
         }
     }
 
     func updateFavoriteStatus(of feature: Feature) {
-        let config = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: Feature.className()) { oldObject, newObject in
-                        newObject?["isFavorite"] = false
-                    }
-                }
+        do {
+            let realm = try Realm()
+            try? realm.write {
+                feature.isFavorite = !feature.isFavorite
             }
-        )
-        
-        let realm = try! Realm(configuration: config)
-        
-        try? realm.write {
-            feature.isFavorite = !feature.isFavorite
+        } catch {
+            print("Failed to update favorite status or open Realm: \(error.localizedDescription)")
         }
     }
     

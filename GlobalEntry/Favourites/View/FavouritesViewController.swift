@@ -9,12 +9,11 @@ import Foundation
 import UIKit
 import SnapKit
 import RealmSwift
-import Kingfisher
-import FirebaseStorage
+import Combine
 
 final class FavouritesViewController: UIViewController {
     
-    var favoriteFeatures: Results<Feature>!
+    var viewModel = FavouritesViewModel()
     var notificationToken: NotificationToken?
     
     //MARK: - label header
@@ -53,8 +52,35 @@ final class FavouritesViewController: UIViewController {
         setupTableView()
         loadFavoriteFeatures()
         observeDatabaseChanges()
+        
+        viewModel.$favouriteFeatures
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &viewModel.cancellables)
     }
     
+    public func loadFavoriteFeatures() {
+        viewModel.loadFavoriteFeatures()
+    }
+    
+    public func observeDatabaseChanges() {
+        do {
+            let realm = try Realm()
+            notificationToken = realm.observe { [weak self] _, _ in
+                self?.viewModel.loadFavoriteFeatures()
+                self?.tableView.reloadData()
+            }
+        } catch {
+            print("Failed to open Realm: \(error.localizedDescription)")
+        }
+    }
+    
+    deinit {
+        notificationToken?.invalidate()
+    }
+
     //MARK: - setup label header
     private func setupLabelHeader() {
         
@@ -78,30 +104,19 @@ final class FavouritesViewController: UIViewController {
         })
     }
     
-    public func loadFavoriteFeatures() {
-
-        let realm = try! Realm()
-        favoriteFeatures = realm.objects(Feature.self).filter("isFavorite == true")
-    }
-
-    
-    public func observeDatabaseChanges() {
-
-        let realm = try! Realm()
-        notificationToken = realm.observe { [weak self] _, _ in
-            self?.loadFavoriteFeatures()
-            self?.tableView.reloadData()
-        }
+    init(viewModel: FavouritesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
-    deinit {
-        notificationToken?.invalidate()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return favoriteFeatures.count
+        return viewModel.favouriteFeatures.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,69 +134,49 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Reset the navigation bar appearance
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MainTableViewCell
-        let feature = favoriteFeatures[indexPath.section]
+        let feature = viewModel.favouriteFeatures[indexPath.section]
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
-        cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
+        cell.favouriteId = feature.id
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.filledHeartImageView.tag = indexPath.section
         
-        if !feature.imageURL.isEmpty {
-            let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
-            storageRef.downloadURL { [weak cell] url, error in
-                guard let imageURL = url, error == nil else {
-                    print("Failed to get image URL: \(error?.localizedDescription ?? "")")
-                    return
-                }
-                KingfisherManager.shared.retrieveImage(with: imageURL, options: [
-                    .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(0.2)),
-                    .cacheOriginalImage
-                ]) { [weak cell] result in
-                    guard let cell = cell else { return }
-                    switch result {
-                    case .success(let value):
-                        // Check if the cell is still meant to display this image
-                        DispatchQueue.main.async {
-                            cell.imageView?.image = value.image
-                            cell.setNeedsLayout()
-                        }
-                    case .failure(let error):
-                        print("Job failed: \(error.localizedDescription)")
-                    }
+        DispatchQueue.main.async {
+            cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
+
+        }
+        
+        viewModel.getImage(for: feature, favouriteId: feature.id) { [weak cell] (id, image) in
+            DispatchQueue.main.async {
+                if cell?.favouriteId == id {
+                    cell?.updateImage(image: image)
                 }
             }
-        } else {
-            cell.imageView?.isHidden = true
         }
         return cell
     }
     
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
-        let feature = favoriteFeatures[index]
+        let feature = viewModel.favouriteFeatures[index]
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
 
-        let realm = try! Realm()
-        
         do {
+            let realm = try Realm()
             try realm.write {
                 feature.isFavorite = !feature.isFavorite
             }
         } catch {
-            print("Failed to update favorite status: \(error.localizedDescription)")
+            print("Failed to update favorite status or open Realm: \(error.localizedDescription)")
         }
-        
         NotificationCenter.default.post(name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
         
         // refresh the cell views

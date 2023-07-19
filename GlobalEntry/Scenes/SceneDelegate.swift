@@ -21,13 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let firstVC = FirstOnboardingController()
                 let navController = UINavigationController(rootViewController: firstVC)
                 window.rootViewController = navController
-                UserDefaultsManager.shared.isWelcomeScreenShown = true
+                
             } else if !UserDefaultsManager.shared.isPassportSelected {
                 // Show the choose passport screen
                 let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
                 let navController = UINavigationController(rootViewController: choosePassportVC)
                 window.rootViewController = navController
-                UserDefaultsManager.shared.isPassportSelected = true
             } else {
                 // Show the main screen
                 let tabBarController = TabController()

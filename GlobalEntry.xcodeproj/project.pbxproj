@@ -53,6 +53,7 @@
 		789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */; };
 		789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */; };
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
+		78AD184A2A66C3F700403213 /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD18492A66C3F700403213 /* FavouritesViewModel.swift */; };
 		78AEB1382A27AC3800C7DE27 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78AEB1372A27AC3800C7DE27 /* FirebaseDatabaseSwift */; };
 		78B0638929DB1AB70007051F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638829DB1AB70007051F /* FirebaseAuth */; };
 		78B0638D29DB1AB70007051F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638C29DB1AB70007051F /* FirebaseStorage */; };
@@ -137,6 +138,7 @@
 		789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingController.swift; sourceTree = "<group>"; };
 		789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingController.swift; sourceTree = "<group>"; };
+		78AD18492A66C3F700403213 /* FavouritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
 		78B1622929D73813002CD5A9 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		78B1622B29D738C8002CD5A9 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		78B1623029D98467002CD5A9 /* SignupPresenter .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupPresenter .swift"; sourceTree = "<group>"; };
@@ -332,7 +334,8 @@
 		781B5CB42A51A476004F29A4 /* Favourites */ = {
 			isa = PBXGroup;
 			children = (
-				781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */,
+				78AD18482A66C3D700403213 /* ViewModel */,
+				78AD18462A66C3CE00403213 /* View */,
 			);
 			path = Favourites;
 			sourceTree = "<group>";
@@ -488,6 +491,22 @@
 				786074E92A598CA600B1BED2 /* MainViewModel.swift */,
 			);
 			path = MainViewModel;
+			sourceTree = "<group>";
+		};
+		78AD18462A66C3CE00403213 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		78AD18482A66C3D700403213 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				78AD18492A66C3F700403213 /* FavouritesViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		78B1621B29D6EFE3002CD5A9 /* Onboarding */ = {
@@ -826,6 +845,7 @@
 				786074EA2A598CA600B1BED2 /* MainViewModel.swift in Sources */,
 				783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */,
 				783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */,
+				78AD184A2A66C3F700403213 /* FavouritesViewModel.swift in Sources */,
 				781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */,
 				781B5CA12A49D903004F29A4 /* FirebaseServiceLogin.swift in Sources */,
 				781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */,

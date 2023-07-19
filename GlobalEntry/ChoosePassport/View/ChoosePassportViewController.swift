@@ -150,6 +150,7 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
         cell.contentView.backgroundColor = .white
         if let countryName = viewModel.filtered?[indexPath.section].passport {
             UserDefaults.standard.setValue(countryName, forKey: "passportCountry")
+            UserDefaultsManager.shared.isPassportSelected = true
             didSelectCountry(countryName)
         }
         tableView.deselectRow(at: indexPath, animated: true)

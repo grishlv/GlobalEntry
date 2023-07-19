@@ -148,6 +148,7 @@ final class ThirdOnboardingController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        navigationItem.setHidesBackButton(true, animated: true)
         view.clipsToBounds = true
         
         setupSwipeByGestureForward()
@@ -174,6 +175,7 @@ final class ThirdOnboardingController: UIViewController {
     @objc func swipeFuncForward(gesture: UISwipeGestureRecognizer) {
         let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
         navigationController?.pushViewController(chooseVC, animated: true)
+        UserDefaultsManager.shared.isWelcomeScreenShown = true
     }
     
     //MARK: - go back by gesture recognizer
@@ -325,6 +327,7 @@ final class ThirdOnboardingController: UIViewController {
         
         let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
         navigationController?.pushViewController(chooseVC, animated: true)
+        UserDefaultsManager.shared.isWelcomeScreenShown = true
     }
     
     //MARK: - button skip
@@ -346,5 +349,6 @@ final class ThirdOnboardingController: UIViewController {
     @objc func actionForButtonSkip() {
         let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
         navigationController?.pushViewController(chooseVC, animated: true)
+        UserDefaultsManager.shared.isWelcomeScreenShown = true
     }
 }
