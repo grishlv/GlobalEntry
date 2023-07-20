@@ -52,7 +52,10 @@ final class FavouritesViewController: UIViewController {
         setupTableView()
         loadFavoriteFeatures()
         observeDatabaseChanges()
-        
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
         viewModel.$favouriteFeatures
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -61,11 +64,11 @@ final class FavouritesViewController: UIViewController {
             .store(in: &viewModel.cancellables)
     }
     
-    public func loadFavoriteFeatures() {
+    private func loadFavoriteFeatures() {
         viewModel.loadFavoriteFeatures()
     }
     
-    public func observeDatabaseChanges() {
+    private func observeDatabaseChanges() {
         do {
             let realm = try Realm()
             notificationToken = realm.observe { [weak self] _, _ in
@@ -80,7 +83,7 @@ final class FavouritesViewController: UIViewController {
     deinit {
         notificationToken?.invalidate()
     }
-
+    
     //MARK: - setup label header
     private func setupLabelHeader() {
         
@@ -149,7 +152,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         
         DispatchQueue.main.async {
             cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
-
+            
         }
         
         viewModel.getImage(for: feature, favouriteId: feature.id) { [weak cell] (id, image) in
@@ -168,7 +171,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
-
+        
         do {
             let realm = try Realm()
             try realm.write {

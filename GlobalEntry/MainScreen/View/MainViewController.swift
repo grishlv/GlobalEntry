@@ -26,14 +26,6 @@ final class MainViewController: UIViewController {
         return labelHeader
     }()
     
-    //MARK: - slider filter
-    private lazy var filterSlider: UIImageView = {
-        let filterSlider = UIImageView()
-        filterSlider.image = UIImage(named: "filter")
-        view.addSubview(filterSlider)
-        return filterSlider
-    }()
-    
     //MARK: - search bar
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -63,18 +55,23 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonTapped))
+        filterButton.tintColor = UIColor.black
+        self.navigationItem.rightBarButtonItem = filterButton
         
+        setupTableView()
         setupLabelHeader()
         setupSearchBar()
-        setupTableView()
-        setupFilterSlider()
         hideKeyboardWhenTappedAround()
+        bindViewModel()
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
-        
+    }
+    
+    private func bindViewModel() {
         viewModel.$filteredFeatures
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -95,12 +92,23 @@ final class MainViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
     }
     
+    //MARK: - setup table view
+    private func setupTableView() {
+        
+        //constraints
+        tableView.snp.makeConstraints({ make in
+            make.top.equalTo(searchBar.safeAreaLayoutGuide.snp.bottomMargin)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        })
+    }
+    
     //MARK: - setup label header
     private func setupLabelHeader() {
         
         //constraints
         labelHeader.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(75)
+            make.top.equalToSuperview().inset(90)
             make.leading.equalToSuperview().inset(20)
             make.trailing.lessThanOrEqualToSuperview().inset(20)
             make.height.equalTo(48)
@@ -118,27 +126,9 @@ final class MainViewController: UIViewController {
         })
     }
     
-    //MARK: - setup table view
-    private func setupTableView() {
-        
-        //constraints
-        tableView.snp.makeConstraints({ make in
-            make.top.equalTo(searchBar.safeAreaLayoutGuide.snp.bottomMargin)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        })
-    }
-    
-    //MARK: - setup filter slider
-    private func setupFilterSlider() {
-        
-        //constraints
-        filterSlider.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(90)
-            make.trailing.equalTo(tableView.snp.trailing)
-            make.width.equalTo(filterSlider)
-            make.height.equalTo(filterSlider)
-        })
+    @objc func filterButtonTapped() {
+        let filterVC = FilterViewController()
+        navigationController?.present(filterVC, animated: true)
     }
     
     init(viewModel: MainViewModel) {

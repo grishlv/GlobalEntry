@@ -23,7 +23,7 @@ class MainViewModel: ObservableObject {
             completion(uniqueId, UIImage(named: "placeholderImage"))
             return
         }
-
+        
         let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
         storageRef.downloadURL { url, error in
             guard let imageURL = url, error == nil else {
@@ -47,7 +47,7 @@ class MainViewModel: ObservableObject {
             }
         }
     }
-
+    
     func loadCountryData(_ passportCountry: String) {
         do {
             let realm = try Realm()
@@ -59,7 +59,7 @@ class MainViewModel: ObservableObject {
             print("Failed to update favorite status or open Realm: \(error.localizedDescription)")
         }
     }
-
+    
     func updateFavoriteStatus(of feature: Feature) {
         do {
             let realm = try Realm()

@@ -17,13 +17,13 @@ class FavouritesViewModel {
     @Published var favouriteFeatures: [Feature] = []
     var notificationToken: NotificationToken?
     var cancellables = Set<AnyCancellable>()
-
+    
     func getImage(for feature: Feature, favouriteId: String, completion: @escaping (String, UIImage?) -> Void) {
         guard !feature.imageURL.isEmpty else {
             print("Failed to get image URL")
             return
         }
-
+        
         let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
         storageRef.downloadURL { url, error in
             guard let imageURL = url, error == nil else {

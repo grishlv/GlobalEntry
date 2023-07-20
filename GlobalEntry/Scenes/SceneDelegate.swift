@@ -16,29 +16,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             
+            let navController = UINavigationController()
+            
             if !UserDefaultsManager.shared.isWelcomeScreenShown {
                 // Show the welcome screen
                 let firstVC = FirstOnboardingController()
-                let navController = UINavigationController(rootViewController: firstVC)
-                window.rootViewController = navController
+                navController.viewControllers = [firstVC]
                 
             } else if !UserDefaultsManager.shared.isPassportSelected {
                 // Show the choose passport screen
                 let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
-                let navController = UINavigationController(rootViewController: choosePassportVC)
-                window.rootViewController = navController
+                navController.viewControllers = [choosePassportVC]
             } else {
                 // Show the main screen
                 let tabBarController = TabController()
                 tabBarController.selectedIndex = 0
-                let navController = UINavigationController(rootViewController: tabBarController)
-                window.rootViewController = navController
+                navController.viewControllers = [tabBarController]
             }
+            
+            window.rootViewController = navController
             
             self.window = window
             window.makeKeyAndVisible()
         }
-
+        
         // Realm configuration
         let config = Realm.Configuration(
             schemaVersion: 1,

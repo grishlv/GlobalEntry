@@ -24,7 +24,6 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupLabelHeader()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
     }
@@ -34,9 +33,8 @@ final class MapViewController: UIViewController {
         
         //constraints
         labelHeader.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(75)
+            make.top.equalTo(view.safeAreaInsets).inset(90)
             make.leading.equalToSuperview().inset(20)
-            make.width.equalTo(345)
             make.height.equalTo(48)
         })
     }
