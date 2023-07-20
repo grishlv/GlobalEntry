@@ -18,4 +18,5 @@ class Feature: Object {
     @objc dynamic var imageURL: String = ""
     @objc dynamic var isFavorite: Bool = false
     @objc dynamic var id: String = ""
+    @objc dynamic var continent: String = ""
 }

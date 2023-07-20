@@ -37,12 +37,45 @@ class FilterViewController: UIViewController {
         return lineSeparator
     }()
     
+    //MARK: - table view
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        tableView.separatorColor = UIColor(red: 222/255, green: 222/255, blue: 228/255, alpha: 1)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        view.addSubview(tableView)
+        return tableView
+    }()
+    
+    //MARK: - button apply
+    private lazy var buttonApply: UIButton = {
+        let buttonApply = UIButton()
+        buttonApply.setTitle("Apply filters", for: .normal)
+        buttonApply.layer.cornerRadius = 10
+        buttonApply.backgroundColor = UIColor(red: 43/255, green: 125/255, blue: 246/255, alpha: 1)
+        view.addSubview(buttonApply)
+        return buttonApply
+    }()
+    
+    var data = [
+        "Continent": ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"],
+        "Visa Types": ["Visa-free", "E-visa", "Visa required"]
+    ]
+    
+    var sectionTitles = ["Continent", "Visa Types"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        
         setupLabelHeader()
         setupButtonClose()
         setupLineSeparator()
+        setupTableView()
+        setupButtonApply()
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
     }
     
     //MARK: - setup label header
@@ -56,7 +89,7 @@ class FilterViewController: UIViewController {
         })
     }
     
-    //MARK: - setup label header
+    //MARK: - setup button close
     private func setupButtonClose() {
         
         //constraints
@@ -85,4 +118,89 @@ class FilterViewController: UIViewController {
         })
     }
     
+    //MARK: - setup line separator
+    private func setupTableView() {
+        
+        //constraints
+        tableView.snp.makeConstraints({ make in
+            make.top.equalTo(lineSeparator.snp.bottom).inset(-35)
+            make.leading.trailing.equalTo(view.safeAreaInsets)
+            make.bottom.equalTo(view.safeAreaInsets)
+        })
+    }
+    
+    //MARK: - setup button apply
+    private func setupButtonApply() {
+        
+        //constraints
+        buttonApply.snp.makeConstraints({ make in
+            make.bottom.equalTo(view.safeAreaInsets).inset(45)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(48)
+        })
+    }
+}
+
+extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return data.count
+    }
+    
+    // Number of rows in section
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let key = sectionTitles[section]
+        if let rows = data[key] {
+            return rows.count
+        }
+        return 0
+    }
+    
+    // Section title
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .clear
+        
+        let headerLabel = UILabel()
+        headerLabel.text = sectionTitles[section]
+        headerLabel.font = UIFont(name: "Inter-Bold", size: 15)
+        headerLabel.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerView.addSubview(headerLabel)
+        
+        // Set constraints for the header label
+        NSLayoutConstraint.activate([
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+            headerLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
+        ])
+        
+        return headerView
+    }
+    
+    // Cell for row at indexPath
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
+        
+        let switchView = UISwitch(frame: .zero)
+        switchView.setOn(false, animated: true)
+        switchView.tag = indexPath.row // for detecting which row switch changed
+        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+
+        // Set the switch container view as the accessory view of the cell
+        cell.accessoryView = switchView
+        
+        let key = sectionTitles[indexPath.section]
+        if let item = data[key]?[indexPath.row] {
+            cell.textLabel?.text = item
+        }
+        return cell
+    }
+    
+    @objc func switchChanged(_ sender : UISwitch!){
+        print("table row switch Changed \(sender.tag)")
+        print("The switch is \(sender.isOn ? "ON" : "OFF")")
+    }
 }
