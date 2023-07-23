@@ -48,7 +48,6 @@
 		786074EA2A598CA600B1BED2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074E92A598CA600B1BED2 /* MainViewModel.swift */; };
 		786074FD2A5D679F00B1BED2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 786074FC2A5D679F00B1BED2 /* Kingfisher */; };
 		786074FF2A5DA8E000B1BED2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */; };
-		7860750E2A632E7D00B1BED2 /* jsonFileNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 7860750D2A632E7D00B1BED2 /* jsonFileNew.json */; };
 		786075102A63DEDF00B1BED2 /* ChooseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7860750F2A63DEDF00B1BED2 /* ChooseTableViewCell.swift */; };
 		789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */; };
 		789E6D7A29CDED3C006FE11A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */; };
@@ -56,6 +55,7 @@
 		78AD184A2A66C3F700403213 /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD18492A66C3F700403213 /* FavouritesViewModel.swift */; };
 		78AD184D2A68227800403213 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD184C2A68227700403213 /* FilterViewController.swift */; };
 		78AD184F2A69816500403213 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 78AD184E2A69816400403213 /* countries.json */; };
+		78AD18512A69A1CD00403213 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD18502A69A1CD00403213 /* Filter.swift */; };
 		78AEB1382A27AC3800C7DE27 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78AEB1372A27AC3800C7DE27 /* FirebaseDatabaseSwift */; };
 		78B0638929DB1AB70007051F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638829DB1AB70007051F /* FirebaseAuth */; };
 		78B0638D29DB1AB70007051F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638C29DB1AB70007051F /* FirebaseStorage */; };
@@ -135,7 +135,6 @@
 		783B36FD29CB5D420029BD6D /* GlobalEntryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEntryUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		786074E92A598CA600B1BED2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
-		7860750D2A632E7D00B1BED2 /* jsonFileNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonFileNew.json; sourceTree = "<group>"; };
 		7860750F2A63DEDF00B1BED2 /* ChooseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTableViewCell.swift; sourceTree = "<group>"; };
 		789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingController.swift; sourceTree = "<group>"; };
 		789E6D7929CDED3C006FE11A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +142,7 @@
 		78AD18492A66C3F700403213 /* FavouritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
 		78AD184C2A68227700403213 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		78AD184E2A69816400403213 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
+		78AD18502A69A1CD00403213 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		78B1622929D73813002CD5A9 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		78B1622B29D738C8002CD5A9 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		78B1623029D98467002CD5A9 /* SignupPresenter .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupPresenter .swift"; sourceTree = "<group>"; };
@@ -264,7 +264,6 @@
 		781B5C982A49A609004F29A4 /* JsonData */ = {
 			isa = PBXGroup;
 			children = (
-				7860750D2A632E7D00B1BED2 /* jsonFileNew.json */,
 				78AD184E2A69816400403213 /* countries.json */,
 			);
 			path = JsonData;
@@ -519,6 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				78AD184C2A68227700403213 /* FilterViewController.swift */,
+				78AD18502A69A1CD00403213 /* Filter.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -754,7 +754,6 @@
 				52ACEA5129F2D9BE00EEED74 /* Inter-Medium.ttf in Resources */,
 				52ACEA5629F2D9BE00EEED74 /* Inter-ExtraBold.ttf in Resources */,
 				783B36E729CB5D420029BD6D /* LaunchScreen.storyboard in Resources */,
-				7860750E2A632E7D00B1BED2 /* jsonFileNew.json in Resources */,
 				783B36E429CB5D420029BD6D /* Assets.xcassets in Resources */,
 				52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */,
 				78AD184F2A69816500403213 /* countries.json in Resources */,
@@ -885,6 +884,7 @@
 				78C650E82A2388FE00E8F30E /* Country.swift in Sources */,
 				782F860E29E6E4D6006B3106 /* LogInViewController.swift in Sources */,
 				789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */,
+				78AD18512A69A1CD00403213 /* Filter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

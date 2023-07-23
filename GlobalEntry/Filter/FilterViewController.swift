@@ -10,6 +10,14 @@ import UIKit
 
 class FilterViewController: UIViewController {
     
+    var data = [
+        "Continent": ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"],
+        "Visa Types": ["visa free", "e-visa", "visa on arrival", "visa required"]
+    ]
+    
+    var sectionTitles = ["Continent", "Visa Types"]
+    var filters: Filter!
+    
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -57,13 +65,6 @@ class FilterViewController: UIViewController {
         return buttonApply
     }()
     
-    var data = [
-        "Continent": ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"],
-        "Visa Types": ["Visa-free", "E-visa", "Visa required"]
-    ]
-    
-    var sectionTitles = ["Continent", "Visa Types"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,7 +99,6 @@ class FilterViewController: UIViewController {
             make.trailing.equalToSuperview().inset(20)
             make.width.height.equalTo(24)
         })
-        
         buttonClose.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
     
@@ -138,6 +138,12 @@ class FilterViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(48)
         })
+        buttonApply.addTarget(self, action: #selector(applyFiltersButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func applyFiltersButtonTapped() {
+        NotificationCenter.default.post(name: NSNotification.Name("FiltersApplied"), object: nil, userInfo: ["filters": filters])
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -183,24 +189,47 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         cell.textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
-        
-        let switchView = UISwitch(frame: .zero)
-        switchView.setOn(false, animated: true)
-        switchView.tag = indexPath.row // for detecting which row switch changed
-        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
 
-        // Set the switch container view as the accessory view of the cell
-        cell.accessoryView = switchView
-        
+        let switchView = UISwitch(frame: .zero)
+        let uniqueTag = indexPath.section * 1000 + indexPath.row
+        switchView.tag = uniqueTag
+
         let key = sectionTitles[indexPath.section]
         if let item = data[key]?[indexPath.row] {
             cell.textLabel?.text = item
+
+            if key == "Continent" {
+                switchView.setOn(filters.continents.contains(item), animated: false)
+            } else if key == "Visa Types" {
+                switchView.setOn(filters.visaTypes.contains(item), animated: false)
+            }
         }
+        
+        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+        cell.accessoryView = switchView
+
         return cell
     }
     
     @objc func switchChanged(_ sender : UISwitch!){
-        print("table row switch Changed \(sender.tag)")
-        print("The switch is \(sender.isOn ? "ON" : "OFF")")
+        let section = sender.tag / 1000
+        let row = sender.tag % 1000
+        let sectionTitle = sectionTitles[section]
+        let item = data[sectionTitle]?[row]
+        let _ = String(section * 1000 + row)
+
+        if sender.isOn {
+            if sectionTitle == "Continent" {
+                filters.continents.append(item ?? "")
+            } else if sectionTitle == "Visa Types" {
+                filters.visaTypes.append(item ?? "")
+            }
+        } else {
+            if sectionTitle == "Continent", let index = filters.continents.firstIndex(of: item ?? "") {
+                filters.continents.remove(at: index)
+            } else if sectionTitle == "Visa Types", let index = filters.visaTypes.firstIndex(of: item ?? "") {
+                filters.visaTypes.remove(at: index)
+            }
+        }
     }
 }

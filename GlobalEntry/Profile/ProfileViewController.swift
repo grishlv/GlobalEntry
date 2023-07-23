@@ -34,7 +34,7 @@ class ProfileViewController: UIViewController {
         
         //constraints
         labelHeader.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(75)
+            make.top.equalToSuperview().inset(90)
             make.leading.equalToSuperview().inset(20)
             make.width.equalTo(345)
             make.height.equalTo(48)

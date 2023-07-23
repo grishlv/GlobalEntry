@@ -162,7 +162,7 @@ final class SecondOnboardingController: UIViewController {
         setupButtonNext()
         setupButtonSkip()
     }
-
+    
     //MARK: - go forward by gesture recognizer
     func setupSwipeByGestureForward() {
         let goForward = UISwipeGestureRecognizer(target: self, action: #selector(swipeFuncForward(gesture:)))
@@ -342,7 +342,6 @@ final class SecondOnboardingController: UIViewController {
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
         let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
-        navigationController?.pushViewController(chooseVC, animated: true)
+        self.navigationController?.pushViewController(chooseVC, animated: true)
         UserDefaultsManager.shared.isWelcomeScreenShown = true
-    }
-}
+    }}

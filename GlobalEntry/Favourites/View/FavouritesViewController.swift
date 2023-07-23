@@ -89,7 +89,7 @@ final class FavouritesViewController: UIViewController {
         
         //constraints
         labelHeader.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(75)
+            make.top.equalToSuperview().inset(90)
             make.leading.equalToSuperview().inset(20)
             make.trailing.lessThanOrEqualToSuperview().inset(20)
             make.height.equalTo(48)
@@ -146,6 +146,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         let feature = viewModel.favouriteFeatures[indexPath.section]
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
+        cell.selectionStyle = .none
         cell.favouriteId = feature.id
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.filledHeartImageView.tag = indexPath.section

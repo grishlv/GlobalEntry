@@ -14,14 +14,14 @@ final class MapViewController: UIViewController {
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
-        labelHeader.text = "Map visualization 🌍"
+        labelHeader.text = "It will be later 🌍"
         labelHeader.font = UIFont(name: "Inter-Bold", size: 30)
         labelHeader.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
         labelHeader.numberOfLines = 1
         view.addSubview(labelHeader)
         return labelHeader
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLabelHeader()

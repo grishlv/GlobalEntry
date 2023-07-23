@@ -19,53 +19,54 @@ final class ChoosePassportViewModel {
     public var filtered: Results<Country>?
     
     //MARK: - fetch data
-    
-    public func fetchData() {
-        guard let filePath = Bundle.main.path(forResource: "countries", ofType: "json") else {
-            return
-        }
-        
-        do {
-            let fileURL = URL(fileURLWithPath: filePath)
-            let jsonData = try Data(contentsOf: fileURL)
-            let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
-            
-            if let jsonDict = json as? [String: Any], let jsonArray = jsonDict["country"] as? [[String: Any]] {
-                let realm = try Realm()
-                
-                try realm.write {
-                    
-                    realm.deleteAll()
-                    
-                    for countryDict in jsonArray {
-                        let country = Country()
-                        country.passport = countryDict["passport"] as? String ?? ""
-                        
-                        if let featuresArray = countryDict["features"] as? [[String: Any]] {
-                            for featureDict in featuresArray {
-                                let feature = Feature()
-                                feature.destination = featureDict["destination"] as? String ?? ""
-                                feature.requirement = featureDict["requirement"] as? String ?? ""
-                                feature.imageURL = featureDict["imageURL"] as? String ?? ""
-                                feature.isFavorite = featureDict["isFavorite"] as? Bool ?? false
-                                feature.id = featureDict["id"] as? String ?? ""
-                                feature.continent = featureDict["continent"] as? String ?? ""
-
-                                
-                                country.features.append(feature)
-                            }
-                        }
-                        realm.add(country)
-                    }
-                }
-                passports = realm.objects(Country.self)
-                filtered = passports
+    public func fetchData(completion: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            guard let filePath = Bundle.main.path(forResource: "countries", ofType: "json") else {
+                return
             }
-        } catch {
-            print("Error:", error)
+            
+            do {
+                let fileURL = URL(fileURLWithPath: filePath)
+                let jsonData = try Data(contentsOf: fileURL)
+                let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
+                
+                if let jsonDict = json as? [String: Any], let jsonArray = jsonDict["country"] as? [[String: Any]] {
+                    let realm = try Realm()
+                    
+                    try realm.write {
+                        
+                        realm.deleteAll()
+                        
+                        for countryDict in jsonArray {
+                            let country = Country()
+                            country.passport = countryDict["passport"] as? String ?? ""
+                            
+                            if let featuresArray = countryDict["features"] as? [[String: Any]] {
+                                for featureDict in featuresArray {
+                                    let feature = Feature()
+                                    feature.destination = featureDict["destination"] as? String ?? ""
+                                    feature.requirement = featureDict["requirement"] as? String ?? ""
+                                    feature.imageURL = featureDict["imageURL"] as? String ?? ""
+                                    feature.isFavorite = featureDict["isFavorite"] as? Bool ?? false
+                                    feature.id = featureDict["id"] as? String ?? ""
+                                    feature.continent = featureDict["continent"] as? String ?? ""
+                                    
+                                    country.features.append(feature)
+                                }
+                            }
+                            realm.add(country)
+                        }
+                    }
+                    self.passports = realm.objects(Country.self)
+                    self.filtered = self.passports
+                }
+            } catch {
+                print("Error:", error)
+            }
+            completion()
         }
     }
-    
+
     //MARK: - perform search
     public func performSearch(with searchText: String) {
         

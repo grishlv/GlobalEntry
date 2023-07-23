@@ -98,7 +98,7 @@ final class FirstOnboardingController: UIViewController {
         view.addSubview(buttonSkip)
         return buttonSkip
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
@@ -123,6 +123,7 @@ final class FirstOnboardingController: UIViewController {
     @objc func swipeFunc(gesture: UISwipeGestureRecognizer) {
         let secondOnboardingVC = SecondOnboardingController()
         navigationController?.pushViewController(secondOnboardingVC, animated: true)
+        
     }
     
     //MARK: - circle left
@@ -241,7 +242,7 @@ final class FirstOnboardingController: UIViewController {
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
         let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
-        navigationController?.pushViewController(chooseVC, animated: true)
+        self.navigationController?.pushViewController(chooseVC, animated: true)
         UserDefaultsManager.shared.isWelcomeScreenShown = true
     }
 }

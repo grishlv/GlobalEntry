@@ -69,6 +69,7 @@ final class MainViewController: UIViewController {
         searchBar.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFilter), name: NSNotification.Name("FiltersApplied"), object: nil)
     }
     
     private func bindViewModel() {
@@ -90,6 +91,12 @@ final class MainViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+    }
+    
+    @objc func updateFilter(notification: NSNotification) {
+        if let filters = notification.userInfo?["filters"] as? Filter {
+            viewModel.applyFilters(filters)
+        }
     }
     
     //MARK: - setup table view
@@ -128,6 +135,7 @@ final class MainViewController: UIViewController {
     
     @objc func filterButtonTapped() {
         let filterVC = FilterViewController()
+        filterVC.filters = self.viewModel.filters
         navigationController?.present(filterVC, animated: true)
     }
     

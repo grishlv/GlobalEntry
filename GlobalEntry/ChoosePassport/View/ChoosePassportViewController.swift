@@ -9,7 +9,6 @@ import UIKit
 
 final class ChoosePassportViewController: UIViewController {
     
-    private var spinner: UIActivityIndicatorView?
     private var tabBar: UITabBarController?
     private let viewModel: ChoosePassportViewModel
     
@@ -51,6 +50,15 @@ final class ChoosePassportViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .gray
+        spinner.style = .medium
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spinner)
+        return spinner
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,17 +68,16 @@ final class ChoosePassportViewController: UIViewController {
         setupLabelHeader()
         setupSearchBar()
         setupTableView()
+        setupSpinner()
         hideKeyboardWhenTappedAround()
-        viewModel.fetchData()
+        viewModel.fetchData() { [weak self] in
+            self?.spinner.stopAnimating()
+            self?.tableView.reloadData()
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
         viewModel.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        spinner?.stopAnimating()
     }
     
     //MARK: - setup label header
@@ -105,6 +112,19 @@ final class ChoosePassportViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         })
+    }
+    
+    //MARK: - setup spinner
+    private func setupSpinner() {
+        spinner.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        spinner.startAnimating()
     }
     
     init(viewModel: ChoosePassportViewModel, tabBar: TabController) {
