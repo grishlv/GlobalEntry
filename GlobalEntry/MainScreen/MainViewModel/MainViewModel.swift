@@ -76,12 +76,6 @@ class MainViewModel: ObservableObject {
             }
         }
     }
-//        func applyFilters(_ filters: Filter) {
-//            self.filters = filters
-//            filteredFeatures = features.filter { feature in
-//                return (filters.continents.isEmpty || filters.continents.contains(feature.continent)) &&
-//                (filters.visaTypes.isEmpty || filters.visaTypes.contains(feature.requirement))
-//            }
     
     func updateFavoriteStatus(of feature: Feature) {
         do {

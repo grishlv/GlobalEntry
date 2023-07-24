@@ -12,9 +12,14 @@ protocol ChoosePassportViewModelDelegate: AnyObject {
     func didSelectCountry(_ passportName: String)
 }
 
+protocol ChooseProtocolSpinner: AnyObject {
+    func didLoadData()
+}
+
 final class ChoosePassportViewModel {
     
     weak var delegate: ChoosePassportViewModelDelegate?
+    weak var spinnerDelegate: ChooseProtocolSpinner?
     public var passports: Results<Country>?
     public var filtered: Results<Country>?
     
@@ -66,7 +71,7 @@ final class ChoosePassportViewModel {
             completion()
         }
     }
-
+    
     //MARK: - perform search
     public func performSearch(with searchText: String) {
         

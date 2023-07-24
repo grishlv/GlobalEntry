@@ -49,6 +49,7 @@ class FilterViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(red: 222/255, green: 222/255, blue: 228/255, alpha: 1)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
@@ -142,7 +143,7 @@ class FilterViewController: UIViewController {
     }
     
     @objc func applyFiltersButtonTapped() {
-        NotificationCenter.default.post(name: NSNotification.Name("FiltersApplied"), object: nil, userInfo: ["filters": filters])
+        NotificationCenter.default.post(name: NSNotification.Name("FiltersApplied"), object: nil, userInfo: ["filters": filters!])
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -207,6 +208,10 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         
         switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
         cell.accessoryView = switchView
+        
+        let selectedBackgroundView = UIView()
+        selectedBackgroundView.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1) // Set your color here
+        cell.selectedBackgroundView = selectedBackgroundView
 
         return cell
     }

@@ -68,18 +68,25 @@ final class ChoosePassportViewController: UIViewController {
         setupLabelHeader()
         setupSearchBar()
         setupTableView()
-        setupSpinner()
         hideKeyboardWhenTappedAround()
-        viewModel.fetchData() { [weak self] in
-            self?.spinner.stopAnimating()
-            self?.tableView.reloadData()
-        }
+        setupSpinner()
         
         tableView.delegate = self
         tableView.dataSource = self
         viewModel.delegate = self
+        spinner.startAnimating()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.fetchData { [weak self] in
+            // This closure will be called when data fetching is complete
+            self?.spinner.stopAnimating()
+            self?.tableView.reloadData()
+        }
+    }
+
     //MARK: - setup label header
     private func setupLabelHeader() {
         
@@ -120,11 +127,6 @@ final class ChoosePassportViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        spinner.startAnimating()
     }
     
     init(viewModel: ChoosePassportViewModel, tabBar: TabController) {
@@ -170,7 +172,7 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
         cell.contentView.backgroundColor = .white
         if let countryName = viewModel.filtered?[indexPath.section].passport {
             UserDefaults.standard.setValue(countryName, forKey: "passportCountry")
-            UserDefaultsManager.shared.isPassportSelected = true
+//            UserDefaultsManager.shared.isPassportSelected = true
             didSelectCountry(countryName)
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -222,7 +224,7 @@ extension ChoosePassportViewController {
     }
 }
 
-//MARK: - setup custom UI to search bar 
+//MARK: - setup custom UI to search bar
 extension ChoosePassportViewController {
     
     func setupCustomSearchBar(_ searchBar: UISearchBar) {

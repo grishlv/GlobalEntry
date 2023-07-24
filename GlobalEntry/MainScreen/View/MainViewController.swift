@@ -64,6 +64,7 @@ final class MainViewController: UIViewController {
         setupSearchBar()
         hideKeyboardWhenTappedAround()
         bindViewModel()
+        
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
