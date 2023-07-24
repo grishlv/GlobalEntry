@@ -12,14 +12,9 @@ protocol ChoosePassportViewModelDelegate: AnyObject {
     func didSelectCountry(_ passportName: String)
 }
 
-protocol ChooseProtocolSpinner: AnyObject {
-    func didLoadData()
-}
-
 final class ChoosePassportViewModel {
     
     weak var delegate: ChoosePassportViewModelDelegate?
-    weak var spinnerDelegate: ChooseProtocolSpinner?
     public var passports: Results<Country>?
     public var filtered: Results<Country>?
     
@@ -29,7 +24,6 @@ final class ChoosePassportViewModel {
             guard let filePath = Bundle.main.path(forResource: "countries", ofType: "json") else {
                 return
             }
-            
             do {
                 let fileURL = URL(fileURLWithPath: filePath)
                 let jsonData = try Data(contentsOf: fileURL)

@@ -81,7 +81,6 @@ final class ChoosePassportViewController: UIViewController {
         super.viewWillAppear(animated)
         
         viewModel.fetchData { [weak self] in
-            // This closure will be called when data fetching is complete
             self?.spinner.stopAnimating()
             self?.tableView.reloadData()
         }
@@ -172,7 +171,7 @@ extension ChoosePassportViewController: UITableViewDelegate, UITableViewDataSour
         cell.contentView.backgroundColor = .white
         if let countryName = viewModel.filtered?[indexPath.section].passport {
             UserDefaults.standard.setValue(countryName, forKey: "passportCountry")
-//            UserDefaultsManager.shared.isPassportSelected = true
+            UserDefaultsManager.shared.isPassportSelected = true
             didSelectCountry(countryName)
         }
         tableView.deselectRow(at: indexPath, animated: true)
