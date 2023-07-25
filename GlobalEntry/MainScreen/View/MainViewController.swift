@@ -53,13 +53,22 @@ final class MainViewController: UIViewController {
         return tableView
     }()
     
+    //MARK: - filter button
+//    private lazy var filterButton: UIButton = {
+//        let filterButton = UIButton()
+//        filterButton.setImage(UIImage(named: "filter"), for: .normal)
+//        view.addSubview(filterButton)
+//        return filterButton
+//    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        
         let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonTapped))
         filterButton.tintColor = UIColor.black
         self.navigationItem.rightBarButtonItem = filterButton
-        
+
         setupTableView()
         setupLabelHeader()
         setupSearchBar()

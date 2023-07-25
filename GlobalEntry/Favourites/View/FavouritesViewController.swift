@@ -54,8 +54,14 @@ final class FavouritesViewController: UIViewController {
         observeDatabaseChanges()
         bindViewModel()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clearFavourites), name: NSNotification.Name("passportSelectionChanged"), object: nil)
     }
     
+    @objc func clearFavourites() {
+        viewModel.clearFavourites()
+        tableView.reloadData()
+    }
+
     private func bindViewModel() {
         viewModel.$favouriteFeatures
             .receive(on: DispatchQueue.main)
@@ -82,6 +88,7 @@ final class FavouritesViewController: UIViewController {
     }
     
     deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("passportSelectionChanged"), object: nil)
         notificationToken?.invalidate()
     }
     
@@ -102,7 +109,7 @@ final class FavouritesViewController: UIViewController {
         
         //constraints
         tableView.snp.makeConstraints({ make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(labelHeader.safeAreaLayoutGuide.snp.bottomMargin)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         })
