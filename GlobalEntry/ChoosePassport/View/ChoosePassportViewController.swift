@@ -71,9 +71,9 @@ final class ChoosePassportViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         setupSpinner()
         
+        viewModel.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
-        viewModel.delegate = self
         spinner.startAnimating()
     }
     
@@ -85,7 +85,7 @@ final class ChoosePassportViewController: UIViewController {
             self?.tableView.reloadData()
         }
     }
-
+    
     //MARK: - setup label header
     private func setupLabelHeader() {
         
@@ -194,8 +194,12 @@ extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
                 }
             }
             tabBarController.selectedIndex = 0
-            navigationController?.pushViewController(tabBarController, animated: true)
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let delegate = windowScene.delegate as? SceneDelegate {
+                delegate.window?.rootViewController = tabBarController
+            }
         }
+        NotificationCenter.default.post(name: NSNotification.Name("passportSelectionChanged"), object: passportName)
     }
 }
 

@@ -53,6 +53,7 @@ final class FavouritesViewController: UIViewController {
         loadFavoriteFeatures()
         observeDatabaseChanges()
         bindViewModel()
+        
     }
     
     private func bindViewModel() {

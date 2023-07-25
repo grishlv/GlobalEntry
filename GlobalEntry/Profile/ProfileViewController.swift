@@ -80,9 +80,9 @@ final class ProfileViewController: UIViewController {
 
         //constraints
         tableView.snp.makeConstraints({ make in
-            make.top.equalTo(labelHeader.snp.bottom).inset(-35)
+            make.top.equalTo(labelHeader.snp.bottom).inset(-20)
             make.leading.trailing.equalTo(view.safeAreaInsets)
-            make.bottom.equalTo(view.safeAreaInsets).inset(404)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         })
     }
 }
@@ -129,6 +129,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         cell.textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
+        cell.textLabel?.font = UIFont(name: "Inter-Medium", size: 15)
         
         let key = sectionTitles[indexPath.section]
         if let item = data[key]?[indexPath.row] {
@@ -156,11 +157,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let sectionTitle = sectionTitles[indexPath.section]
 
         if sectionTitle == "Current passport" {
-            // Navigate to ChoosePassportViewController
-            if let tabBarController = self.tabBarController as? TabController {
-                let choosePassportViewController = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: tabBarController)
-                navigationController?.pushViewController(choosePassportViewController, animated: true)
-            }
+            let viewModel = ChoosePassportViewModel()
+            let tabbar = TabController()
+            let choosePassportViewController = ChoosePassportViewController(viewModel: viewModel, tabBar: tabbar)
+            let navigationController = UINavigationController(rootViewController: choosePassportViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
         }
     }
 }
@@ -170,5 +172,7 @@ extension ProfileViewController: ChoosePassportViewModelDelegate {
     func didSelectCountry(_ passportName: String) {
         data["Current passport"] = [passportName]
         tableView.reloadData()
+        NotificationCenter.default.post(name: NSNotification.Name("passportSelectionChanged"), object: passportName)
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -33,9 +33,6 @@ final class ChoosePassportViewModel {
                     let realm = try Realm()
                     
                     try realm.write {
-                        
-                        realm.deleteAll()
-                        
                         for countryDict in jsonArray {
                             let country = Country()
                             country.passport = countryDict["passport"] as? String ?? ""

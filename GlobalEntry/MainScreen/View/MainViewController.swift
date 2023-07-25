@@ -14,6 +14,7 @@ import Combine
 final class MainViewController: UIViewController {
     
     var viewModel = MainViewModel()
+    var cancellables = Set<AnyCancellable>()
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -71,6 +72,7 @@ final class MainViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateFilter), name: NSNotification.Name("FiltersApplied"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: NSNotification.Name("passportSelectionChanged"), object: nil)
     }
     
     private func bindViewModel() {
@@ -90,14 +92,23 @@ final class MainViewController: UIViewController {
         tableView.reloadData()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+    @objc func reloadData(notification: NSNotification) {
+        if let passportCountry = notification.object as? String {
+            viewModel.loadCountryData(passportCountry)
+            print("table view should reload")
+            tableView.reloadData()
+        }
     }
     
     @objc func updateFilter(notification: NSNotification) {
         if let filters = notification.userInfo?["filters"] as? Filter {
             viewModel.applyFilters(filters)
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("passportSelectionChanged"), object: nil)
     }
     
     //MARK: - setup table view

@@ -10,8 +10,6 @@ import SnapKit
 
 final class TabController: UITabBarController, UITabBarControllerDelegate {
     
-    var viewModel = ChoosePassportViewModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.setHidesBackButton(true, animated: true)
@@ -20,7 +18,6 @@ final class TabController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         configureTabBarAppearance()
     }
     
@@ -28,11 +25,11 @@ final class TabController: UITabBarController, UITabBarControllerDelegate {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.shadowImage = createLine(color: UIColor(red: 229/255, green: 229/255, blue: 234/255, alpha: 1), size: CGSize(width: tabBar.frame.size.width, height: 1))
-
+        
         // Customize the system icon and text colors
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1)
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1)]
-
+        
         tabBar.standardAppearance = appearance
         
         let search = createNav(with: "Search", and: UIImage(systemName: "magnifyingglass"), vc: MainViewController(viewModel: MainViewModel.init()))
