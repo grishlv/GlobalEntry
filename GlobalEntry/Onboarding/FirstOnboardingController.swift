@@ -241,7 +241,7 @@ final class FirstOnboardingController: UIViewController {
     
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
-        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel(), tabBar: TabController())
         self.navigationController?.pushViewController(chooseVC, animated: true)
         UserDefaultsManager.shared.isWelcomeScreenShown = true
     }

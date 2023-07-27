@@ -56,6 +56,7 @@
 		78AD184D2A68227800403213 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD184C2A68227700403213 /* FilterViewController.swift */; };
 		78AD184F2A69816500403213 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 78AD184E2A69816400403213 /* countries.json */; };
 		78AD18512A69A1CD00403213 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD18502A69A1CD00403213 /* Filter.swift */; };
+		78AD185C2A7136BF00403213 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD185B2A7136BF00403213 /* FAQViewController.swift */; };
 		78AEB1382A27AC3800C7DE27 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78AEB1372A27AC3800C7DE27 /* FirebaseDatabaseSwift */; };
 		78B0638929DB1AB70007051F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638829DB1AB70007051F /* FirebaseAuth */; };
 		78B0638D29DB1AB70007051F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638C29DB1AB70007051F /* FirebaseStorage */; };
@@ -143,6 +144,7 @@
 		78AD184C2A68227700403213 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		78AD184E2A69816400403213 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		78AD18502A69A1CD00403213 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		78AD185B2A7136BF00403213 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		78B1622929D73813002CD5A9 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		78B1622B29D738C8002CD5A9 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		78B1623029D98467002CD5A9 /* SignupPresenter .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupPresenter .swift"; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				781B5CB42A51A476004F29A4 /* Favourites */,
 				781B5CB52A51A497004F29A4 /* MapView */,
 				781B5CB72A51A4C0004F29A4 /* Profile */,
+				78AD185A2A71363500403213 /* InfoViews */,
 				783B36E829CB5D420029BD6D /* Info.plist */,
 				78C651142A2658CF00E8F30E /* GoogleService-Info.plist */,
 			);
@@ -521,6 +524,14 @@
 				78AD18502A69A1CD00403213 /* Filter.swift */,
 			);
 			path = Filter;
+			sourceTree = "<group>";
+		};
+		78AD185A2A71363500403213 /* InfoViews */ = {
+			isa = PBXGroup;
+			children = (
+				78AD185B2A7136BF00403213 /* FAQViewController.swift */,
+			);
+			path = InfoViews;
 			sourceTree = "<group>";
 		};
 		78B1621B29D6EFE3002CD5A9 /* Onboarding */ = {
@@ -869,6 +880,7 @@
 				781B5CA42A49DA56004F29A4 /* LoginPresenter.swift in Sources */,
 				52ACEA6129F307D200EEED74 /* SingnupInteractor.swift in Sources */,
 				786075102A63DEDF00B1BED2 /* ChooseTableViewCell.swift in Sources */,
+				78AD185C2A7136BF00403213 /* FAQViewController.swift in Sources */,
 				78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */,
 				781B5CA82A49DAE6004F29A4 /* LoginInteractor.swift in Sources */,
 				78B1622C29D738C8002CD5A9 /* Register.swift in Sources */,

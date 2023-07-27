@@ -9,23 +9,23 @@ import UIKit
 import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
+
     var window: UIWindow?
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            
+
             let navController = UINavigationController()
-            
+
             if !UserDefaultsManager.shared.isWelcomeScreenShown {
                 // Show the welcome screen
                 let firstVC = FirstOnboardingController()
                 navController.viewControllers = [firstVC]
-                
+
             } else if !UserDefaultsManager.shared.isPassportSelected {
                 // Show the choose passport screen
-                let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+                let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel(), tabBar: TabController())
                 navController.viewControllers = [choosePassportVC]
             } else {
                 // Show the main screen
@@ -33,13 +33,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 tabBarController.selectedIndex = 0
                 navController.viewControllers = [tabBarController]
             }
-            
+
             window.rootViewController = navController
-            
+
             self.window = window
             window.makeKeyAndVisible()
         }
-        
+
         // Realm configuration
         let config = Realm.Configuration(
             schemaVersion: 1,

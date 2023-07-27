@@ -232,7 +232,7 @@ final class LogInViewController: UIViewController, UITextFieldDelegate {
     
     func transitionNext() {
         let viewModel = ChoosePassportViewModel()
-        let chooseVC = ChoosePassportViewController(viewModel: viewModel, tabBar: TabController.init())
+        let chooseVC = ChoosePassportViewController(viewModel: viewModel, tabBar: TabController())
         spinner.startAnimating()
         DispatchQueue.main.async {
             self.navigationController?.pushViewController(chooseVC, animated: true)

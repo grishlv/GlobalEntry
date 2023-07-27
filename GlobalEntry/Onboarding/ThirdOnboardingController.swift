@@ -173,7 +173,7 @@ final class ThirdOnboardingController: UIViewController {
     }
     
     @objc func swipeFuncForward(gesture: UISwipeGestureRecognizer) {
-        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel(), tabBar: TabController())
         self.navigationController?.pushViewController(chooseVC, animated: true)
         UserDefaultsManager.shared.isWelcomeScreenShown = true
     }
@@ -325,7 +325,7 @@ final class ThirdOnboardingController: UIViewController {
     //MARK: - action button to the next view
     @objc func actionForNextButton() {
         
-        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel(), tabBar: TabController())
         self.navigationController?.pushViewController(chooseVC, animated: true)
         UserDefaultsManager.shared.isWelcomeScreenShown = true
     }
@@ -347,7 +347,7 @@ final class ThirdOnboardingController: UIViewController {
     
     //MARK: - action to the next view
     @objc func actionForButtonSkip() {
-        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel.init(), tabBar: TabController.init())
+        let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel(), tabBar: TabController())
         self.navigationController?.pushViewController(chooseVC, animated: true)
         UserDefaultsManager.shared.isWelcomeScreenShown = true
     }

@@ -282,7 +282,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     private func transitionNext() {
         let viewModel = ChoosePassportViewModel()
-        let chooseVC = ChoosePassportViewController(viewModel: viewModel, tabBar: TabController.init())
+        let chooseVC = ChoosePassportViewController(viewModel: viewModel, tabBar: TabController())
         spinner.startAnimating()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.navigationController?.pushViewController(chooseVC, animated: true)

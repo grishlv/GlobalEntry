@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import MessageUI
 
 final class ProfileViewController: UIViewController {
     
@@ -17,7 +18,7 @@ final class ProfileViewController: UIViewController {
     ]
     
     var sectionTitles = ["Current passport", "Information"]
-    
+
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -80,10 +81,33 @@ final class ProfileViewController: UIViewController {
 
         //constraints
         tableView.snp.makeConstraints({ make in
-            make.top.equalTo(labelHeader.snp.bottom).inset(-20)
+            make.top.equalTo(labelHeader.snp.bottom).inset(-25)
             make.leading.trailing.equalTo(view.safeAreaInsets)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         })
+    }
+    
+    private func createEmailUrl(to: String, subject: String, body: String) -> URL? {
+        let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        let gmailUrl = URL(string: "googlegmail://co?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let outlookUrl = URL(string: "ms-outlook://compose?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let yahooMail = URL(string: "ymail://mail/compose?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let sparkUrl = URL(string: "readdle-spark://compose?recipient=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let defaultUrl = URL(string: "mailto:\(to)?subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        
+        if let gmailUrl = gmailUrl, UIApplication.shared.canOpenURL(gmailUrl) {
+            return gmailUrl
+        } else if let outlookUrl = outlookUrl, UIApplication.shared.canOpenURL(outlookUrl) {
+            return outlookUrl
+        } else if let yahooMail = yahooMail, UIApplication.shared.canOpenURL(yahooMail) {
+            return yahooMail
+        } else if let sparkUrl = sparkUrl, UIApplication.shared.canOpenURL(sparkUrl) {
+            return sparkUrl
+        }
+        
+        return defaultUrl
     }
 }
 
@@ -153,17 +177,40 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
         let sectionTitle = sectionTitles[indexPath.section]
-
+        let rowTitle = data[sectionTitle]?[indexPath.row]
+        
         if sectionTitle == "Current passport" {
             let viewModel = ChoosePassportViewModel()
-            let tabbar = TabController()
-            let choosePassportViewController = ChoosePassportViewController(viewModel: viewModel, tabBar: tabbar)
-            let navigationController = UINavigationController(rootViewController: choosePassportViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            present(navigationController, animated: true, completion: nil)
+            let choosePassportViewController = ChoosePassportViewController(viewModel: viewModel, tabBar: TabController())
+            choosePassportViewController.delegate = self
+            navigationController?.pushViewController(choosePassportViewController, animated: true)
+            
+        } else if sectionTitle == "Information", rowTitle == "Contact us" {
+            
+            let recipientEmail = "g.shilyaev28@gmail.com"
+            let subject = "GlobalEntry feedback"
+            let body = ""
+            
+            if MFMailComposeViewController.canSendMail() {
+                let mailComposerVC = MFMailComposeViewController()
+                mailComposerVC.mailComposeDelegate = self
+                mailComposerVC.setToRecipients([recipientEmail])
+                mailComposerVC.setSubject(subject)
+                mailComposerVC.setMessageBody(body, isHTML: false)
+                present(mailComposerVC, animated: true)
+                
+            } else if let emailUrl = createEmailUrl(to: recipientEmail, subject: subject, body: body) {
+                UIApplication.shared.open(emailUrl)
+            }
         }
+    }
+}
+
+extension ProfileViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 }
 

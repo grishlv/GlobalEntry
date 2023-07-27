@@ -53,14 +53,6 @@ final class MainViewController: UIViewController {
         return tableView
     }()
     
-    //MARK: - filter button
-//    private lazy var filterButton: UIButton = {
-//        let filterButton = UIButton()
-//        filterButton.setImage(UIImage(named: "filter"), for: .normal)
-//        view.addSubview(filterButton)
-//        return filterButton
-//    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
