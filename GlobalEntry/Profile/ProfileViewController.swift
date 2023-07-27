@@ -18,7 +18,7 @@ final class ProfileViewController: UIViewController {
     ]
     
     var sectionTitles = ["Current passport", "Information"]
-
+    
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -42,7 +42,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(tableView)
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +56,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         // Fetch the selected passport
         if let passportCountry = UserDefaults.standard.string(forKey: "passportCountry") {
             data["Current passport"] = [passportCountry]
@@ -78,7 +78,7 @@ final class ProfileViewController: UIViewController {
     
     //MARK: - setup line separator
     private func setupTableView() {
-
+        
         //constraints
         tableView.snp.makeConstraints({ make in
             make.top.equalTo(labelHeader.snp.bottom).inset(-25)
@@ -87,6 +87,7 @@ final class ProfileViewController: UIViewController {
         })
     }
     
+    //MARK: - create email URL
     private func createEmailUrl(to: String, subject: String, body: String) -> URL? {
         let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -130,21 +131,21 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-
+        
         let headerLabel = UILabel()
         headerLabel.text = sectionTitles[section]
         headerLabel.font = UIFont(name: "Inter-Bold", size: 15)
         headerLabel.textColor = UIColor(red: 174/255, green: 174/255, blue: 178/255, alpha: 1)
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
         headerView.addSubview(headerLabel)
-
+        
         // Set constraints for the header label
         NSLayoutConstraint.activate([
             headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             headerLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
-
+        
         return headerView
     }
     
@@ -163,7 +164,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let image = UIImage(systemName: "chevron.right")
         let accessory  = UIImageView(frame:CGRect(x:0, y:0, width:(image?.size.width)!, height:(image?.size.height)!))
         accessory.image = image
-
+        
         // set the color here
         accessory.tintColor = UIColor(red: 174/255, green: 174/255, blue: 178/255, alpha: 1)
         cell.accessoryView = accessory
@@ -204,6 +205,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             } else if let emailUrl = createEmailUrl(to: recipientEmail, subject: subject, body: body) {
                 UIApplication.shared.open(emailUrl)
             }
+        } else if sectionTitle == "Information", rowTitle == "FAQ" {
+            let faqVC = FAQViewController()
+            navigationController?.pushViewController(faqVC, animated: true)
         }
     }
 }
@@ -215,7 +219,7 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
 }
 
 extension ProfileViewController: ChoosePassportViewModelDelegate {
-
+    
     func didSelectCountry(_ passportName: String) {
         data["Current passport"] = [passportName]
         tableView.reloadData()

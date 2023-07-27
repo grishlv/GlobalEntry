@@ -64,6 +64,11 @@
 		78B1622C29D738C8002CD5A9 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1622B29D738C8002CD5A9 /* Register.swift */; };
 		78B1623129D98467002CD5A9 /* SignupPresenter .swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B1623029D98467002CD5A9 /* SignupPresenter .swift */; };
 		78B6A5E82A1BAD15008DF2F1 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 78B6A5E72A1BAD15008DF2F1 /* FirebaseDatabase */; };
+		78C0150B2A72C26700260C86 /* FirstFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C0150A2A72C26700260C86 /* FirstFAQViewController.swift */; };
+		78C0150D2A72CCF500260C86 /* SecondFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C0150C2A72CCF500260C86 /* SecondFAQViewController.swift */; };
+		78C0150F2A72D1FC00260C86 /* ThirdFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C0150E2A72D1FC00260C86 /* ThirdFAQViewController.swift */; };
+		78C015112A72D2D900260C86 /* FourthFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C015102A72D2D900260C86 /* FourthFAQViewController.swift */; };
+		78C015132A72D42100260C86 /* FifthFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C015122A72D42100260C86 /* FifthFAQViewController.swift */; };
 		78C1AB3C29ED5B4A00253AA8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1AB3B29ED5B4A00253AA8 /* GoogleSignIn */; };
 		78C1AB3E29ED5B4A00253AA8 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1AB3D29ED5B4A00253AA8 /* GoogleSignInSwift */; };
 		78C650E82A2388FE00E8F30E /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C650E72A2388FE00E8F30E /* Country.swift */; };
@@ -148,6 +153,11 @@
 		78B1622929D73813002CD5A9 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		78B1622B29D738C8002CD5A9 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		78B1623029D98467002CD5A9 /* SignupPresenter .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupPresenter .swift"; sourceTree = "<group>"; };
+		78C0150A2A72C26700260C86 /* FirstFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstFAQViewController.swift; sourceTree = "<group>"; };
+		78C0150C2A72CCF500260C86 /* SecondFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondFAQViewController.swift; sourceTree = "<group>"; };
+		78C0150E2A72D1FC00260C86 /* ThirdFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdFAQViewController.swift; sourceTree = "<group>"; };
+		78C015102A72D2D900260C86 /* FourthFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthFAQViewController.swift; sourceTree = "<group>"; };
+		78C015122A72D42100260C86 /* FifthFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FifthFAQViewController.swift; sourceTree = "<group>"; };
 		78C650E72A2388FE00E8F30E /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		78C651142A2658CF00E8F30E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -530,6 +540,11 @@
 			isa = PBXGroup;
 			children = (
 				78AD185B2A7136BF00403213 /* FAQViewController.swift */,
+				78C0150A2A72C26700260C86 /* FirstFAQViewController.swift */,
+				78C0150C2A72CCF500260C86 /* SecondFAQViewController.swift */,
+				78C0150E2A72D1FC00260C86 /* ThirdFAQViewController.swift */,
+				78C015102A72D2D900260C86 /* FourthFAQViewController.swift */,
+				78C015122A72D42100260C86 /* FifthFAQViewController.swift */,
 			);
 			path = InfoViews;
 			sourceTree = "<group>";
@@ -863,17 +878,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				781B5CB92A51A4F8004F29A4 /* FavouritesViewController.swift in Sources */,
+				78C0150D2A72CCF500260C86 /* SecondFAQViewController.swift in Sources */,
 				78B1623129D98467002CD5A9 /* SignupPresenter .swift in Sources */,
 				781B5C962A489363004F29A4 /* MainViewController.swift in Sources */,
 				52ACEA6329F3099400EEED74 /* SignupAssembly.swift in Sources */,
 				781B5C9B2A49A653004F29A4 /* ChoosePassportViewModel.swift in Sources */,
 				786074EA2A598CA600B1BED2 /* MainViewModel.swift in Sources */,
+				78C0150F2A72D1FC00260C86 /* ThirdFAQViewController.swift in Sources */,
+				78C0150B2A72C26700260C86 /* FirstFAQViewController.swift in Sources */,
 				783B36DF29CB5D3D0029BD6D /* FirstOnboardingController.swift in Sources */,
 				783B36DB29CB5D3D0029BD6D /* AppDelegate.swift in Sources */,
 				78AD184A2A66C3F700403213 /* FavouritesViewModel.swift in Sources */,
 				781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */,
 				781B5CA12A49D903004F29A4 /* FirebaseServiceLogin.swift in Sources */,
 				781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */,
+				78C015112A72D2D900260C86 /* FourthFAQViewController.swift in Sources */,
 				782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */,
 				781B5CBD2A51A555004F29A4 /* ProfileViewController.swift in Sources */,
 				7839825E29F2CF4E00D30821 /* Validator.swift in Sources */,
@@ -881,6 +900,7 @@
 				52ACEA6129F307D200EEED74 /* SingnupInteractor.swift in Sources */,
 				786075102A63DEDF00B1BED2 /* ChooseTableViewCell.swift in Sources */,
 				78AD185C2A7136BF00403213 /* FAQViewController.swift in Sources */,
+				78C015132A72D42100260C86 /* FifthFAQViewController.swift in Sources */,
 				78B1622A29D73813002CD5A9 /* SignupViewController.swift in Sources */,
 				781B5CA82A49DAE6004F29A4 /* LoginInteractor.swift in Sources */,
 				78B1622C29D738C8002CD5A9 /* Register.swift in Sources */,
