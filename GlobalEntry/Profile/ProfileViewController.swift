@@ -208,6 +208,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         } else if sectionTitle == "Information", rowTitle == "FAQ" {
             let faqVC = FAQViewController()
             navigationController?.pushViewController(faqVC, animated: true)
+        } else if sectionTitle == "Information", rowTitle == "About the app" {
+            let aboutVC = AboutViewContoller()
+            navigationController?.pushViewController(aboutVC, animated: true)
+        } else if sectionTitle == "Information", rowTitle == "Privacy policy" {
+            let privacyVC = PrivacyViewController()
+            navigationController?.pushViewController(privacyVC, animated: true)
         }
     }
 }

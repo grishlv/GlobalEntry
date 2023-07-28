@@ -236,5 +236,8 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
                 filters.visaTypes.remove(at: index)
             }
         }
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
     }
 }

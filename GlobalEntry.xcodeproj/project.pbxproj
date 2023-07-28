@@ -69,6 +69,8 @@
 		78C0150F2A72D1FC00260C86 /* ThirdFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C0150E2A72D1FC00260C86 /* ThirdFAQViewController.swift */; };
 		78C015112A72D2D900260C86 /* FourthFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C015102A72D2D900260C86 /* FourthFAQViewController.swift */; };
 		78C015132A72D42100260C86 /* FifthFAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C015122A72D42100260C86 /* FifthFAQViewController.swift */; };
+		78C015172A73BFF000260C86 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C015162A73BFF000260C86 /* AboutViewController.swift */; };
+		78C0151B2A73E25400260C86 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C0151A2A73E25400260C86 /* PrivacyViewController.swift */; };
 		78C1AB3C29ED5B4A00253AA8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1AB3B29ED5B4A00253AA8 /* GoogleSignIn */; };
 		78C1AB3E29ED5B4A00253AA8 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1AB3D29ED5B4A00253AA8 /* GoogleSignInSwift */; };
 		78C650E82A2388FE00E8F30E /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C650E72A2388FE00E8F30E /* Country.swift */; };
@@ -158,6 +160,8 @@
 		78C0150E2A72D1FC00260C86 /* ThirdFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdFAQViewController.swift; sourceTree = "<group>"; };
 		78C015102A72D2D900260C86 /* FourthFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthFAQViewController.swift; sourceTree = "<group>"; };
 		78C015122A72D42100260C86 /* FifthFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FifthFAQViewController.swift; sourceTree = "<group>"; };
+		78C015162A73BFF000260C86 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		78C0151A2A73E25400260C86 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
 		78C650E72A2388FE00E8F30E /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		78C651142A2658CF00E8F30E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -539,12 +543,9 @@
 		78AD185A2A71363500403213 /* InfoViews */ = {
 			isa = PBXGroup;
 			children = (
-				78AD185B2A7136BF00403213 /* FAQViewController.swift */,
-				78C0150A2A72C26700260C86 /* FirstFAQViewController.swift */,
-				78C0150C2A72CCF500260C86 /* SecondFAQViewController.swift */,
-				78C0150E2A72D1FC00260C86 /* ThirdFAQViewController.swift */,
-				78C015102A72D2D900260C86 /* FourthFAQViewController.swift */,
-				78C015122A72D42100260C86 /* FifthFAQViewController.swift */,
+				78C015142A73BFA400260C86 /* FAQ Questions */,
+				78C015152A73BFD500260C86 /* About the app */,
+				78C015192A73E23300260C86 /* Privacy policy */,
 			);
 			path = InfoViews;
 			sourceTree = "<group>";
@@ -638,6 +639,43 @@
 				78C650E72A2388FE00E8F30E /* Country.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		78C015142A73BFA400260C86 /* FAQ Questions */ = {
+			isa = PBXGroup;
+			children = (
+				78AD185B2A7136BF00403213 /* FAQViewController.swift */,
+				78C015182A73E21300260C86 /* Question screens */,
+			);
+			path = "FAQ Questions";
+			sourceTree = "<group>";
+		};
+		78C015152A73BFD500260C86 /* About the app */ = {
+			isa = PBXGroup;
+			children = (
+				78C015162A73BFF000260C86 /* AboutViewController.swift */,
+			);
+			path = "About the app";
+			sourceTree = "<group>";
+		};
+		78C015182A73E21300260C86 /* Question screens */ = {
+			isa = PBXGroup;
+			children = (
+				78C0150A2A72C26700260C86 /* FirstFAQViewController.swift */,
+				78C0150C2A72CCF500260C86 /* SecondFAQViewController.swift */,
+				78C0150E2A72D1FC00260C86 /* ThirdFAQViewController.swift */,
+				78C015102A72D2D900260C86 /* FourthFAQViewController.swift */,
+				78C015122A72D42100260C86 /* FifthFAQViewController.swift */,
+			);
+			path = "Question screens";
+			sourceTree = "<group>";
+		};
+		78C015192A73E23300260C86 /* Privacy policy */ = {
+			isa = PBXGroup;
+			children = (
+				78C0151A2A73E25400260C86 /* PrivacyViewController.swift */,
+			);
+			path = "Privacy policy";
 			sourceTree = "<group>";
 		};
 		78CC418A29CC32B200490F84 /* New Group */ = {
@@ -894,6 +932,7 @@
 				781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */,
 				78C015112A72D2D900260C86 /* FourthFAQViewController.swift in Sources */,
 				782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */,
+				78C0151B2A73E25400260C86 /* PrivacyViewController.swift in Sources */,
 				781B5CBD2A51A555004F29A4 /* ProfileViewController.swift in Sources */,
 				7839825E29F2CF4E00D30821 /* Validator.swift in Sources */,
 				781B5CA42A49DA56004F29A4 /* LoginPresenter.swift in Sources */,
@@ -911,6 +950,7 @@
 				781B5CC72A52C91A004F29A4 /* UserDefaultsManager.swift in Sources */,
 				786074FF2A5DA8E000B1BED2 /* MainTableViewCell.swift in Sources */,
 				78AD184D2A68227800403213 /* FilterViewController.swift in Sources */,
+				78C015172A73BFF000260C86 /* AboutViewController.swift in Sources */,
 				781B5CAC2A4B1790004F29A4 /* LoginAssembly.swift in Sources */,
 				783B36DD29CB5D3D0029BD6D /* SceneDelegate.swift in Sources */,
 				78C650E82A2388FE00E8F30E /* Country.swift in Sources */,
