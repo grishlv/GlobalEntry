@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class PrivacyViewController: UIViewController {
+final class PrivacyViewController: UIViewController {
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
@@ -70,7 +70,7 @@ class PrivacyViewController: UIViewController {
         
         textView.attributedText = attributedText
         textView.isEditable = false
-        textView.isScrollEnabled = true //allowing scroll as the text might be long
+        textView.isScrollEnabled = true
         
         view.addSubview(textView)
         return textView

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class AboutViewContoller: UIViewController {
+final class AboutViewContoller: UIViewController {
     
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
