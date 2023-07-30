@@ -13,7 +13,7 @@ final class ChoosePassportViewController: UIViewController {
     weak var delegate: ChoosePassportViewModelDelegate?
     private let viewModel: ChoosePassportViewModel
     private var tabBar: UITabBarController?
-
+    
     //MARK: - label header
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
@@ -66,7 +66,7 @@ final class ChoosePassportViewController: UIViewController {
         
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         navigationItem.setHidesBackButton(true, animated: true)
-
+        
         setupLabelHeader()
         setupSearchBar()
         setupTableView()

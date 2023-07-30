@@ -7,8 +7,6 @@
 
 import UIKit
 import Firebase
-import FirebaseCore
-import FirebaseDatabase
 import FirebaseStorage
 
 @main
@@ -16,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
         
         if #available(iOS 15, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
@@ -35,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UITabBar.appearance().scrollEdgeAppearance = tabBarApperance
             UITabBar.appearance().standardAppearance = tabBarApperance
         }
-
         return true
     }
     

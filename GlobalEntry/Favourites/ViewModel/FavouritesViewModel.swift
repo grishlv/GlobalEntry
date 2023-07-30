@@ -57,11 +57,9 @@ class FavouritesViewModel {
     }
     
     func clearFavourites() {
-        // Use Realm to remove all favourite features
         do {
             let realm = try Realm()
             try realm.write {
-                // Filter the features where isFavorite is true and update them
                 let favouriteFeatures = realm.objects(Feature.self).filter("isFavorite == true")
                 for feature in favouriteFeatures {
                     feature.isFavorite = false
@@ -70,7 +68,6 @@ class FavouritesViewModel {
         } catch {
             print("Failed to clear favourites: \(error.localizedDescription)")
         }
-        // Clear the local copy of favourite features
         favouriteFeatures = []
     }
 }

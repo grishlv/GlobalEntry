@@ -8,10 +8,10 @@
 import UIKit
 
 final class ChooseTableViewCell: UITableViewCell {
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        
         textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
         textLabel?.font = UIFont(name: "Inter-Medium", size: 18)
         
@@ -23,9 +23,7 @@ final class ChooseTableViewCell: UITableViewCell {
         layer.cornerRadius = 10
         backgroundColor = .white
         clipsToBounds = true
-        
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

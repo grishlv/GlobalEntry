@@ -66,7 +66,7 @@ class MainViewModel: ObservableObject {
         self.filters = filters
         filteredFeatures = features.filter { feature in
             let continentMatches = (filters.continents.isEmpty || filters.continents.contains(feature.continent))
-
+            
             if filters.visaTypes.isEmpty {
                 return continentMatches
             } else if filters.visaTypes.contains("visa free") {

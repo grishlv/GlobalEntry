@@ -61,7 +61,7 @@ final class FavouritesViewController: UIViewController {
         viewModel.clearFavourites()
         tableView.reloadData()
     }
-
+    
     private func bindViewModel() {
         viewModel.$favouriteFeatures
             .receive(on: DispatchQueue.main)
@@ -191,7 +191,6 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         }
         NotificationCenter.default.post(name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
         
-        // refresh the cell views
         tableView.beginUpdates()
         tableView.reloadRows(at: [IndexPath(row: 0, section: index)], with: .none)
         tableView.endUpdates()

@@ -60,7 +60,7 @@ final class MainViewController: UIViewController {
         let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonTapped))
         filterButton.tintColor = UIColor.black
         self.navigationItem.rightBarButtonItem = filterButton
-
+        
         setupTableView()
         setupLabelHeader()
         setupSearchBar()

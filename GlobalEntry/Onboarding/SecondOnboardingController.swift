@@ -344,4 +344,6 @@ final class SecondOnboardingController: UIViewController {
         let chooseVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel(), tabBar: TabController())
         self.navigationController?.pushViewController(chooseVC, animated: true)
         UserDefaultsManager.shared.isWelcomeScreenShown = true
-    }}
+    }
+}
+

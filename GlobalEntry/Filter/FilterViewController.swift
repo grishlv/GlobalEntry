@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class FilterViewController: UIViewController {
+final class FilterViewController: UIViewController {
     
     var data = [
         "Continent": ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"],
@@ -154,7 +154,6 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         return data.count
     }
     
-    // Number of rows in section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = sectionTitles[section]
         if let rows = data[key] {
@@ -163,7 +162,6 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         return 0
     }
     
-    // Section title
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = .clear
@@ -190,15 +188,15 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         cell.textLabel?.textColor = UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1)
-
+        
         let switchView = UISwitch(frame: .zero)
         let uniqueTag = indexPath.section * 1000 + indexPath.row
         switchView.tag = uniqueTag
-
+        
         let key = sectionTitles[indexPath.section]
         if let item = data[key]?[indexPath.row] {
             cell.textLabel?.text = item
-
+            
             if key == "Continent" {
                 switchView.setOn(filters.continents.contains(item), animated: false)
             } else if key == "Visa Types" {
@@ -210,9 +208,9 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         cell.accessoryView = switchView
         
         let selectedBackgroundView = UIView()
-        selectedBackgroundView.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1) // Set your color here
+        selectedBackgroundView.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         cell.selectedBackgroundView = selectedBackgroundView
-
+        
         return cell
     }
     
@@ -222,7 +220,7 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         let sectionTitle = sectionTitles[section]
         let item = data[sectionTitle]?[row]
         let _ = String(section * 1000 + row)
-
+        
         if sender.isOn {
             if sectionTitle == "Continent" {
                 filters.continents.append(item ?? "")
