@@ -2,9 +2,9 @@
 Global Entry — travel mobile application that helps people quickly find information about visa requirements in different countries of the world. The app was launched in 2023, born out of our personal desire for such a resource. It soon became clear that we weren't alone in this need. The app is currently only available on the App Store for iPhone users.
 
 <p float="left">
-	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/16448077-352b-417a-ab13-06d02db4e839"" width="33%" />
-	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/343bbe16-b834-4ef0-973f-06416619e50d" width="33%" />
-	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/3ae81052-8eb9-4ef7-9fc5-d28f39d68e28" width="33%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/16448077-352b-417a-ab13-06d02db4e839"" width="32%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/343bbe16-b834-4ef0-973f-06416619e50d" width="32%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/3ae81052-8eb9-4ef7-9fc5-d28f39d68e28" width="32%" />
  </p>
 
 ## Features
