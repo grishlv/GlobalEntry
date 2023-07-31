@@ -1,4 +1,4 @@
-# Global Entry
+# Global Entry - travel mobile application
 Global Entry — travel mobile application that helps people quickly find information about visa requirements in different countries of the world. The app was launched in 2023, born out of our personal desire for such a resource. It soon became clear that we weren't alone in this need. The app is currently only available on the App Store for iPhone users.
 
 <p float="left">
