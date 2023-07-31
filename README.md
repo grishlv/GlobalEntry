@@ -2,9 +2,9 @@
 Global Entry — travel mobile application that helps people quickly find information about visa requirements in different countries of the world. The app was launched in 2023, born out of our personal desire for such a resource. It soon became clear that we weren't alone in this need. The app is currently only available on the App Store for iPhone users.
 
 <p float="left">
-	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/16448077-352b-417a-ab13-06d02db4e839"" width="32%" />
-	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/343bbe16-b834-4ef0-973f-06416619e50d" width="32%" />
-	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/3ae81052-8eb9-4ef7-9fc5-d28f39d68e28" width="32%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/3ea6c07d-a752-4904-a284-98a6f242bc1b" width="32%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/397479a6-047b-4b81-a632-4b953c601d3d" width="32%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/7316ad80-7f55-489f-a893-a895758ec385" width="32%" />
  </p>
 
 ## Features
@@ -38,7 +38,7 @@ On the main screen you can observe visa conditions in all 199 countries. The sea
 
 ## 3. Add to favourites
 
-In favorites, you can add countries that you would like to visit and make a comparison.
+In favourites, you can add countries that you would like to visit and make a comparison.
 
 <p float="left">
 	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/0fe7fc3e-9ca1-40eb-b847-32201388b481" width="20%" />
@@ -47,7 +47,7 @@ In favorites, you can add countries that you would like to visit and make a comp
 
 ## 4. Filter by category
 
-In filter category you can select the conditions you are interested in. For example, you want to travel to Latin American countries and not have visa restrictions.
+In filter category you can select the conditions you are interested in. For example, you want to travel to South America and not have visa restrictions.
 
 <p float="left">
 	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/e978b7ea-ab1f-469f-8cd1-1b0442bbaad7" width="20%" />
@@ -59,10 +59,10 @@ In filter category you can select the conditions you are interested in. For exam
 You can also change your passport to compare visa conditions in different countries. But be careful that when you change your passport, the countries added to favorites will disappear. You can also view FAQ, contact us or read more about the app.
 
 <p float="left">
-	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/83459efa-976d-4701-aeb0-59b567478183" width="20%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/26c499cf-f632-4b59-a185-e35853367d4c" width="20%" />
 </p>
  
-In the near future, I plan to introduce features that will provide in-depth information about each country. This will help our users gain better awareness before their visits, enhancing their travel experience.
+In the near future, I plan to introduce in-depth information about each country. This will help users gain better awareness before their visits, enhancing their travel experience!
 
 # Development
 
@@ -82,7 +82,7 @@ Also about project:
 
 ## Database 
 
-I used the database provided by the website Passport Index. According to Passport Index, it is a free tool built with publicly available information and content contributed by fans and government agencies from around the world. You are free to use the dataset under the MIT license.
+I used the database provided by the website Passport Index. According to Passport Index, it's a free tool built with publicly available information and content contributed by fans and government agencies from around the world. It's free to use the dataset under the MIT license.
 
 Source: https://www.passportindex.org
 
@@ -90,5 +90,13 @@ For more convenient work with data, I used an open data project: https://github.
 
 ## Photo Credits
 
-I used photos with a free license from the Unsplash web-site, which doesn't require mentioning the photographers credit, but I will add their links later.
+I used photos with a free license from the Unsplash site, which doesn't require mentioning the photographers credit, but I will add their links later.
+
+## Contacts 
+
+For any questions, you can always contact me at:
+
+E-mail: g.shilyaev28@gmail.com
+
+Telegram: [@grishlv](https://t.me/grishlv)
 
