@@ -128,7 +128,6 @@ final class FirstOnboardingController: UIViewController {
     
     //MARK: - circle left
     func setupCircleLeft() {
-        
         //constraints
         imageViewCircleLeft.snp.makeConstraints( { make in
             make.leading.equalToSuperview().inset(-130)
@@ -139,7 +138,6 @@ final class FirstOnboardingController: UIViewController {
     
     //MARK: - circle right
     func setupCircleRight() {
-        
         //constraints
         imageViewCircleRight.snp.makeConstraints( { make in
             make.leading.equalToSuperview().offset(185)
@@ -150,7 +148,6 @@ final class FirstOnboardingController: UIViewController {
     
     //MARK: - image main
     func setupImageMain() {
-        
         //constraints
         imageViewMain.snp.makeConstraints( { make in
             make.centerX.equalToSuperview().inset(40)

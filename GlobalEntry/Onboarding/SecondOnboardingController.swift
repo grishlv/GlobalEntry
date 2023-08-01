@@ -188,7 +188,6 @@ final class SecondOnboardingController: UIViewController {
     
     //MARK: - circle left
     func setupCircleLeft() {
-        
         //constraints
         imageViewCircleLeft.snp.makeConstraints( { make in
             make.leading.equalToSuperview().inset(-130)
@@ -199,7 +198,6 @@ final class SecondOnboardingController: UIViewController {
     
     //MARK: - circle right
     func setupCircleRight() {
-        
         //constraints
         imageViewCircleRight.snp.makeConstraints( { make in
             make.leading.equalToSuperview().offset(135)
@@ -210,7 +208,6 @@ final class SecondOnboardingController: UIViewController {
     
     //MARK: - image main
     func setupImageMain() {
-        
         //constraints
         imageViewMain.snp.makeConstraints( { make in
             make.centerX.equalToSuperview().inset(82)
@@ -222,7 +219,6 @@ final class SecondOnboardingController: UIViewController {
     
     //MARK: - image right
     func setupImageRight() {
-        
         //constraints
         imageViewRight.snp.makeConstraints( { make in
             make.leading.equalTo(imageViewMain.snp.trailing).offset(0)
@@ -233,8 +229,7 @@ final class SecondOnboardingController: UIViewController {
     
     //MARK: - image left
     func setupImageLeft() {
-        
-        //constraints for left image
+                //constraints for left image
         imageViewLeft.snp.makeConstraints( { make in
             make.trailing.equalTo(imageViewMain.snp.leading).offset(-30)
             make.top.equalTo(imageViewMain.snp.top).offset(12)
@@ -251,7 +246,6 @@ final class SecondOnboardingController: UIViewController {
     
     //MARK: - shape star
     func setupImageStar() {
-        
         //constraints
         imageViewStar.snp.makeConstraints( { make in
             make.trailing.equalTo(imageViewMain.snp.trailing).offset(50)
