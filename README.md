@@ -10,26 +10,26 @@ Global Entry — travel mobile application that helps people quickly find inform
 ## Navigation 
 
 1. Features
-	- First steps
-	- Main feature
-	- Add to favourites
-	- Filter by category
-	- Other features
+	- [First steps](https://github.com/grishlv/GlobalEntry#1-first-steps)
+	- [Main feature](https://github.com/grishlv/GlobalEntry#2-main-feature)
+	- [Add to favourites](https://github.com/grishlv/GlobalEntry#3-add-to-favourites)
+	- [Filter by category](https://github.com/grishlv/GlobalEntry#4-filter-by-category)
+	- [Other features](https://github.com/grishlv/GlobalEntry#5-other-features)
 
 2. Realization
-	- Idea
-	- Naming
-	- Competitor analysis
-	- Who is my client
-	- User Flow
-	- Prototype
-	- Design
-	- Development
+	- [Idea](https://github.com/grishlv/GlobalEntry#idea)
+	- [Naming](https://github.com/grishlv/GlobalEntry#naming)
+	- [Competitor analysis](https://github.com/grishlv/GlobalEntry#this-already-exists-competitor-analysis)
+	- [Who is my client](https://github.com/grishlv/GlobalEntry#who-is-the-client-and-what-does-he-want)
+	- [User Flows](https://github.com/grishlv/GlobalEntry#user-flows)
+	- [Prototype](https://github.com/grishlv/GlobalEntry#prototype)
+	- [Design](https://github.com/grishlv/GlobalEntry#design)
+	- [Development](https://github.com/grishlv/GlobalEntry#development)
 
 3. Attributions
-   	- Database
-   	- Photo Credits
-   	- Contacts
+   	- [Database](https://github.com/grishlv/GlobalEntry#database)
+   	- [Photo Credits](https://github.com/grishlv/GlobalEntry#photo-credits)
+   	- [Contacts](https://github.com/grishlv/GlobalEntry#contacts)
 
 # Features
 
@@ -87,11 +87,11 @@ In the near future, I plan to introduce in-depth information about each country.
 
 ## Idea
 
-The idea of the app came from my own need. Since 2022, I have been traveling and sometimes I don't know which country to choose next. Of course, one of the main factors is the visa and the period of staying. To find visa requirements for all potentially interesting countries can be time-consuming. Additionally, sometimes the idea comes to me not to visit any particular country but to explore regions like Latin America or Asia. And my friends and I lacked an application where we could compare the conditions of entry to each of these countries.
+The idea of the app came from my own need. Since 2022, I have been traveling and sometimes I don't know which country to choose next. Of course, one of the main factors is the visa and the period of staying. To find visa requirements for all potentially interesting countries can be time-consuming. Additionally, sometimes the idea comes to me not to visit any particular country but to explore regions like Latin America or Asia and I liked an idea where I could compare the conditions of entry to each of these countries. So, I realized that I need to implement this idea into reality!
 
 ## Naming 
 
-After that, I began brainstorming potential names. Here's how I did it: 
+I began brainstorming potential names. Here's how I did it: 
 1. I listed out keywords that best represented the core idea of my application and its purpose.
 2. Asked for help from ChatGPT to generate a variety of name options.
 3. Engaging in a brief conversation with ChatGPT, I provided more refined prompts to receive suitable suggestions.
@@ -127,15 +127,13 @@ _From my analysis of competitors, I have drawn the following conclusions:_
 - Monetization exists, which is a positive sign. While the market may not be as extensive as complex SAAS/B2B solutions or certain FinTech sectors, it still demonstrates a willingness of people to pay for this service, indicating a viable market
 - I believe I can differentiate my app by offering a more pleasant UX
 
-Now, it's time to implement and make this idea a reality!
-
 
 ## Who is the client and what does he want
 
 I understand that this stage is crucial - comprehending the portrait of your client, their desires, and pain points. However, conducting professional research demands significant time and financial resources, which I currently lack. Nonetheless, observing the demand from competitors gave me some confidence. As a result, I have completed this stage up to the "MVP" level:
 
-- I assembled a focus group consisting of 10-20 volunteers and conducted a mini-survey to gauge their interest in using this service. The response was predominantly positive.
-- I also inquired about additional information they would like to see, but for the MVP, I decided to prioritize the main aspects - the type of visa and the length of stay. A couple of other features were included, but they are considered supplementary. The rest will be developed later.
+- I assembled a focus group consisting of 10-20 volunteers and conducted a mini-survey to gauge their interest in using this service. The response was predominantly positive
+- I also inquired about additional information they would like to see, but for the MVP, I decided to prioritize the main aspects - the type of visa and the length of stay. A couple of other features were included, but they are considered supplementary. The rest will be developed later
 - I created client portraits, which primarily include digital nomads, travelers, and individuals on business trips (consultants, top managers, etc.)
 
 ## User Flows
@@ -144,8 +142,7 @@ The stage did not seem difficult, since there was already an approximate logic o
 ![userStories](https://github.com/grishlv/GlobalEntry/assets/115469316/26ea52d2-6a7e-4cde-981a-e1027039c5e4)
 
 ## Prototype
-
-There are many cool services for building prototypes, but I chose Figma, with which I am friends and know the functionality quite well. I show it as it is! Without beautiful mockups and fully thought-out logic. It turned out the following:
+There are numerous services available for building prototypes, and I decided to use Figma, as I am familiar with its functionality and find it user-friendly. I present it just as it is, without fancy mockups or fully thought-out logic. It turned out the following:
 
 <img width="740" alt="prototype" src="https://github.com/grishlv/GlobalEntry/assets/115469316/5d69b1c2-0399-4e80-8a1b-09c3700c4052">
 
@@ -153,11 +150,11 @@ There are many cool services for building prototypes, but I chose Figma, with wh
 
 To be honest, I prefer not to dwell on design for too long. I follow this approach:
 
-- I find design references from various sources.
-- I pick the elements I like, such as styles, colors, and fonts.
-- I adapt these elements to match the vision I want to convey in the application.
-- I don't hesitate to draw inspiration from existing designs. While creating something entirely unique and unseen in the market is desirable, it can delay the application's release.
-- I analyzed various travel applications on Behance, Dribbble, and Awards for inspiration. Additionally, I've created a collection of application, not limited to the travel sphere, that I personally enjoy using.
+- finding design references from various sources.
+- selecting elements I like, such as styles, colors, and fonts.
+- adapting these elements to match the vision intended for the application.
+- drawing inspiration from existing designs. While creating something entirely unique and unseen in the market is desirable, it can delay the application's release.
+- analyzing various travel applications on Behance, Dribbble, and Awards for inspiration. Additionally, a collection of applications, not limited to the travelsphere, has been created that I personally enjoy using.
 
 <p float="left">
 	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/494ee4c1-6c9c-407f-9a15-5398cc7accc8" width="32%" />
