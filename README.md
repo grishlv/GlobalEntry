@@ -1,5 +1,5 @@
-# Global Entry - travel mobile application
-Global Entry — travel mobile application that helps people quickly find information about visa requirements in different countries of the world. The app was launched in 2023, born out of our personal desire for such a resource. It soon became clear that we weren't alone in this need. The app is currently only available on the App Store for iPhone users.
+# Global Entry — travel mobile application
+Global Entry — travel mobile application that helps people quickly find information about visa requirements in different countries of the world. The app was launched in 2023, born out of my personal desire for such a resource. It soon became clear that I wasn't alone in this need. The app is currently under review in the AppStore.
 
 <p float="left">
 	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/3ea6c07d-a752-4904-a284-98a6f242bc1b" width="32%" />
@@ -7,13 +7,31 @@ Global Entry — travel mobile application that helps people quickly find inform
 	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/7316ad80-7f55-489f-a893-a895758ec385" width="32%" />
  </p>
 
-## Features
+## Navigation 
 
-1. First steps
-2. Main feature
-3. Add to favourites
-4. Filter by category
-5. Other features
+1. Features
+	- First steps
+	- Main feature
+	- Add to favourites
+	- Filter by category
+	- Other features
+
+2. Realization
+	- Idea
+	- Naming
+	- Competitor analysis
+	- Who is my client
+	- User Flow
+	- Prototype
+	- Design
+	- Development
+
+3. Attributions
+   	- Database
+   	- Photo Credits
+   	- Contacts
+
+# Features
 
 ## 1. First steps
 
@@ -63,6 +81,89 @@ You can also change your passport to compare visa conditions in different countr
 </p>
  
 In the near future, I plan to introduce in-depth information about each country. This will help users gain better awareness before their visits, enhancing their travel experience!
+
+
+# From idea to implementation
+
+## Idea
+
+The idea of the app came from my own need. Since 2022, I have been traveling and sometimes I don't know which country to choose next. Of course, one of the main factors is the visa and the period of staying. To find visa requirements for all potentially interesting countries can be time-consuming. Additionally, sometimes the idea comes to me not to visit any particular country but to explore regions like Latin America or Asia. And my friends and I lacked an application where we could compare the conditions of entry to each of these countries.
+
+## Naming 
+
+After that, I began brainstorming potential names. Here's how I did it: 
+1. I listed out keywords that best represented the core idea of my application and its purpose.
+2. Asked for help from ChatGPT to generate a variety of name options.
+3. Engaging in a brief conversation with ChatGPT, I provided more refined prompts to receive suitable suggestions.
+4. From the different options, I selected the most promising ones.
+5. Additionally, I sought feedback from my friends to gain valuable insights.
+  
+After careful consideration, I ultimately settled on the name: **Global Entry**
+
+## This already exists! Competitor analysis...
+
+Of course, something similar already exists. However, I believe that having competition can be a positive aspect. While researching potential competitors, I discovered several crucial points:
+
+- there are existing databases from which I can gather information
+- there is a strong demand for these services, making them commercially attractive
+- leveraging ready-made and working solutions will simplify the process of creating an MVP
+
+### **About competitors:**
+
+There is one direct competitor, and the rest are either providing an all-in-one solution or a slightly different product-market fit.
+
+1. **Atlys** handles the visa application process and closed [a Seed round for $4.25 million dollars](https://techcrunch.com/2021/10/28/atlys-raises-4-25m-to-make-visa-applications-faster-and-easier/) from a16z, one of the largest venture funds, in 2021. Although they have a slightly different product-market fit, I included them in this list because they offer an application that provides information about visa conditions (available on the AppStore: Atlys). Nonetheless, I'm open to pivoting in this direction in the future, depending on audience demand.
+
+2. **Visa-list** is the main competitor, offering comprehensive information about all countries. However, A couple of points that I see how to improve in terms of a more pleasant and user-friendly UX. When users access my app, I want them to enjoy exploring different countries. On Visa-list's website, I feel overwhelmed by the vast amount of information available, and I believe an application would be more convenient. Nevertheless, Visa-list has seen success, achieving 1st place of the day on Product Hunt, and it has shown monetization with revenue of $232k in the last year.
+
+<img width="937" alt="Screenshot 2023-08-04 at 16 26 05" src="https://github.com/grishlv/GlobalEntry/assets/115469316/6d30acdc-61ea-419e-a32d-313f04854b0a">
+
+3. **Nomad-list** is to some extent a competitor, though not a direct one. It caters to digital nomads traveling to different countries, aggregating data from people and various online sources (such as coworking spaces, security levels, etc.) to provide valuable insights on cities. Their revenue figures are not precisely recalled, but they surpass the previous competitor.
+
+
+_From my analysis of competitors, I have drawn the following conclusions:_
+
+- I found only one fairly competitive application in this space
+- Monetization exists, which is a positive sign. While the market may not be as extensive as complex SAAS/B2B solutions or certain FinTech sectors, it still demonstrates a willingness of people to pay for this service, indicating a viable market
+- I believe I can differentiate my app by offering a more pleasant UX
+
+Now, it's time to implement and make this idea a reality!
+
+
+## Who is the client and what does he want
+
+I understand that this stage is crucial - comprehending the portrait of your client, their desires, and pain points. However, conducting professional research demands significant time and financial resources, which I currently lack. Nonetheless, observing the demand from competitors gave me some confidence. As a result, I have completed this stage up to the "MVP" level:
+
+- I assembled a focus group consisting of 10-20 volunteers and conducted a mini-survey to gauge their interest in using this service. The response was predominantly positive.
+- I also inquired about additional information they would like to see, but for the MVP, I decided to prioritize the main aspects - the type of visa and the length of stay. A couple of other features were included, but they are considered supplementary. The rest will be developed later.
+- I created client portraits, which primarily include digital nomads, travelers, and individuals on business trips (consultants, top managers, etc.)
+
+## User Flows
+
+The stage did not seem difficult, since there was already an approximate logic of the application and a lot of viewing in my head. All that remained was to transfer the ideas to Miro, where I had already made a user map. I want to add that everything was done intuitively rather than as it should be, since there was not much time to think about it
+![userStories](https://github.com/grishlv/GlobalEntry/assets/115469316/26ea52d2-6a7e-4cde-981a-e1027039c5e4)
+
+## Prototype
+
+There are many cool services for building prototypes, but I chose Figma, with which I am friends and know the functionality quite well. I show it as it is! Without beautiful mockups and fully thought-out logic. It turned out the following:
+
+<img width="740" alt="prototype" src="https://github.com/grishlv/GlobalEntry/assets/115469316/5d69b1c2-0399-4e80-8a1b-09c3700c4052">
+
+## Design 
+
+To be honest, I prefer not to dwell on design for too long. I follow this approach:
+
+- I find design references from various sources.
+- I pick the elements I like, such as styles, colors, and fonts.
+- I adapt these elements to match the vision I want to convey in the application.
+- I don't hesitate to draw inspiration from existing designs. While creating something entirely unique and unseen in the market is desirable, it can delay the application's release.
+- I analyzed various travel applications on Behance, Dribbble, and Awards for inspiration. Additionally, I've created a collection of application, not limited to the travel sphere, that I personally enjoy using.
+
+<p float="left">
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/494ee4c1-6c9c-407f-9a15-5398cc7accc8" width="32%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/0ad82853-1a95-4031-85d8-28c8df051b32" width="32%" />
+	<img src="https://github.com/grishlv/GlobalEntry/assets/115469316/618f05b1-aef2-442e-8077-63366f2e2ba9" width="32%" />
+ </p>
 
 # Development
 
