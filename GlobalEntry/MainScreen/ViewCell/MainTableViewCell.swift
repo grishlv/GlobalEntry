@@ -93,7 +93,6 @@ final class MainTableViewCell: UITableViewCell {
         heartImageView.isHidden = isFavorite
         filledHeartImageView.isHidden = !isFavorite
         
-        // Handle the tap on the heart icon
         heartImageView.isUserInteractionEnabled = true
         filledHeartImageView.isUserInteractionEnabled = true
         
