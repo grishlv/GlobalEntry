@@ -12,7 +12,7 @@ import Kingfisher
 import RealmSwift
 import Combine
 
-class MainViewModel: ObservableObject {
+final class MainViewModel: ObservableObject {
     
     var filters = Filter()
     var cancellables = Set<AnyCancellable>()

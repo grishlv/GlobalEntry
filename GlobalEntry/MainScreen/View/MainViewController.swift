@@ -209,6 +209,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let feature = viewModel.filteredFeatures[indexPath.section]
+        let cardVM = CardViewModel(imageURL: feature.imageURL)
+        let cardVC = CardViewController(viewModel: cardVM, destinationText: feature.destination, requirementText: feature.requirement)
+        
+        navigationController?.pushViewController(cardVC, animated: true)
+    }
+    
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         let feature = viewModel.filteredFeatures[index]

@@ -37,6 +37,8 @@
 		786074FD2A5D679F00B1BED2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 786074FC2A5D679F00B1BED2 /* Kingfisher */; };
 		786074FF2A5DA8E000B1BED2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */; };
 		786075102A63DEDF00B1BED2 /* ChooseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7860750F2A63DEDF00B1BED2 /* ChooseTableViewCell.swift */; };
+		7882ED022A8254F000054808 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7882ED012A8254F000054808 /* CardViewController.swift */; };
+		7882ED042A82707300054808 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7882ED032A82707300054808 /* CardViewModel.swift */; };
 		789E6D7829CDD31B006FE11A /* ThirdOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */; };
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
 		78AD184A2A66C3F700403213 /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD18492A66C3F700403213 /* FavouritesViewModel.swift */; };
@@ -113,6 +115,8 @@
 		786074E92A598CA600B1BED2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		786074FE2A5DA8E000B1BED2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		7860750F2A63DEDF00B1BED2 /* ChooseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTableViewCell.swift; sourceTree = "<group>"; };
+		7882ED012A8254F000054808 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		7882ED032A82707300054808 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		789E6D7729CDD31B006FE11A /* ThirdOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnboardingController.swift; sourceTree = "<group>"; };
 		789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingController.swift; sourceTree = "<group>"; };
 		78AD18492A66C3F700403213 /* FavouritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 				782F861429E83465006B3106 /* ChoosePassport */,
 				781B5CBE2A51A572004F29A4 /* TabBar */,
 				781B5C942A489339004F29A4 /* MainScreen */,
+				7882ED002A8254C900054808 /* Card */,
 				78AD184B2A68224300403213 /* Filter */,
 				781B5CB42A51A476004F29A4 /* Favourites */,
 				781B5CB52A51A497004F29A4 /* MapView */,
@@ -353,6 +358,31 @@
 			path = ViewCell;
 			sourceTree = "<group>";
 		};
+		7882ED002A8254C900054808 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				7882ED012A8254F000054808 /* CardViewController.swift */,
+				7882ED032A82707300054808 /* CardViewModel.swift */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
+		789B52412A79423800AB59DE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				78AD18502A69A1CD00403213 /* Filter.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		789B52422A79424300AB59DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78AD184C2A68227700403213 /* FilterViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		78AD18452A6552C000403213 /* MainViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,8 +410,8 @@
 		78AD184B2A68224300403213 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
-				78AD184C2A68227700403213 /* FilterViewController.swift */,
-				78AD18502A69A1CD00403213 /* Filter.swift */,
+				789B52422A79424300AB59DE /* View */,
+				789B52412A79423800AB59DE /* Model */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -713,6 +743,8 @@
 				781B5CC22A51A5C0004F29A4 /* TabController.swift in Sources */,
 				781B5CBB2A51A53E004F29A4 /* MapViewController.swift in Sources */,
 				78C015112A72D2D900260C86 /* FourthFAQViewController.swift in Sources */,
+				7882ED022A8254F000054808 /* CardViewController.swift in Sources */,
+				7882ED042A82707300054808 /* CardViewModel.swift in Sources */,
 				782F861629E8349E006B3106 /* ChoosePassportViewController.swift in Sources */,
 				78C0151B2A73E25400260C86 /* PrivacyViewController.swift in Sources */,
 				781B5CBD2A51A555004F29A4 /* ProfileViewController.swift in Sources */,
