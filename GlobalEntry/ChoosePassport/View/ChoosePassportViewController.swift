@@ -202,6 +202,7 @@ extension ChoosePassportViewController: ChoosePassportViewModelDelegate {
             }
         }
         NotificationCenter.default.post(name: NSNotification.Name("passportSelectionChanged"), object: passportName)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

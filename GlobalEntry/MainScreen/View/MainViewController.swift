@@ -53,17 +53,28 @@ final class MainViewController: UIViewController {
         return tableView
     }()
     
+    //MARK: - table view
+    private lazy var filterButton: UIButton = {
+        let filterButton = UIButton()
+        filterButton.setImage(UIImage(named: "filter"), for: .normal)
+        filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
+        filterButton.tintColor = UIColor.black
+        view.addSubview(filterButton)
+        return filterButton
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         
-        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonTapped))
-        filterButton.tintColor = UIColor.black
-        self.navigationItem.rightBarButtonItem = filterButton
+//        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterButtonTapped))
+//        filterButton.tintColor = UIColor.black
+//        self.navigationItem.rightBarButtonItem = filterButton
         
         setupTableView()
         setupLabelHeader()
         setupSearchBar()
+        setupFilterButton()
         hideKeyboardWhenTappedAround()
         bindViewModel()
         
@@ -146,6 +157,16 @@ final class MainViewController: UIViewController {
         })
     }
     
+    //MARK: - setup filter button
+    private func setupFilterButton() {
+        //constraints
+        filterButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.trailing.equalToSuperview().inset(20)
+            make.width.height.equalTo(30)
+        }
+    }
+    
     @objc func filterButtonTapped() {
         let filterVC = FilterViewController()
         filterVC.filters = self.viewModel.filters
@@ -215,7 +236,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let feature = viewModel.filteredFeatures[indexPath.section]
         let cardVM = CardViewModel(imageURL: feature.imageURL)
         let cardVC = CardViewController(viewModel: cardVM, destinationText: feature.destination, requirementText: feature.requirement)
-        
         navigationController?.pushViewController(cardVC, animated: true)
     }
     
@@ -289,3 +309,8 @@ extension MainViewController {
         view.endEditing(true)
     }
 }
+
+
+
+//        let nextVC = UINavigationController.init(rootViewController: cardVC)
+//        self.present(nextVC, animated: true, completion: nil)
