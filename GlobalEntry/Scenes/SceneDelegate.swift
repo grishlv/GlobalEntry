@@ -16,16 +16,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
 
-            let navController = UINavigationController()
-
             if !UserDefaultsManager.shared.isWelcomeScreenShown {
                 // Show the welcome screen
                 let firstVC = FirstOnboardingController()
+                let navController = UINavigationController(rootViewController: firstVC)
                 window.rootViewController = navController
 
             } else if !UserDefaultsManager.shared.isPassportSelected {
                 // Show the choose passport screen
                 let choosePassportVC = ChoosePassportViewController(viewModel: ChoosePassportViewModel(), tabBar: TabController())
+                let navController = UINavigationController(rootViewController: choosePassportVC)
                 window.rootViewController = navController
 
             } else {
@@ -34,7 +34,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 tabBarController.selectedIndex = 0
                 window.rootViewController = tabBarController
             }
-
             self.window = window
             window.makeKeyAndVisible()
         }
