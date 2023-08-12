@@ -21,7 +21,7 @@ final class ChoosePassportViewModel {
     //MARK: - fetch data
     public func fetchData(completion: @escaping () -> Void) {
         DispatchQueue.main.async {
-            guard let filePath = Bundle.main.path(forResource: "countries", ofType: "json") else {
+            guard let filePath = Bundle.main.path(forResource: "countriesNew", ofType: "json") else {
                 return
             }
             do {
@@ -46,6 +46,7 @@ final class ChoosePassportViewModel {
                                     feature.isFavorite = featureDict["isFavorite"] as? Bool ?? false
                                     feature.id = featureDict["id"] as? String ?? ""
                                     feature.continent = featureDict["continent"] as? String ?? ""
+                                    feature.english = featureDict["english"] as? String ?? ""
                                     
                                     country.features.append(feature)
                                 }

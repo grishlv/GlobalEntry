@@ -19,4 +19,5 @@ class Feature: Object {
     @objc dynamic var isFavorite: Bool = false
     @objc dynamic var id: String = ""
     @objc dynamic var continent: String = ""
+    @objc dynamic var english: String = ""
 }

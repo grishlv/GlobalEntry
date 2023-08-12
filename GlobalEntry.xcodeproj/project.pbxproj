@@ -17,6 +17,7 @@
 		52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4E29F2D9BE00EEED74 /* Inter-ExtraLight.ttf */; };
 		52ACEA5829F2D9BE00EEED74 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA4F29F2D9BE00EEED74 /* Inter-Black.ttf */; };
 		52ACEA5929F2D9BE00EEED74 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52ACEA5029F2D9BE00EEED74 /* Inter-SemiBold.ttf */; };
+		78059CB12A87691D0094B9B9 /* countriesNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 78059CB02A87691C0094B9B9 /* countriesNew.json */; };
 		781B5C962A489363004F29A4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5C952A489363004F29A4 /* MainViewController.swift */; };
 		781B5C9B2A49A653004F29A4 /* ChoosePassportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5C9A2A49A653004F29A4 /* ChoosePassportViewModel.swift */; };
 		781B5CB92A51A4F8004F29A4 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */; };
@@ -43,7 +44,6 @@
 		789F5D9829CDB50800D4B89A /* SecondOnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */; };
 		78AD184A2A66C3F700403213 /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD18492A66C3F700403213 /* FavouritesViewModel.swift */; };
 		78AD184D2A68227800403213 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD184C2A68227700403213 /* FilterViewController.swift */; };
-		78AD184F2A69816500403213 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 78AD184E2A69816400403213 /* countries.json */; };
 		78AD18512A69A1CD00403213 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD18502A69A1CD00403213 /* Filter.swift */; };
 		78AD185C2A7136BF00403213 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD185B2A7136BF00403213 /* FAQViewController.swift */; };
 		78B0638D29DB1AB70007051F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 78B0638C29DB1AB70007051F /* FirebaseStorage */; };
@@ -92,6 +92,7 @@
 		5451B27055BF8FD23F0E2CE8 /* Pods_GlobalEntry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlobalEntry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		565468D2AFF99EDA716D6339 /* Pods_GlobalEntryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlobalEntryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B1CBD8EC4C94F485C8E88BB /* Pods_GlobalEntry_GlobalEntryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlobalEntry_GlobalEntryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		78059CB02A87691C0094B9B9 /* countriesNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countriesNew.json; sourceTree = "<group>"; };
 		781B5C952A489363004F29A4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		781B5C9A2A49A653004F29A4 /* ChoosePassportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePassportViewModel.swift; sourceTree = "<group>"; };
 		781B5CB82A51A4F8004F29A4 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
@@ -121,7 +122,6 @@
 		789F5D9729CDB50800D4B89A /* SecondOnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnboardingController.swift; sourceTree = "<group>"; };
 		78AD18492A66C3F700403213 /* FavouritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
 		78AD184C2A68227700403213 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
-		78AD184E2A69816400403213 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		78AD18502A69A1CD00403213 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		78AD185B2A7136BF00403213 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		78C0150A2A72C26700260C86 /* FirstFAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstFAQViewController.swift; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 		781B5C982A49A609004F29A4 /* JsonData */ = {
 			isa = PBXGroup;
 			children = (
-				78AD184E2A69816400403213 /* countries.json */,
+				78059CB02A87691C0094B9B9 /* countriesNew.json */,
 			);
 			path = JsonData;
 			sourceTree = "<group>";
@@ -635,7 +635,7 @@
 				783B36E729CB5D420029BD6D /* LaunchScreen.storyboard in Resources */,
 				783B36E429CB5D420029BD6D /* Assets.xcassets in Resources */,
 				52ACEA5729F2D9BE00EEED74 /* Inter-ExtraLight.ttf in Resources */,
-				78AD184F2A69816500403213 /* countries.json in Resources */,
+				78059CB12A87691D0094B9B9 /* countriesNew.json in Resources */,
 				52ACEA5529F2D9BE00EEED74 /* Inter-Regular.ttf in Resources */,
 				52ACEA5829F2D9BE00EEED74 /* Inter-Black.ttf in Resources */,
 				52ACEA5929F2D9BE00EEED74 /* Inter-SemiBold.ttf in Resources */,

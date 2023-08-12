@@ -235,7 +235,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         let feature = viewModel.filteredFeatures[indexPath.section]
         let cardVM = CardViewModel(imageURL: feature.imageURL)
-        let cardVC = CardViewController(viewModel: cardVM, destinationText: feature.destination, requirementText: feature.requirement)
+        let cardVC = CardViewController(viewModel: cardVM, destinationText: feature.destination, requirementText: feature.requirement, englishSkills: feature.english)
         navigationController?.pushViewController(cardVC, animated: true)
     }
     
@@ -309,8 +309,3 @@ extension MainViewController {
         view.endEditing(true)
     }
 }
-
-
-
-//        let nextVC = UINavigationController.init(rootViewController: cardVC)
-//        self.present(nextVC, animated: true, completion: nil)
