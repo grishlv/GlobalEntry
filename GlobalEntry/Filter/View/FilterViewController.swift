@@ -12,9 +12,10 @@ final class FilterViewController: UIViewController {
     
     var data = [
         "Continent": ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"],
-        "Visa Types": ["visa free", "e-visa", "visa on arrival", "visa required"]
+        "Visa Types": ["Visa free", "E-visa", "Visa on arrival", "Visa required"]
     ]
     
+    let numericRequirements: [String] = ["90", "30", "180", "120", "21", "14", "360", "60", "15", "42", "45", "28", "240", "10", "7", "31"]
     var sectionTitles = ["Continent", "Visa Types"]
     var filters: Filter!
     
@@ -219,19 +220,24 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         let row = sender.tag % 1000
         let sectionTitle = sectionTitles[section]
         let item = data[sectionTitle]?[row]
-        let _ = String(section * 1000 + row)
         
         if sender.isOn {
             if sectionTitle == "Continent" {
                 filters.continents.append(item ?? "")
             } else if sectionTitle == "Visa Types" {
                 filters.visaTypes.append(item ?? "")
+                if item == "Visa free" {
+                    filters.visaTypes.append(contentsOf: numericRequirements)
+                }
             }
         } else {
             if sectionTitle == "Continent", let index = filters.continents.firstIndex(of: item ?? "") {
                 filters.continents.remove(at: index)
             } else if sectionTitle == "Visa Types", let index = filters.visaTypes.firstIndex(of: item ?? "") {
                 filters.visaTypes.remove(at: index)
+                if item == "Visa free" {
+                    filters.visaTypes.removeAll(where: { numericRequirements.contains($0) })
+                }
             }
         }
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
