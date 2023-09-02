@@ -12,6 +12,7 @@ import Kingfisher
 import RealmSwift
 
 class CardViewModel: ObservableObject {
+    
     @Published var image: UIImage?
     private var imageURL: String?
     

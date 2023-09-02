@@ -334,6 +334,22 @@
 			path = GlobalEntryUITests;
 			sourceTree = "<group>";
 		};
+		785266302A98EA41001376D1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7882ED012A8254F000054808 /* CardViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		785266312A98EA5D001376D1 /* CardViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7882ED032A82707300054808 /* CardViewModel.swift */,
+			);
+			path = CardViewModel;
+			sourceTree = "<group>";
+		};
 		786075112A63E4A700B1BED2 /* ViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,8 +377,8 @@
 		7882ED002A8254C900054808 /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				7882ED012A8254F000054808 /* CardViewController.swift */,
-				7882ED032A82707300054808 /* CardViewModel.swift */,
+				785266312A98EA5D001376D1 /* CardViewModel */,
+				785266302A98EA41001376D1 /* View */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -962,7 +978,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Z65RF5M6WV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GlobalEntry/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Global Entry";

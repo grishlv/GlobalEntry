@@ -77,7 +77,6 @@ final class ChoosePassportViewModel {
             let uniquePassports = filteredResults?
                 .sorted(byKeyPath: "passport", ascending: true)
                 .distinct(by: ["passport"])
-            
             filtered = uniquePassports
         }
     }
