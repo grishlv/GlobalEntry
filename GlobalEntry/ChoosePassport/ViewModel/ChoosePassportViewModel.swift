@@ -1,10 +1,3 @@
-//
-//  ChoosePassportViewModel.swift
-//  GlobalEntry
-//
-//  Created by Grigoriy Shilyaev on 26.06.23.
-//
-
 import Foundation
 import RealmSwift
 
@@ -15,8 +8,8 @@ protocol ChoosePassportViewModelDelegate: AnyObject {
 final class ChoosePassportViewModel {
     
     weak var delegate: ChoosePassportViewModelDelegate?
-    public var passports: Results<Country>?
-    public var filtered: Results<Country>?
+    var passports: Results<Country>?
+    var filtered: Results<Country>?
     
     //MARK: - fetch data
     public func fetchData(completion: @escaping () -> Void) {
@@ -63,9 +56,11 @@ final class ChoosePassportViewModel {
             completion()
         }
     }
+}
+
+extension ChoosePassportViewModel {
     
-    //MARK: - perform search
-    public func performSearch(with searchText: String) {
+    func performSearch(with searchText: String) {
         
         if searchText.isEmpty {
             filtered = passports

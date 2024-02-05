@@ -1,9 +1,3 @@
-//
-//  Country.swift
-//  GlobalEntry
-//
-//  Created by Grigoriy Shilyaev on 28.05.23.
-
 import Foundation
 import RealmSwift
 

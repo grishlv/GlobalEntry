@@ -1,9 +1,3 @@
-//
-//  ChoosePassportViewController.swift
-//  GlobalEntry
-//
-//  Created by Grigoriy Shilyaev on 13.04.23.
-
 import Foundation
 import UIKit
 import SnapKit
@@ -52,6 +46,7 @@ final class ChoosePassportViewController: UIViewController {
         return tableView
     }()
     
+    //MARK: - spinner
     private lazy var spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.color = .gray
@@ -91,7 +86,6 @@ final class ChoosePassportViewController: UIViewController {
     //MARK: - setup label header
     private func setupLabelHeader() {
         
-        //constraints
         labelHeader.snp.makeConstraints({ make in
             make.top.equalToSuperview().inset(75)
             make.leading.equalToSuperview().inset(20)
@@ -103,7 +97,6 @@ final class ChoosePassportViewController: UIViewController {
     //MARK: - setup search bar
     private func setupSearchBar() {
         
-        //constraints
         searchBar.snp.makeConstraints({ make in
             make.top.equalTo(labelHeader.snp.bottom).inset(-16)
             make.leading.trailing.equalToSuperview().inset(10)
@@ -114,7 +107,6 @@ final class ChoosePassportViewController: UIViewController {
     //MARK: - setup table view
     private func setupTableView() {
         
-        //constraints
         tableView.snp.makeConstraints({ make in
             make.top.equalTo(searchBar.safeAreaLayoutGuide.snp.bottomMargin)
             make.leading.trailing.equalToSuperview().inset(20)
@@ -124,6 +116,7 @@ final class ChoosePassportViewController: UIViewController {
     
     //MARK: - setup spinner
     private func setupSpinner() {
+        
         spinner.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()

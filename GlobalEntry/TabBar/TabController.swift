@@ -1,10 +1,3 @@
-//
-//  TabController.swift
-//  GlobalEntry
-//
-//  Created by Grigoriy Shilyaev on 02.07.23.
-//
-
 import UIKit
 
 final class TabController: UITabBarController, UITabBarControllerDelegate {
@@ -31,11 +24,11 @@ final class TabController: UITabBarController, UITabBarControllerDelegate {
         
         tabBar.standardAppearance = appearance
         
-        let search = createNav(with: "Search", and: UIImage(systemName: "magnifyingglass"), vc: MainViewController(viewModel: MainViewModel.init()))
-        let favourites = createNav(with: "Favourites", and: UIImage(systemName: "heart"), vc: FavouritesViewController(viewModel: FavouritesViewModel.init()))
+        let search = createNav(with: "Search", and: UIImage(systemName: "magnifyingglass"), vc: MainViewController(viewModel: MainViewModel(dataModel: FeatureDataModels.init(), imageService: ImageService.init())))
+        let favorites = createNav(with: "Favourites", and: UIImage(systemName: "heart"), vc: FavoritesViewController(viewModel: FavoritesViewModel(dataModel: FeatureDataModels.init(), imageService: ImageService.init())))
         let profile = createNav(with: "Profile", and: UIImage(systemName: "person.circle"), vc: ProfileViewController())
         
-        setViewControllers([search, favourites, profile], animated: true)
+        setViewControllers([search, favorites, profile], animated: true)
     }
     
     func configureTabBarAppearance() {

@@ -1,55 +1,28 @@
-//
-//  MainViewModel.swift
-//  GlobalEntry
-//
-//  Created by Grigoriy Shilyaev on 08.07.23.
-//
-
 import Foundation
 import UIKit
-import FirebaseStorage
-import Kingfisher
 import RealmSwift
 import Combine
 
 final class MainViewModel: ObservableObject {
     
-    var filters = Filter()
-    var cancellables = Set<AnyCancellable>()
-    let visaFreeTypes = ["visa free", "90", "30", "180", "120", "21", "14", "360", "60", "15", "42", "45", "28", "240", "10", "7", "31"]
-    @Published var features: [Feature] = []
     @Published var filteredFeatures: [Feature] = []
+    var features: [Feature] = []
+    var cancellables = Set<AnyCancellable>()
     
-    func getImage(for feature: Feature, uniqueId: String, completion: @escaping (String, UIImage?) -> Void) {
-        guard !feature.imageURL.isEmpty else {
-            completion(uniqueId, UIImage(named: "placeholderImage"))
-            return
-        }
-        
-        let storageRef = Storage.storage().reference().child("images/\(feature.imageURL).jpg")
-        storageRef.downloadURL { url, error in
-            guard let imageURL = url, error == nil else {
-                print("Failed to get image URL: \(error?.localizedDescription ?? "")")
-                completion(uniqueId, UIImage(named: "placeholderImage"))
-                return
-            }
-            KingfisherManager.shared.retrieveImage(with: imageURL, options: [
-                .processor(DownsamplingImageProcessor(size: CGSize(width: 140, height: 110))),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(0.2)),
-                .cacheOriginalImage
-            ]) { result in
-                switch result {
-                case .success(let value):
-                    completion(uniqueId, value.image)
-                case .failure(let error):
-                    print("Job failed: \(error.localizedDescription)")
-                    completion(uniqueId, UIImage(named: "placeholderImage"))
-                }
-            }
-        }
+    var filters = Filter()
+    let dataModel: FeatureDataModels
+    let imageService: ImageServiceProtocol
+    let visaFreeTypes = ["visa free", "90", "30", "180", "120", "21", "14", "360", "60", "15", "42", "45", "28", "240", "10", "7", "31"]
+    
+    init(dataModel: FeatureDataModels, imageService: ImageServiceProtocol) {
+        self.dataModel = dataModel
+        self.imageService = imageService
     }
+}
+
+extension MainViewModel {
     
+    //MARK: - load country data
     func loadCountryData(_ passportCountry: String) {
         do {
             let realm = try Realm()
@@ -61,7 +34,11 @@ final class MainViewModel: ObservableObject {
             print("Failed to update favorite status or open Realm: \(error.localizedDescription)")
         }
     }
+}
+
+extension MainViewModel {
     
+    //MARK: - setup filter feature
     func applyFilters(_ filters: Filter) {
         self.filters = filters
         filteredFeatures = features.filter { feature in
@@ -76,23 +53,37 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
+}
+
+extension MainViewModel {
     
-    func updateFavoriteStatus(of feature: Feature) {
-        do {
-            let realm = try Realm()
-            try? realm.write {
-                feature.isFavorite = !feature.isFavorite
-            }
-        } catch {
-            print("Failed to update favorite status or open Realm: \(error.localizedDescription)")
-        }
-    }
-    
+    //MARK: - setup search feature
     func filterFeatures(with text: String) {
         if text.isEmpty {
             filteredFeatures = features
         } else {
             filteredFeatures = features.filter { $0.destination.lowercased().starts(with: text.lowercased()) }
+        }
+    }
+}
+
+extension MainViewModel {
+    
+    //MARK: - setup favorite status functions
+//    func toggleFavorite(at index: Int) {
+//        guard index < features.count else { return }
+//        let featureId = features[index].id
+//        dataModel.toggleFavorite(for: featureId)
+//    }
+    
+    func toggleFavorite(at index: Int) {
+        guard index < features.count else { return }
+        let featureId = features[index].id
+        dataModel.toggleFavorite(for: featureId) { [weak self] isFavoriteNow in
+            if let idx = self?.filteredFeatures.firstIndex(where: { $0.id == featureId }) {
+                // Update the isFavorite status of the feature in filteredFeatures
+                self?.filteredFeatures[idx].isFavorite = isFavoriteNow
+            }
         }
     }
 }

@@ -1,10 +1,3 @@
-////
-////  MainTableViewCell.swift
-////  GlobalEntry
-////
-////  Created by Grigoriy Shilyaev on 11.07.23.
-////
-
 import UIKit
 
 final class MainTableViewCell: UITableViewCell {
@@ -39,7 +32,7 @@ final class MainTableViewCell: UITableViewCell {
     }()
     
     var uniqueId: String?
-    var favouriteId: String?
+    var favoriteId: String?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

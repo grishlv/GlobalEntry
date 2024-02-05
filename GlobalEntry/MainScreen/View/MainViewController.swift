@@ -1,19 +1,11 @@
-//
-//  MainScreenViewController.swift
-//  GlobalEntry
-//
-//  Created by Grigoriy Shilyaev on 25.06.23.
-//
-
 import Foundation
 import UIKit
 import SnapKit
-import RealmSwift
 import Combine
 
 final class MainViewController: UIViewController {
     
-    var viewModel = MainViewModel()
+    var viewModel: MainViewModel
     var cancellables = Set<AnyCancellable>()
     
     //MARK: - label header
@@ -30,7 +22,7 @@ final class MainViewController: UIViewController {
     //MARK: - search bar
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        setupCustomSearchBar(searchBar) //custom UI
+        setupCustomSearchBar(searchBar)
         searchBar.barTintColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         searchBar.searchTextField.backgroundColor = UIColor(red: 238/255, green: 239/255, blue: 244/255, alpha: 1)
         searchBar.tintColor = UIColor(red: 110/255, green: 114/255, blue: 123/255, alpha: 1)
@@ -53,7 +45,7 @@ final class MainViewController: UIViewController {
         return tableView
     }()
     
-    //MARK: - table view
+    //MARK: - filter button
     private lazy var filterButton: UIButton = {
         let filterButton = UIButton()
         filterButton.setImage(UIImage(named: "filter"), for: .normal)
@@ -65,108 +57,11 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        setupView()
         
-        setupTableView()
-        setupLabelHeader()
-        setupSearchBar()
-        setupFilterButton()
-        hideKeyboardWhenTappedAround()
-        bindViewModel()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        searchBar.delegate = self
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableData), name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateFilter), name: NSNotification.Name("FiltersApplied"), object: nil)
+        //Should refactor this!
+//        NotificationCenter.default.addObserver(self, selector: #selector(updateFilter), name: NSNotification.Name("FiltersApplied"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: NSNotification.Name("passportSelectionChanged"), object: nil)
-    }
-    
-    private func bindViewModel() {
-        viewModel.$filteredFeatures
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.tableView.reloadData()
-            }
-            .store(in: &viewModel.cancellables)
-        
-        if let passportCountry = UserDefaults.standard.string(forKey: "passportCountry") {
-            viewModel.loadCountryData(passportCountry)
-        }
-    }
-    
-    @objc func reloadTableData() {
-        tableView.reloadData()
-    }
-    
-    @objc func reloadData(notification: NSNotification) {
-        if let passportCountry = notification.object as? String {
-            viewModel.loadCountryData(passportCountry)
-            print("table view should reload")
-            tableView.reloadData()
-        }
-    }
-    
-    @objc func updateFilter(notification: NSNotification) {
-        if let filters = notification.userInfo?["filters"] as? Filter {
-            viewModel.applyFilters(filters)
-        }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavouriteStatusChanged"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("passportSelectionChanged"), object: nil)
-    }
-    
-    //MARK: - setup table view
-    private func setupTableView() {
-        
-        //constraints
-        tableView.snp.makeConstraints({ make in
-            make.top.equalTo(searchBar.safeAreaLayoutGuide.snp.bottomMargin)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        })
-    }
-    
-    //MARK: - setup label header
-    private func setupLabelHeader() {
-        
-        //constraints
-        labelHeader.snp.makeConstraints({ make in
-            make.top.equalToSuperview().inset(90)
-            make.leading.equalToSuperview().inset(20)
-            make.trailing.lessThanOrEqualToSuperview().inset(20)
-            make.height.equalTo(48)
-        })
-    }
-    
-    //MARK: - setup search bar
-    private func setupSearchBar() {
-        
-        //constraints
-        searchBar.snp.makeConstraints({ make in
-            make.top.equalTo(labelHeader.snp.bottom).inset(-16)
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.height.equalTo(48)
-        })
-    }
-    
-    //MARK: - setup filter button
-    private func setupFilterButton() {
-        //constraints
-        filterButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.trailing.equalToSuperview().inset(20)
-            make.width.height.equalTo(30)
-        }
-    }
-    
-    @objc func filterButtonTapped() {
-        let filterVC = FilterViewController()
-        filterVC.filters = self.viewModel.filters
-        navigationController?.present(filterVC, animated: true)
     }
     
     init(viewModel: MainViewModel) {
@@ -177,9 +72,99 @@ final class MainViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func setupView() {
+        view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        
+        bindViewModel()
+        loadContryData()
+        setupTableView()
+        setupLabelHeader()
+        setupSearchBar()
+        setupFilterButton()
+        hideKeyboardWhenTappedAround()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        searchBar.delegate = self
+    }
+    
+    private func bindViewModel() {
+        viewModel.$filteredFeatures
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+    
+    //MARK: - upload data for the first time
+    private func loadContryData() {
+        if let passportCountry = UserDefaults.standard.string(forKey: "passportCountry") {
+            viewModel.loadCountryData(passportCountry)
+        }
+    }
+    
+    //MARK: - reload data when user changes his passport
+    @objc func reloadData(notification: NSNotification) {
+        if let passportCountry = notification.object as? String {
+            viewModel.loadCountryData(passportCountry)
+            tableView.reloadData()
+        }
+    }
+    
+    //MARK: - apply filters
+    @objc func updateFilter(notification: NSNotification) {
+        if let filters = notification.userInfo?["filters"] as? Filter {
+            viewModel.applyFilters(filters)
+        }
+    }
+    
+    //MARK: - setup table view
+    private func setupTableView() {
+        tableView.snp.makeConstraints({ make in
+            make.top.equalTo(searchBar.safeAreaLayoutGuide.snp.bottomMargin)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        })
+    }
+    
+    //MARK: - setup label header
+    private func setupLabelHeader() {
+        labelHeader.snp.makeConstraints({ make in
+            make.top.equalToSuperview().inset(90)
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.lessThanOrEqualToSuperview().inset(20)
+            make.height.equalTo(48)
+        })
+    }
+    
+    //MARK: - setup search bar
+    private func setupSearchBar() {
+        searchBar.snp.makeConstraints({ make in
+            make.top.equalTo(labelHeader.snp.bottom).inset(-16)
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.height.equalTo(48)
+        })
+    }
+    
+    //MARK: - setup filter button
+    private func setupFilterButton() {
+        filterButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.trailing.equalToSuperview().inset(20)
+            make.width.height.equalTo(30)
+        }
+    }
+    
+    @objc func filterButtonTapped() {
+        let filterVC = FilterViewController()
+        filterVC.filters = viewModel.filters
+        navigationController?.present(filterVC, animated: true)
+    }
 }
 
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+extension MainViewController: UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.filteredFeatures.count
@@ -198,6 +183,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.backgroundColor = view.backgroundColor
         return headerView
     }
+}
+
+extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -206,17 +194,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let tapGestureEmpty = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         let tapGestureFilled = UITapGestureRecognizer(target: self, action: #selector(heartIconTapped))
         
+        cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
         cell.uniqueId = feature.id
         cell.heartImageView.addGestureRecognizer(tapGestureEmpty)
         cell.filledHeartImageView.addGestureRecognizer(tapGestureFilled)
         cell.heartImageView.tag = indexPath.section
         cell.filledHeartImageView.tag = indexPath.section
         
-        DispatchQueue.main.async {
-            cell.configureCell(feature: feature, destination: feature.destination, requirement: feature.requirement)
-        }
-        
-        viewModel.getImage(for: feature, uniqueId: feature.id) { [weak cell] (id, image) in
+        viewModel.imageService.getImage(for: feature, uniqueId: feature.id) { [weak cell] (id, image) in
             DispatchQueue.main.async {
                 if cell?.uniqueId == id {
                     cell?.updateImage(image: image)
@@ -237,21 +222,21 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func heartIconTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
-        let feature = viewModel.filteredFeatures[index]
+        
+        // Notify ViewModel to toggle favorite status
+        viewModel.toggleFavorite(at: index)
+
+        // Update UI for the heart icon in the cell
+        if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell {
+            let feature = viewModel.filteredFeatures[index]
+            cell.heartImageView.isHidden = feature.isFavorite
+            cell.filledHeartImageView.isHidden = !feature.isFavorite
+        }
+        
+        // Haptic feedback
         let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         feedbackGenerator.prepare()
         feedbackGenerator.impactOccurred()
-        
-        let realm = try! Realm()
-        try? realm.write {
-            feature.isFavorite = !feature.isFavorite
-        }
-        
-        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: index)) as? MainTableViewCell
-        else { return }
-        
-        cell.heartImageView.isHidden = feature.isFavorite
-        cell.filledHeartImageView.isHidden = !feature.isFavorite
     }
 }
 
@@ -266,7 +251,6 @@ extension MainViewController: UISearchBarDelegate {
 extension MainViewController {
     
     func setupCustomSearchBar(_ searchBar: UISearchBar) {
-        //setup custom UI
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
             
             //setup color to search icon
